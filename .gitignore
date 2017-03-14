@@ -3,7 +3,9 @@
 /AmazonProdAdvt/build/*
 !/AmazonProdAPI
 /AmazonProdAPI/build/*
-!/ScaleConcepts/src/*
+!/ScaleConcepts
+/ScaleConcepts/*
+!/ScaleConcepts/src
 !/ScaleConcepts/build.gradle
 !/settings.gradle
 !/.gitignore
