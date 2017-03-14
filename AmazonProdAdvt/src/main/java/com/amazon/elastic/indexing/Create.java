@@ -40,6 +40,7 @@ public class Create {
 		            .startObject(typeName)
 		            .startObject("properties")
 		            .startObject("ASIN").field("type", "string").field("index", "not_analyzed").endObject()
+		            .startObject("category").field("type", "string").field("index", "not_analyzed").endObject()
 		            .startObject("Title").field("type", "string").field("index", "not_analyzed").endObject()
 		            .startObject("averagePrice").field("type", "double").field("index", "not_analyzed").endObject()
 		            .startObject("currentPrice").field("type", "double").field("index", "not_analyzed").endObject()
@@ -57,6 +58,36 @@ public class Create {
 		}		
 		PutMappingResponse mapResponse = transClient.admin().indices().preparePutMapping(indexName).setType(typeName)
 		        .setSource(mapping).execute().actionGet();
+	}
+    }
+    
+    public void createDiscItemsIndex(String indexName, String typeName){
+	this.indexName=indexName;
+	this.typeName=typeName;
+	if(!this.ifIndexExists(indexName) || !this.ifTypeExists(indexName, typeName)){
+	    XContentBuilder mapping=null;
+	    try{
+		mapping=jsonBuilder().startObject()
+			.startObject(typeName)
+			.startObject("properties")
+		        .startObject("ASIN").field("type", "string").field("index", "not_analyzed").endObject()
+		        .startObject("category").field("type", "string").field("index", "not_analyzed").endObject()
+		        .startObject("Title").field("type", "string").field("index", "not_analyzed").endObject()
+		        .startObject("averagePrice").field("type", "double").field("index", "not_analyzed").endObject()
+		        .startObject("currentPrice").field("type", "double").field("index", "not_analyzed").endObject()
+		        .startObject("minPrice").field("type", "double").field("index", "not_analyzed").endObject()
+		        .startObject("timesCaptured").field("type","integer").field("index","not_analyzed").endObject()
+		        .endObject()
+		        .endObject()
+		        .endObject();
+	    }catch(Exception e){
+		
+	    }
+	    if(!this.ifIndexExists(indexName)){
+		    transClient.admin().indices().create(new CreateIndexRequest(indexName)).actionGet();
+	    }		
+	    PutMappingResponse mapResponse = transClient.admin().indices().preparePutMapping(indexName).setType(typeName)
+		    .setSource(mapping).execute().actionGet();
 	}
     }
 	

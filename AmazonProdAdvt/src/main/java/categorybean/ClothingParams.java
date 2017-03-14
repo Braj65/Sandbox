@@ -12,6 +12,12 @@ public class ClothingParams implements Categories{
     public String fullName="Clothing&Accessories";
     @Override
     public void setSortParams(String nodeId) {
+	try {
+	    Thread.sleep(2000);
+	} catch (InterruptedException e) {
+	    // TODO Auto-generated catch block
+	    e.printStackTrace();
+	}
 	getSortParams(nodeId);
 	/*sortParams=new ArrayList<String>();
 	sortParams.add("relevancerank");

@@ -7,6 +7,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class RequestEntity {
 	
 	private String ASIN;
+	private String category;
 	private String title;
 	private double currentPrice;
 	private double minPrice;
@@ -22,13 +23,21 @@ public class RequestEntity {
 	public void setASIN(String aSIN) {
 		ASIN = aSIN;
 	}
+	@JsonProperty("category")
+	public String getCategory() {
+	    return category;
+	}
+	@JsonProperty("category")
+	public void setCategory(String category) {
+	    this.category = category;
+	}
 	@JsonProperty("title")
 	public String getTitle() {
 	    return title;
 	}
 	@JsonProperty("title")
 	public void setTitle(String title) {
-	    title = title;
+	    this.title = title;
 	}
 	@JsonProperty("currentPrice")
 	public double getCurrentPrice() {

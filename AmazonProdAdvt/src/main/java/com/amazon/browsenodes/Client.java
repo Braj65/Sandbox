@@ -12,9 +12,9 @@ public class Client {
     public static void main(String[] args) throws Exception {
 //	String compTimeFileLoc="/nodedetails/HighestRootNodeIds.properties";
 	String parentNodes="/nodedetails/HighestRootNodeIds.properties";
-	String leafNodeIds="/nodedetails/Grocery & Gourmet Foods.properties";
+//	String leafNodeIds="/nodedetails/Grocery & Gourmet Foods.properties";
 //	String leafNodeIds="/nodedetails/Clothing & Accessories.properties";
-	
+	String leafNodeIds="/nodedetails/Video Games.properties";	
 	String physicalLoc="/src/main/resources";
 	Client c=new Client();
 	NodeContainer nc=new NodeContainer("BrowseNodeLookup", leafNodeIds);

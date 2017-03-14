@@ -14,17 +14,19 @@ import org.apache.commons.configuration.PropertiesConfigurationLayout;
 public class Client {
     
     public static void main(String[] args) throws Exception {
-	String groceryNodes="/nodedetails/Grocery&Gourmet.properties";
-	String clothNodes="/nodedetails/Clothing&Accessories.properties";
+	String groceryNodes="/nodedetails/Grocery & Gourmet Foods.properties";
+	String clothNodes="/nodedetails/Clothing & Accessories.properties";
+	String videoNodes="/nodedetails/Video Games.properties";
 	String nodeLdap="/nodedetails/NodeLDAP.properties";
 	String physicalLoc="/src/main/resources";
 	String s=System.getProperty("user.dir");
 	
 	File grocFile=new File(s+physicalLoc+groceryNodes);
 	File clothFile=new File(s+physicalLoc+clothNodes);
+	File videoFile=new File(s+physicalLoc+videoNodes);
 	File ldapFile=new File(s+physicalLoc+nodeLdap);
 	
-	BufferedReader bfr=new BufferedReader(new FileReader(grocFile));
+	BufferedReader bfr=new BufferedReader(new FileReader(videoFile));
 	
 	PropertiesConfiguration ldapConf=new PropertiesConfiguration(ldapFile);
 	PropertiesConfigurationLayout ldapLay=ldapConf.getLayout();
@@ -35,6 +37,13 @@ public class Client {
 	Set<String> nameSet=new HashSet<String>();
 	String temp=null;
 	while((curLine=bfr.readLine())!=null){
+	    if(curLine.startsWith("#")){
+		curLine=curLine.substring(2);
+		nameSet.add(curLine);
+	    }
+	}
+	
+	/*while((curLine=bfr.readLine())!=null){
 	    if(curLine.startsWith("#")){
 		if(count==1){
 		    ldapConf.setProperty(curLine.substring(2, curLine.indexOf(".")), true);
@@ -58,11 +67,11 @@ public class Client {
 		    }
 		}		
 	    }
-	}
+	}*/
 	
 	Iterator<String> x=nameSet.iterator();
 	while(x.hasNext()){
-	    ldapConf.setProperty(x.next(), true);
+	    ldapConf.setProperty(x.next(), false);
 	}
 	
 	FileWriter fw=new FileWriter(ldapFile);

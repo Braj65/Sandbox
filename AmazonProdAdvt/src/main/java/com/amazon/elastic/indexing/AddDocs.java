@@ -7,18 +7,20 @@ import java.util.Iterator;
 import java.util.Set;
 
 import org.apache.commons.configuration.PropertiesConfiguration;
+import org.elasticsearch.action.get.GetResponse;
 import org.elasticsearch.action.index.IndexResponse;
 
 import com.amazon.elastic.entity.RequestEntity;
 import com.amazon.elastic.entity.SearchResult;
 import com.amazon.prodbase.Categories;
+import com.amazon.prodbase.ProdReviews;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class AddDocs extends Create {
 
     ObjectMapper mapper = null;
     // HashMap<String, String> selectedItemsMap=new HashMap<String, String>();
-    HashMap<String, ArrayList<String>> selectedItemsMap = new HashMap<String, ArrayList<String>>();
+    ArrayList<String> selectedItemsList = new ArrayList<String>();
     public String indexMetaFile = "/indexmeta/LastIndexTypeMeta.properties";
     public String physicalLoc = "/src/main/resources";
     public String s = System.getProperty("user.dir");
@@ -29,7 +31,7 @@ public class AddDocs extends Create {
 	mapper = new ObjectMapper();
 	try {
 //	    indexMeta = new PropertiesConfiguration(s + physicalLoc + indexMetaFile);
-	    fw = new FileWriter(s + physicalLoc + indexMetaFile);
+//	    fw = new FileWriter(s + physicalLoc + indexMetaFile);
 	} catch (Exception e) {
 	    e.printStackTrace();
 	}
@@ -38,11 +40,15 @@ public class AddDocs extends Create {
 	this.typeName = c.typeName;
     }
 
+    public void changeType(String typeName){
+	this.typeName=typeName;
+    }
     public void clearDiffCache() {
-	selectedItemsMap.clear();
+	selectedItemsList.clear();
     }
 
-    public void prepareDoc(HashMap<String, ArrayList<String>> map, Categories cat, PropertiesConfiguration indexMeta) {
+    public void prepareDoc(HashMap<String, ArrayList<String>> map, Categories cat, PropertiesConfiguration indexMeta,
+	    String categoryName) {
 	this.indexMeta=indexMeta;
 	RequestEntity req = new RequestEntity();
 	Set<String> s = map.keySet();
@@ -52,6 +58,7 @@ public class AddDocs extends Create {
 	    while (i.hasNext()) {
 		String k = i.next();
 		req.setASIN(k);
+		req.setCategory(categoryName);
 		ArrayList<String> prc = map.get(k);
 		// String[] x=(String[])prc.toArray();
 		req.setTitle(prc.get(0));
@@ -66,16 +73,25 @@ public class AddDocs extends Create {
     }
 
     public void addDoc(byte[] json, String asin) {
-	IndexResponse resp = transClient.prepareIndex(indexName, typeName, asin).setSource(json).get();
+	IndexResponse resp=null;
+	try{
+	    resp = transClient.prepareIndex(indexName, typeName, asin).setSource(json).get();  
+	}catch(Exception e){
+	   e.printStackTrace(); 
+	}
+	
     }
 
     public void checkDiscItems() {
-	Set<String> keys = selectedItemsMap.keySet();
+	for(String asin:selectedItemsList){
+	    
+	}
+	/*Set<String> keys = selectedItemsMap.keySet();
 	Iterator<String> i = keys.iterator();
 	while (i.hasNext()) {
 	    ArrayList<String> asin = selectedItemsMap.get(i.next());
 	    System.out.println(asin.get(0) + "-prev-" + asin.get(1) + "-curr-" + asin.get(2));
-	}
+	}*/
     }
 
     public RequestEntity optiAlgo(RequestEntity req, double price, Categories cat) {
@@ -95,11 +111,10 @@ public class AddDocs extends Create {
 		try {
 		    prevRes = mapper.readValue(res, SearchResult.class);
 		    req.setCurrentPrice(price);
-		    req.setMinPrice(price);
 		    req.setAveragePrice((prevRes.getAveragePrice() * prevRes.getTimesCaptured() + price)
 			    / (prevRes.getTimesCaptured() + 1));
 		    req.setTimesCaptured(prevRes.getTimesCaptured() + 1);
-		    checkDiscAddResult(prevRes, price, asin, req.getTitle());
+		    req.setMinPrice(checkDiscAddResult(prevRes, price, asin, req.getTitle()));
 		} catch (Exception e) {
 		    e.printStackTrace();
 		}
@@ -153,13 +168,24 @@ public class AddDocs extends Create {
 	return req;
     }
 
-    public void checkDiscAddResult(SearchResult source, double curPrice, String asin, String title) {
+    public double checkDiscAddResult(SearchResult source, double curPrice, String asin, String title) {
 	/*
 	 * if(title.contains("NBA 2K17")){ System.out.println(); }
 	 */
-	ArrayList<String> x = new ArrayList<String>();
+//	ArrayList<String> x = new ArrayList<String>();
+	
+	if(discPercent(source.getAveragePrice(),curPrice)>=15 || 
+		(discPercent(curPrice,source.getMinPrice())<=7.5 && discPercent(curPrice,source.getMinPrice())>=0)
+		|| discPercent(source.getCurrentPrice(),curPrice)>15)
+	    selectedItemsList.add(asin);
+	
+	if(curPrice<source.getMinPrice())
+	    return curPrice;
+	else
+	    return source.getMinPrice();
+	
 
-	if (((source.getCurrentPrice() - curPrice) / 100) >= 0.2) {
+	/*if (((source.getCurrentPrice() - curPrice) / 100) >= 0.2) {
 	    x.add(title);
 	    x.add(String.valueOf(source.getCurrentPrice()));
 	    x.add(String.valueOf(curPrice));
@@ -172,7 +198,7 @@ public class AddDocs extends Create {
 	    x.add(String.valueOf(curPrice));
 	    selectedItemsMap.put(asin, x);
 	    // System.out.println(title+"-prev--"+source.getMinPrice()+"--curr--"+curPrice);
-	}
+	}*/
 
 	/*
 	 * if(prevPrice<=100){ if((prevPrice-curPrice/100)>=0.2){ map.put(asin,
@@ -181,6 +207,18 @@ public class AddDocs extends Create {
 	 * if(prevPrice<=1000 && prevPrice>500){
 	 * if((prevPrice-curPrice/100)>=0.3){ map.put(asin, title); } }
 	 */
+    }
+    
+    public double discPercent(double base, double curr){
+	return base>curr?((base-curr)/base)*100:0;
+    }
+    
+    public void indexDiscItems(String type){
+	for(String asin: selectedItemsList){
+	    GetResponse get=transClient.prepareGet(indexName, type, asin).get();
+	    byte[] res=get.getSourceAsBytes();
+	    addDoc(res, asin);
+	}
     }
 
 }

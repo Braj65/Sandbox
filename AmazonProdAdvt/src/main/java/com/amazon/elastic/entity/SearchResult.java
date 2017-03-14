@@ -7,6 +7,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class SearchResult {
 	
 	private String ASIN;
+	private String category;
 	private double currentPrice;
 	private double minPrice;
 	private double averagePrice;
@@ -20,6 +21,14 @@ public class SearchResult {
 	@JsonProperty("ASIN")
 	public void setASIN(String aSIN) {
 		ASIN = aSIN;
+	}
+	@JsonProperty("category")
+	public String getCategory() {
+	    return category;
+	}
+	@JsonProperty("category")
+	public void setCategory(String category) {
+	    this.category = category;
 	}
 	@JsonProperty("currentPrice")
 	public double getCurrentPrice() {
