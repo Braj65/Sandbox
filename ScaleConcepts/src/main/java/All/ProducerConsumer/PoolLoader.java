@@ -29,6 +29,10 @@ public class PoolLoader {
 	mRecursive = Boolean.FALSE;
 	addFilesFromDir(dir);
     }
+    
+    public long getCapa(){
+	return mFiles.size();
+    }
 
     private void addFilesFromDir(File dir) {
 	File[] files = dir.listFiles();

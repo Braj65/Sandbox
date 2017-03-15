@@ -1,23 +1,20 @@
 package All.ProducerConsumer;
 
-
-import java.util.Properties;
-import java.util.Queue;
-
+import All.Clients.ClientPoolProdConsVolatile;
 import All.Pool.AZCatPEPool;
 import All.Pool.AzCat;
-import All.Pool.AzCatManager;
 import All.Pool.EOFToken;
 import All.Pool.WorkQueue;
 
-public class Producer extends Thread{
+public class ProducerVolatileFlag extends Thread{
+    
     WorkQueue q=null;
     AZCatPEPool pool=null;
     PoolLoader pload=null;
     private long maxToProcess=0;
+    public ClientPoolProdConsVolatile.Control ctrl=null;
     
-    
-    public Producer(WorkQueue qu, AZCatPEPool poo){
+    public ProducerVolatileFlag(WorkQueue qu, AZCatPEPool poo){
 	this.q=qu;
 	pool=poo;
 	pload=new PoolLoader();
@@ -25,9 +22,13 @@ public class Producer extends Thread{
 	setName("producer::");
     }
     
-    public void run() {
+    public void setFlag(ClientPoolProdConsVolatile.Control ctr){
+	this.ctrl=ctr;
+    }
+    
+    public void run(){
 	System.out.println();
-	while(true){
+	while(maxToProcess!=0){
 	    AzCat cat=pool.getCat();
 	    try{
 		/*if(!pload.hasNext()){
@@ -37,11 +38,12 @@ public class Producer extends Thread{
 		q.enqueue(cat);
 		--maxToProcess;
 		if(endOfProcessingReached()){
+		    ctrl.finishflag=false;
 		    break;
 		}
 	    }catch(Exception e){
 		e.printStackTrace();
-	    }
+	    }	
 	}
 	placeEofToken();
 	Thread.currentThread().interrupt();
@@ -58,4 +60,5 @@ public class Producer extends Thread{
     private void placeEofToken(){
 	q.enqueue(new EOFToken());
     }
+
 }

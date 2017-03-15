@@ -1,28 +1,31 @@
 package All.ProducerConsumer;
 
-import java.util.Queue;
-
+import All.Clients.ClientPoolProdConsVolatile;
 import All.Pool.AZCatPEPool;
 import All.Pool.AzCat;
 import All.Pool.EOFToken;
 import All.Pool.WorkQueue;
 
-public class Consumer extends Thread {
+public class ConsumerVolatileFlag extends Thread{
     public static int instance = 0;
     private final WorkQueue queue;
     protected AZCatPEPool pool = null;
-
-    public Consumer(WorkQueue q, AZCatPEPool poo) {
+    ClientPoolProdConsVolatile.Control ctrl=null;
+    
+    public ConsumerVolatileFlag(WorkQueue q, AZCatPEPool poo) {
 	this.queue = q;
 	pool = poo;
 	setName("Consumer- " + instance++);
     }
-
-    @Override
-    public void run() {
+    
+    public void setFlag(ClientPoolProdConsVolatile.Control ctr){
+	this.ctrl=ctr;
+    }
+    
+    public void run(){
 	System.out.println();
 	boolean run=true;
-	while (run) {
+	while(ctrl.finishflag){
 	    try {
 		AzCat work = null;
 //		work = (AzCat) queue.dequeue(0);
@@ -36,7 +39,6 @@ public class Consumer extends Thread {
 		    System.out.println(work.text);
 		    pool.releaseCat(work);		    
 		}
-		
 	    } catch (Exception e) {
 		break;
 	    }
@@ -47,5 +49,4 @@ public class Consumer extends Thread {
     public void handleEOFToken(){
 	
     }
-
 }
