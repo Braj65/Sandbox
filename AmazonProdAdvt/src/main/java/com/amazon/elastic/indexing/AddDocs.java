@@ -175,7 +175,7 @@ public class AddDocs extends Create {
 //	ArrayList<String> x = new ArrayList<String>();
 	
 	if(discPercent(source.getAveragePrice(),curPrice)>=15 || 
-		(discPercent(curPrice,source.getMinPrice())<=7.5 && discPercent(curPrice,source.getMinPrice())>=0)
+		(discPercent(curPrice,source.getMinPrice())<=7.5 && discPercent(curPrice,source.getMinPrice())>=0.5)
 		|| discPercent(source.getCurrentPrice(),curPrice)>15)
 	    selectedItemsList.add(asin);
 	
