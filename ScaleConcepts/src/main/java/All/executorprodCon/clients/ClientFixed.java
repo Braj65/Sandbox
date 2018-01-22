@@ -4,7 +4,9 @@ import java.util.List;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.SynchronousQueue;
+import java.util.concurrent.TimeUnit;
 
 import All.executorprodCon.pool.AzCat;
 import All.executorprodCon.pool.AzCatPool;
@@ -30,8 +32,7 @@ public class ClientFixed {
 	    if(threadCount==6){
 		List<Runnable> x=execpool.shutdownNow();
 		System.out.println(x.size());
-	    }
-		
+	    }		
 	}
     }
 

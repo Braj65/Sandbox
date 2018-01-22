@@ -25,14 +25,17 @@ public class Producer extends ProdConAbs{
 	System.out.println();
 	try{
 	    while(pLoad.hasNext()){
-		AzCat c=new AzCat();
+//		AzCat c=new AzCat();
+		AzCat c=pool.getCat();
 		pLoad.loadCat(c);
 		q.put(c);
 	    }
+	    Thread.currentThread().interrupt();
 	}catch(Exception e){
 	    e.printStackTrace();
 	}
-	Thread.currentThread().interrupt();
+	
+//	Thread.currentThread().interrupt();
 	System.out.println("Producer finished");
     }
 

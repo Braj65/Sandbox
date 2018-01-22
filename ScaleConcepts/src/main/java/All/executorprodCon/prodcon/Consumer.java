@@ -23,17 +23,18 @@ public class Consumer extends ProdConAbs{
 	System.out.println();
 	try{
 	    while(true){
-		AzCat c=q.poll(3000, TimeUnit.MILLISECONDS);
-		if(c==null)
+		AzCat c=q.poll(8000, TimeUnit.MILLISECONDS);
+		if(c==null){
 		    break;
+		}
 		System.out.println(c.getText());
 		pool.releaseCat(c);
 	    }
 	}catch(Exception e){
 	    e.printStackTrace();
 	}
+	Thread.currentThread().interrupt();
 	System.out.println("Consumer finished");
-	
     }
 
 }
