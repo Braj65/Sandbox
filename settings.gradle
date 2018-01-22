@@ -1,1 +1,1 @@
-include "AmazonProdAPI","AmazonProdAdvt"
+include "AmazonProdAPI","AmazonProdAdvt", "AmazonProdAdvtPlatform"
