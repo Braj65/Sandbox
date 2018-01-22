@@ -2,12 +2,9 @@
 !/AmazonProdAdvt
 /AmazonProdAdvt/build/*
 !/AmazonProdAdvtPlatform
-/AmazonProdAdvtPlatform/build/*
-/AmazonProdAdvtPlatform/bin/*
-/AmazonProdAdvtPlatform/.gradle/*
-/AmazonProdAdvtPlatform/.settings/*
-/AmazonProdAdvtPlatform/.classpath/*
-/AmazonProdAdvtPlatform/.project/*
+/AmazonProdAdvtPlatform/*
+!/AmazonProdAdvtPlatform/src
+!/AmazonProdAdvtPlatform/build.gradle
 !/AmazonProdAPI
 /AmazonProdAPI/build/*
 !/ScaleConcepts
