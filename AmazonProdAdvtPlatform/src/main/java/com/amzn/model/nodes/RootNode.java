@@ -22,6 +22,7 @@ public class RootNode extends AbstractNode{
 	RootNode n=new RootNode();
 	n.getOneHigestCategory();
 	n.loadLdapChildren();
+	n.processLdap();
     }
 
     public void getOneHigestCategory() {
@@ -39,13 +40,16 @@ public class RootNode extends AbstractNode{
 	while(iter.hasNext()){
 	    key=iter.next();
 	    ILdapChild child=new LdapChild(key, ldap.get(key));
-	    childNodes.add(child);
+	    if(ldap.get(key))
+		childNodes.add(child);
 	}
     }
 
     @Override
-    public void loadChildren() {
-	// TODO Auto-generated method stub
+    public void processLdap() {
+	for(ILdapChild child:childNodes){
+	    child.processLdaps();
+	}
 	
     }
     
