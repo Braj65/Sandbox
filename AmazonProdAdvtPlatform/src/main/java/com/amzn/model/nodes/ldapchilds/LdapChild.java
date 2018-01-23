@@ -21,7 +21,7 @@ public class LdapChild extends AbstractLdapChild{
 
     @Override
     public void createAndLoadChildren() {
-	Map<String, Integer> leafChildrens=loadLeafs.loadRequiredChildren(this.parentCategory);
+	Map<String, Long> leafChildrens=loadLeafs.loadRequiredChildren(this.parentCategory);
 	System.out.println(leafChildrens);
     }
 
