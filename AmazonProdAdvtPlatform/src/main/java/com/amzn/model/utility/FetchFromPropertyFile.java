@@ -22,7 +22,7 @@ public class FetchFromPropertyFile {
     private PropertiesConfigurationLayout layout=null;
     private File rootFile=null;
     
-    public NodeStats loadFromFile(){
+    public NodeStats loadOneHighestCat(){
 	String category="";
 	try{
 	    rootFile=new File(Property.Value.ROOT_CATEGORIES.getString());

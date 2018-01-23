@@ -26,7 +26,7 @@ public class RootNode extends AbstractNode{
     }
 
     public void getOneHigestCategory() {
-	currentLdapChild=fetch.loadFromFile();
+	currentLdapChild=fetch.loadOneHighestCat();
 	System.out.println(currentLdapChild.toString());
 	/*root.status="Covered";
 	fetch.markAsCovered(root);*/
@@ -49,8 +49,7 @@ public class RootNode extends AbstractNode{
     public void processLdap() {
 	for(ILdapChild child:childNodes){
 	    child.processLdaps();
-	}
-	
+	}	
     }
     
     

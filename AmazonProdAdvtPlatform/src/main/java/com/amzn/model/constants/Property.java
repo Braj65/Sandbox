@@ -4,16 +4,19 @@ public class Property {
     private final static String slash=System.getProperty("file.separator");
     
     public static String getFilePathFromLdap(String fileName){
-	return Value.RSCFOLDER.getString()+slash+
-		Value.ROOTPACK.getString()+slash+Value.NODES.getString()+slash+
+	return getRscNodePackPath()+slash+
 		Value.LDAPCHILDS.getString()+slash+
 		fileName;
     }
     
     public static String getChildNodePath(){
-	return Value.RSCFOLDER.getString()+slash+
-		Value.ROOTPACK.getString()+slash+Value.NODES.getString()+slash+
+	return getRscNodePackPath()+slash+
 		Value.CHILDNODES.getString()+slash;
+    }
+    
+    public static String getRscNodePackPath(){
+	return Value.RSCFOLDER.getString()+slash+
+		Value.ROOTPACK.getString()+slash+Value.NODES.getString();
     }
     
     public enum Value{
