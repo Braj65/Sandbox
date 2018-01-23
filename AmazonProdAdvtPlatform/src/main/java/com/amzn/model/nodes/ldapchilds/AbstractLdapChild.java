@@ -9,9 +9,11 @@ public abstract class AbstractLdapChild implements ILdapChild{
     
     protected List<IChildNode> children;
     protected Boolean toBeScrapped;
+    protected String parentCategory;
     
-    public AbstractLdapChild(Boolean toBeScrapped){
+    public AbstractLdapChild(String ldapName, Boolean toBeScrapped){
 	children=new ArrayList<IChildNode>();
 	this.toBeScrapped=toBeScrapped;
+	this.parentCategory=ldapName;
     }
 }

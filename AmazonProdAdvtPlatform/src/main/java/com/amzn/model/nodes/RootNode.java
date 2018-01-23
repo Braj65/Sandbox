@@ -38,7 +38,7 @@ public class RootNode extends AbstractNode{
 	String key="";
 	while(iter.hasNext()){
 	    key=iter.next();
-	    ILdapChild child=new LdapChild(ldap.get(key));
+	    ILdapChild child=new LdapChild(key, ldap.get(key));
 	    childNodes.add(child);
 	}
     }

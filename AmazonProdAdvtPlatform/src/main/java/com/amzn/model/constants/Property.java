@@ -10,6 +10,12 @@ public class Property {
 		fileName;
     }
     
+    public static String getChildNodePath(){
+	return Value.RSCFOLDER.getString()+slash+
+		Value.ROOTPACK.getString()+slash+Value.NODES.getString()+slash+
+		Value.CHILDNODES.getString()+slash;
+    }
+    
     public enum Value{
 	HOME("home", System.getProperty("user.dir")),
 	BIN("bin", Property.Value.HOME.getString()+slash+"bin"),
@@ -17,6 +23,7 @@ public class Property {
 	RSCFOLDER("src/main/resources",Value.HOME.getString()+slash+"src"+slash+"main"+slash+"resources"),
 	ROOTPACK("com/amzn","com"+slash+"amzn"),
 	NODES("model/nodes", "model"+slash+"nodes"),
+	CHILDNODES("childnodes","childnodes"),
 	LDAPCHILDS("ldapchilds","ldapchilds"),
 	ROOT_CATEGORIES("HighestRootNodeIds.properties", Property.Value.BIN.getString()+slash+
 		Property.Value.ROOTPACK.getString()+slash+
