@@ -14,7 +14,9 @@ import org.apache.commons.configuration.PropertiesConfigurationLayout;
 import org.apache.commons.io.FileUtils;
 
 import com.amzn.model.constants.Property;
-import com.amzn.model.nodes.NodeStats;
+import com.amzn.model.nodes.nodeEntity.AbstractNodeStats;
+import com.amzn.model.nodes.nodeEntity.INodeStats;
+import com.amzn.model.nodes.nodeEntity.NodeStats;
 
 public class FetchFromPropertyFile {
     private static final String NODE_COVERED="Covered";
@@ -22,7 +24,7 @@ public class FetchFromPropertyFile {
     private PropertiesConfigurationLayout layout=null;
     private File rootFile=null;
     
-    public NodeStats loadOneHighestCat(){
+    public INodeStats loadOneHighestCat(){
 	String category="";
 	try{
 	    rootFile=new File(Property.Value.ROOT_CATEGORIES.getString());
@@ -40,16 +42,20 @@ public class FetchFromPropertyFile {
 	    }	    
 	    
 	    if(categories.get(1).equals(NODE_COVERED)){
-		return new NodeStats("", "", "", "");
+		return AbstractNodeStats.getNullNode();
 	    }else
-		return new NodeStats(category, (String)categories.get(0), (String)categories.get(1), 
-			(String)categories.get(2));
+		return new AbstractNodeStats.Builder()
+			.setNodeName(category)
+			.setNodeId((String)categories.get(0))
+			.setLdapFile((String)categories.get(1))
+			.setStatus((String)categories.get(2))
+			.build();
 		
 	}catch(Exception e){
 	    e.printStackTrace();
 	}
 	
-	return new NodeStats("", "", "", "");
+	return AbstractNodeStats.getNullNode();
     }
     
     public Map<String, Boolean> getAllLdaps(String ldapFileName){
