@@ -13,7 +13,7 @@ public abstract class AbstractLdapChild implements ILdapChild{
     
     public AbstractLdapChild(String ldapName, Boolean toBeScrapped){
 	children=new ArrayList<IChildNode>();
-	this.toBeScrapped=toBeScrapped;
 	this.parentCategory=ldapName;
+	this.toBeScrapped=toBeScrapped;	
     }
 }
