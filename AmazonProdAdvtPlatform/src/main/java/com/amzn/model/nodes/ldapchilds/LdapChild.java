@@ -40,6 +40,7 @@ public class LdapChild extends AbstractLdapChild{
 	    if(!(Boolean)entry.getValue()){
 		isCovered=true;
 		leafNode=(INode)entry.getKey();
+		leafNode.register(this);
 		children.put(leafNode, isCovered);
 		leafNode.loadChildren();
 		break;
@@ -48,6 +49,13 @@ public class LdapChild extends AbstractLdapChild{
 	leafNode.interpretChild();
     }
 
+    @Override
+    public void register(INode observer) {
+	this.observer=observer;
+    }
     
+    public LoadLeafChildren getLeafChildrenSetter(){
+	return loadLeafs;
+    }
 
 }

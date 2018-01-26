@@ -6,6 +6,7 @@ import com.amzn.model.nodes.nodeEntity.INodeStats;
 
 public abstract class AbstractChildNode implements INode{
     protected INodeStats nodeStats;
+    protected INode observer;
     
     public AbstractChildNode(String childNodeName, Long nodeId){
 	nodeStats=new AbstractNodeStats.Builder()
@@ -17,5 +18,10 @@ public abstract class AbstractChildNode implements INode{
     public void loadChildren() {
 	
     }
-
+    
+    @Override
+    public INode getObserver() {
+	// TODO Auto-generated method stub
+	return null;
+    }
 }

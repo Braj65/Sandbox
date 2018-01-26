@@ -1,6 +1,5 @@
 package com.amzn.model.nodes;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -8,17 +7,17 @@ import java.util.Set;
 
 import com.amzn.model.nodes.ldapchilds.LdapChild;
 import com.amzn.model.nodes.nodeEntity.INodeStats;
-import com.amzn.model.nodes.nodeEntity.NodeStats;
-import com.amzn.model.nodes.nodeEntity.ldapNodeEntity.AbstractLdapNodeStats;
 import com.amzn.model.utility.FetchFromPropertyFile;
+import com.amzn.model.utility.LoadLeafChildren;
 
 public class RootNode extends AbstractNode{
 
     private FetchFromPropertyFile fetch=null;
+    private LoadLeafChildren ldapsChildrenPopulator;
     
     private boolean isCovered=false;
     
-    private RootNode(){
+    public RootNode(){
 	childNodes=new HashMap<INode, Boolean>();
 	fetch=new FetchFromPropertyFile();
 	currentLdapChild=fetch.loadOneHighestCat();
@@ -57,21 +56,21 @@ public class RootNode extends AbstractNode{
 	Iterator<INode> iter=childset.iterator();
 	while(iter.hasNext()){
 	    child=iter.next();
-	    if(!childNodes.get(child)){
+//	    if(!childNodes.get(child)){
 		isCovered=true;
+		child.register(this);
 		childNodes.put(child, isCovered);
 		child.loadChildren();
-		break;		
-	    }
-	    
-	}
-	child.interpretChild();
+		child.interpretChild();
+//	    }	    
+	}	
     }
     
     public String toString(){
 	return currentLdapChild.toString();
     }
-    
-    
-
+    @Override
+    public void notifyObserver(INodeStats nodeStats) {
+	System.out.println(nodeStats.toString());	
+    }
 }
