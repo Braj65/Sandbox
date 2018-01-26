@@ -5,6 +5,9 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 
+import org.apache.commons.configuration.PropertiesConfiguration;
+
+import com.amzn.model.nodes.ldapchilds.AbstractLdapChild;
 import com.amzn.model.nodes.ldapchilds.LdapChild;
 import com.amzn.model.nodes.nodeEntity.INodeStats;
 import com.amzn.model.utility.FetchFromPropertyFile;
@@ -21,12 +24,6 @@ public class RootNode extends AbstractNode{
 	childNodes=new HashMap<INode, Boolean>();
 	fetch=new FetchFromPropertyFile();
 	currentLdapChild=fetch.loadOneHighestCat();
-    }
-    public static void main(String[] args) {
-	RootNode n=new RootNode();
-//	n.getOneHigestCategory();
-	n.loadChildren();
-	n.interpretChild();
     }
 
     public void getOneHigestCategory() {
@@ -54,15 +51,30 @@ public class RootNode extends AbstractNode{
     public void interpretChild() {
 	Set<INode> childset=childNodes.keySet();
 	Iterator<INode> iter=childset.iterator();
+	AbstractLdapChild tempLdap;
+	PropertiesConfiguration tempLeafChildProp=null;
+	for(int i=0;i<1;i++){
+	    child=iter.next();
+	    isCovered=true;
+	    child.register(this);
+	    childNodes.put(child, isCovered);
+	    child.loadChildren();
+	    tempLdap=(AbstractLdapChild) child;
+	    tempLeafChildProp=tempLdap.getLeafNodeProperties();
+	    child.interpretChild();
+	}
 	while(iter.hasNext()){
 	    child=iter.next();
 //	    if(!childNodes.get(child)){
 		isCovered=true;
 		child.register(this);
 		childNodes.put(child, isCovered);
+		tempLdap=(AbstractLdapChild) child;
+		tempLdap.setLeafNodeProperties(tempLeafChildProp);
 		child.loadChildren();
+		tempLeafChildProp=tempLdap.getLeafNodeProperties();
 		child.interpretChild();
-//	    }	    
+//	    }   
 	}	
     }
     

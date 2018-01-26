@@ -11,7 +11,6 @@ import com.amzn.model.utility.LoadLeafChildren;
 
 public class LdapChild extends AbstractLdapChild{
 
-    private LoadLeafChildren loadLeafs;
     private boolean isCovered=false;
     
     public LdapChild(String ldapName, Boolean toBeCrawled) {
@@ -53,9 +52,4 @@ public class LdapChild extends AbstractLdapChild{
     public void register(INode observer) {
 	this.observer=observer;
     }
-    
-    public LoadLeafChildren getLeafChildrenSetter(){
-	return loadLeafs;
-    }
-
 }
