@@ -1,11 +1,21 @@
 package com.amzn.model.nodes.childnodes;
 
-import java.util.List;
+import com.amzn.model.nodes.INode;
+import com.amzn.model.nodes.nodeEntity.AbstractNodeStats;
+import com.amzn.model.nodes.nodeEntity.INodeStats;
 
-public class AbstractChildNode implements IChildNode{
+public abstract class AbstractChildNode implements INode{
+    protected INodeStats nodeStats;
     
-    protected List<IChildNode> children;
-    private String childNodeName;
-    private Integer nodeId;
+    public AbstractChildNode(String childNodeName, Long nodeId){
+	nodeStats=new AbstractNodeStats.Builder()
+		.setNodeName(childNodeName)
+		.setNodeId(nodeId).build();
+    }
+    
+    @Override
+    public void loadChildren() {
+	
+    }
 
 }

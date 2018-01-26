@@ -17,6 +17,7 @@ import com.amzn.model.constants.Property;
 import com.amzn.model.nodes.nodeEntity.AbstractNodeStats;
 import com.amzn.model.nodes.nodeEntity.INodeStats;
 import com.amzn.model.nodes.nodeEntity.NodeStats;
+import com.amzn.model.nodes.nodeEntity.ldapNodeEntity.AbstractLdapNodeStats;
 
 public class FetchFromPropertyFile {
     private static final String NODE_COVERED="Covered";
@@ -24,7 +25,7 @@ public class FetchFromPropertyFile {
     private PropertiesConfigurationLayout layout=null;
     private File rootFile=null;
     
-    public INodeStats loadOneHighestCat(){
+    public AbstractLdapNodeStats loadOneHighestCat(){
 	String category="";
 	try{
 	    rootFile=new File(Property.Value.ROOT_CATEGORIES.getString());
@@ -35,18 +36,18 @@ public class FetchFromPropertyFile {
 	    while(iter.hasNext()){
 		category=iter.next();
 		categories=nodeProperties.getList(category);
-		if(categories.get(1).equals(NODE_COVERED))
+		if(categories.get(2).equals(NODE_COVERED))
 		    continue;
 		else
 		    break;		
 	    }	    
 	    
-	    if(categories.get(1).equals(NODE_COVERED)){
-		return AbstractNodeStats.getNullNode();
+	    if(categories.get(2).equals(NODE_COVERED)){
+		return AbstractLdapNodeStats.getNullLdapNode();
 	    }else
-		return new AbstractNodeStats.Builder()
-			.setNodeName(category)
-			.setNodeId((String)categories.get(0))
+		
+		return new AbstractLdapNodeStats.Builder()
+			.setNodeStats(newNodeStats(categories, category))
 			.setLdapFile((String)categories.get(1))
 			.setStatus((String)categories.get(2))
 			.build();
@@ -55,7 +56,7 @@ public class FetchFromPropertyFile {
 	    e.printStackTrace();
 	}
 	
-	return AbstractNodeStats.getNullNode();
+	return AbstractLdapNodeStats.getNullLdapNode();
     }
     
     public Map<String, Boolean> getAllLdaps(String ldapFileName){
@@ -77,11 +78,11 @@ public class FetchFromPropertyFile {
 	return ldapMap;
     }
     
-    public void markAsCovered(NodeStats overrideNode){
+    public void markAsCovered(AbstractLdapNodeStats overrideNode){
 	try {
 	    FileWriter fw=new FileWriter(Property.Value.ROOT_CATEGORIES.getString());
 	    layout=nodeProperties.getLayout();
-	    nodeProperties.setProperty(overrideNode.getNodeName(), overrideNode.getNodeId()+", "+
+	    nodeProperties.setProperty(overrideNode.getNodeStats().getNodeName(), overrideNode.getNodeStats().getNodeId()+", "+
 		    	overrideNode.getLdapFile()+", "+overrideNode.getStatus());
 	    nodeProperties.save(fw);
 	    File destFile=new File(Property.Value.WRITEROOT_CATEGORIES.getString());
@@ -90,5 +91,12 @@ public class FetchFromPropertyFile {
 	    // TODO Auto-generated catch block
 	    e.printStackTrace();
 	}
+    }
+    
+    public INodeStats newNodeStats(List<Object> categories, String category){
+	return new AbstractNodeStats.Builder()
+		.setNodeName(category)
+		.setNodeId(Long.parseLong((String) categories.get(0)))
+		.build();
     }
 }

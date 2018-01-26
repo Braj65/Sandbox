@@ -1,18 +1,19 @@
 package com.amzn.model.nodes.ldapchilds;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
-import com.amzn.model.nodes.childnodes.IChildNode;
+import com.amzn.model.nodes.INode;
+import com.amzn.model.nodes.nodeEntity.INodeStats;
 
-public abstract class AbstractLdapChild implements ILdapChild{
+public abstract class AbstractLdapChild implements INode{
     
-    protected List<IChildNode> children;
+    protected Map<INode, Boolean> children;
     protected Boolean toBeScrapped;
     protected String parentCategory;
     
     public AbstractLdapChild(String ldapName, Boolean toBeScrapped){
-	children=new ArrayList<IChildNode>();
+	children=new HashMap<INode, Boolean>();
 	this.parentCategory=ldapName;
 	this.toBeScrapped=toBeScrapped;	
     }

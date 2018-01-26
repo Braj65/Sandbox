@@ -6,26 +6,28 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 
-import com.amzn.model.nodes.ldapchilds.ILdapChild;
 import com.amzn.model.nodes.ldapchilds.LdapChild;
 import com.amzn.model.nodes.nodeEntity.INodeStats;
 import com.amzn.model.nodes.nodeEntity.NodeStats;
+import com.amzn.model.nodes.nodeEntity.ldapNodeEntity.AbstractLdapNodeStats;
 import com.amzn.model.utility.FetchFromPropertyFile;
 
 public class RootNode extends AbstractNode{
-    
-    private INodeStats currentLdapChild=null;
+
     private FetchFromPropertyFile fetch=null;
     
+    private boolean isCovered=false;
+    
     private RootNode(){
-	childNodes=new HashMap<ILdapChild, Boolean>();
+	childNodes=new HashMap<INode, Boolean>();
 	fetch=new FetchFromPropertyFile();
+	currentLdapChild=fetch.loadOneHighestCat();
     }
     public static void main(String[] args) {
 	RootNode n=new RootNode();
-	n.getOneHigestCategory();
-	n.loadLdapChildren();
-	n.processLdap();
+//	n.getOneHigestCategory();
+	n.loadChildren();
+	n.interpretChild();
     }
 
     public void getOneHigestCategory() {
@@ -35,34 +37,39 @@ public class RootNode extends AbstractNode{
 	fetch.markAsCovered(root);*/
     }
     
-    public void loadLdapChildren(){
+    public void loadChildren(){
 	Map<String, Boolean> ldap= fetch.getAllLdaps(currentLdapChild.getLdapFile());
 	Set<String> ldapCategories= ldap.keySet();
 	Iterator<String> iter=ldapCategories.iterator();
 	String key="";
 	while(iter.hasNext()){
 	    key=iter.next();
-	    ILdapChild child=new LdapChild(key, ldap.get(key));
+	    INode child=new LdapChild(key, ldap.get(key));
 	    if(ldap.get(key)){
-		childNodes.put(child, false);
+		childNodes.put(child, isCovered);
 	    }
 	}
     }
 
     @Override
-    public void processLdap() {
-	ILdapChild childTobeProcessed=null;
-	Set<ILdapChild> child=childNodes.keySet();
-	Iterator<ILdapChild> iter=child.iterator();
+    public void interpretChild() {
+	Set<INode> childset=childNodes.keySet();
+	Iterator<INode> iter=childset.iterator();
 	while(iter.hasNext()){
-	    childTobeProcessed=iter.next();
-	    if(!childNodes.get(childTobeProcessed)){
-		childNodes.put(childTobeProcessed, false);
+	    child=iter.next();
+	    if(!childNodes.get(child)){
+		isCovered=true;
+		childNodes.put(child, isCovered);
+		child.loadChildren();
 		break;		
 	    }
 	    
 	}
-	childTobeProcessed.processLdaps();	
+	child.interpretChild();
+    }
+    
+    public String toString(){
+	return currentLdapChild.toString();
     }
     
     
