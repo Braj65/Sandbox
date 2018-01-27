@@ -42,10 +42,10 @@ public class LdapChild extends AbstractLdapChild{
 		leafNode.register(this);
 		children.put(leafNode, isCovered);
 		leafNode.loadChildren();
-		break;
+		leafNode.interpretChild();
 	    }
 	}
-	leafNode.interpretChild();
+	
     }
 
     @Override

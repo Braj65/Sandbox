@@ -11,7 +11,7 @@ public class ChildNode extends AbstractChildNode{
 
     @Override
     public void interpretChild() {
-	System.out.println(toString());
+//	System.out.println(toString());
 	notifyObserver(nodeStats);
     }
     
