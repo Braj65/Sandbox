@@ -8,17 +8,9 @@ import com.amzn.model.nodes.nodeEntity.ldapNodeEntity.AbstractLdapNodeStats;
 
 public abstract class AbstractNode implements INode{
     
-    protected Map<INode, Boolean> childNodes;
-    protected INode child;
+    protected List<INode> childNodes;
     protected AbstractLdapNodeStats currentLdapChild;
     
-    public INode getChild(){
-	return child;
-    }
-    
-    public void notifyObserver(){
-	interpretChild();
-    }
     
     @Override
     public void register(INode observer) {

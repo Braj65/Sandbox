@@ -1,7 +1,8 @@
 package com.amzn.model.nodes.ldapchilds;
 
+import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Map;
+import java.util.List;
 
 import org.apache.commons.configuration.PropertiesConfiguration;
 
@@ -11,16 +12,14 @@ import com.amzn.model.utility.LoadLeafChildren;
 
 public abstract class AbstractLdapChild implements INode{
     
-    protected Map<INode, Boolean> children;
-    protected Boolean toBeScrapped;
+    protected List<INode> children;
     protected String parentCategory;
     protected INode observer;
     protected LoadLeafChildren loadLeafs;
     
     public AbstractLdapChild(String ldapName, Boolean toBeScrapped){
-	children=new HashMap<INode, Boolean>();
+	children=new ArrayList<INode>();
 	this.parentCategory=ldapName;
-	this.toBeScrapped=toBeScrapped;	
     }
     
     public INode getObserver(){

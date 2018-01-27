@@ -14,6 +14,8 @@ import org.apache.commons.configuration.PropertiesConfigurationLayout;
 import org.apache.commons.io.FileUtils;
 
 import com.amzn.model.constants.Property;
+import com.amzn.model.nodes.INode;
+import com.amzn.model.nodes.ldapchilds.LdapChild;
 import com.amzn.model.nodes.nodeEntity.AbstractNodeStats;
 import com.amzn.model.nodes.nodeEntity.INodeStats;
 import com.amzn.model.nodes.nodeEntity.NodeStats;
@@ -30,37 +32,35 @@ public class FetchFromPropertyFile {
 	try{
 	    rootFile=new File(Property.Value.ROOT_CATEGORIES.getString());
 	    nodeProperties=new PropertiesConfiguration(rootFile); 
-	    Iterator<String> iter=nodeProperties.getKeys();
-	    List<Object> categories=new ArrayList<Object>();
-	    
-	    while(iter.hasNext()){
-		category=iter.next();
-		categories=nodeProperties.getList(category);
-		if(categories.get(2).equals(NODE_COVERED))
-		    continue;
-		else
-		    break;		
-	    }	    
-	    
-	    if(categories.get(2).equals(NODE_COVERED)){
-		return AbstractLdapNodeStats.getNullLdapNode();
-	    }else
-		
-		return new AbstractLdapNodeStats.Builder()
-			.setNodeStats(newNodeStats(categories, category))
-			.setLdapFile((String)categories.get(1))
-			.setStatus((String)categories.get(2))
-			.build();
+	    return rootNodeParameters();
 		
 	}catch(Exception e){
 	    e.printStackTrace();
 	}
-	
 	return AbstractLdapNodeStats.getNullLdapNode();
     }
     
-    public Map<String, Boolean> getAllLdaps(String ldapFileName){
-	Map<String, Boolean> ldapMap=new HashMap<String, Boolean>();
+    public AbstractLdapNodeStats rootNodeParameters(){
+	String rootNode=null;
+	Iterator<String> iter=nodeProperties.getKeys();
+	while(iter.hasNext()){
+	    rootNode=iter.next();
+	    if(nodeProperties.getList(rootNode).get(2).equals(NODE_COVERED))
+		continue;
+	    else
+		break;		
+	}
+	if(nodeProperties.getList(rootNode).get(2).equals(NODE_COVERED))
+	    return AbstractLdapNodeStats.getNullLdapNode();
+	else
+	    return new AbstractLdapNodeStats.Builder()
+			.setNodeStats(createNewNodeStats(nodeProperties.getList(rootNode), rootNode))
+			.setLdapFile((String)nodeProperties.getList(rootNode).get(1))
+			.setStatus((String)nodeProperties.getList(rootNode).get(2))
+			.build();
+    }
+    
+    public void createLdapObjectsFromLdapFileLoadToMap(List<INode> childNodes, String ldapFileName){
 	File ldpapPath=new File(Property.getFilePathFromLdap(ldapFileName));
 	String ldapKey="";
 	
@@ -70,12 +70,13 @@ public class FetchFromPropertyFile {
 	    Iterator<String> iter=nodeProperties.getKeys();
 	    while(iter.hasNext()){
 		ldapKey=iter.next();
-		ldapMap.put(ldapKey, nodeProperties.getBoolean(ldapKey));
+		INode child=new LdapChild(ldapKey, nodeProperties.getBoolean(ldapKey));
+		if(nodeProperties.getBoolean(ldapKey))
+		    childNodes.add(child);
 	    }
 	} catch (ConfigurationException e) {
 	    e.printStackTrace();
 	}
-	return ldapMap;
     }
     
     public void markAsCovered(AbstractLdapNodeStats overrideNode){
@@ -93,7 +94,7 @@ public class FetchFromPropertyFile {
 	}
     }
     
-    public INodeStats newNodeStats(List<Object> categories, String category){
+    public INodeStats createNewNodeStats(List<Object> categories, String category){
 	return new AbstractNodeStats.Builder()
 		.setNodeName(category)
 		.setNodeId(Long.parseLong((String) categories.get(0)))
