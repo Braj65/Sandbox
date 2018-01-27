@@ -38,9 +38,7 @@ public abstract class AbstractNodeStats implements INodeStats {
 
     static class NullNode extends AbstractNodeStats {
 	public String toString() {
-	    StringBuilder str = new StringBuilder();
-	    str.append("Node Name-" + nodeName + " Node Id-" + nodeId);
-	    return str.toString();
+	    return new StringBuilder().append("Node Name-" + nodeName + " Node Id-" + nodeId).toString();
 	}
     }
 }

@@ -49,9 +49,8 @@ public abstract class AbstractLdapNodeStats {
     
     public static class LdapNullNode extends AbstractLdapNodeStats{
 	public String toString(){
-	    StringBuilder str = new StringBuilder();
-	    str.append(nodeStats.toString()+" ldapFile-"+LdapFile+" Status-"+status);
-	    return str.toString();
+	    return new StringBuilder().append(nodeStats.toString()+" ldapFile-"+LdapFile+" Status-"+status)
+		    .toString();
 	}
     }
 
