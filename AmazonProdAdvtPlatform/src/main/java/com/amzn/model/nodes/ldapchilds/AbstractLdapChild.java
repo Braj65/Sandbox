@@ -15,6 +15,8 @@ public abstract class AbstractLdapChild implements INode{
     protected List<INode> children;
     protected String parentCategory;
     protected INode observer;
+    //The reason for removing loadlea could be keep this Ldap class focus on two things-
+    //It should carry its own object fields and its chidren list and thats it
     protected LoadLeafChildren loadLeafs;
     
     public AbstractLdapChild(String ldapName, Boolean toBeScrapped){
@@ -31,6 +33,7 @@ public abstract class AbstractLdapChild implements INode{
 	// TODO Auto-generated method stub
     }
     
+    //loadLeafs is used heavily in three methods. Maybe move method is required for it
     public PropertiesConfiguration getLeafNodeProperties(){
 	return this.loadLeafs.getLeafNodeProperties();
     }

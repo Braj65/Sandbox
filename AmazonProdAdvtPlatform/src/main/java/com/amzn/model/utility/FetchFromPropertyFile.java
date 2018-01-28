@@ -60,6 +60,10 @@ public class FetchFromPropertyFile {
 			.build();
     }
     
+    //If we can abstract it to a parent class. SInce this method is almost same in LoadLeafChidren.
+    //Pass an object of the respective class(LDap or child) and delegate the creation back to the object
+    //Since we will be passing the object reference in INode the object will know which method to call
+    //to create the object and return
     public void createLdapObjectsFromLdapFileLoadToMap(List<INode> childNodes, String ldapFileName){
 	File ldpapPath=new File(Property.getFilePathFromLdap(ldapFileName));
 	String ldapKey="";

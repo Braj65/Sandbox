@@ -67,11 +67,7 @@ public class LoadLeafChildren {
     
     public void setLeafNodeProperties(PropertiesConfiguration prevPropertiesConfig){
 	this.childNodeProperties=prevPropertiesConfig;
-    }
-    
-    
-    
-    
+    }    
     
     /*public LeafChildProperties getLeafPropConfig(String fullLdapName){
 	if(leafPropertiesFile!=null && leafPropertiesFile.getLeafFile().equals(getLdapFile(fullLdapName)))

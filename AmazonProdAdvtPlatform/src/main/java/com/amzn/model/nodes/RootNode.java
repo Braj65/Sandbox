@@ -11,24 +11,24 @@ import com.amzn.model.nodes.nodeEntity.INodeStats;
 import com.amzn.model.utility.FetchFromPropertyFile;
 
 public class RootNode extends AbstractNode{
-
-    private FetchFromPropertyFile fetch=null;
     
     public RootNode(){
 	childNodes=new ArrayList<INode>();
 	fetch=new FetchFromPropertyFile();
-	currentLdapChild=fetch.loadOneHighestCat();
+	currentRootCategory=fetch.loadOneHighestCat();
     }
-
+    //Here we need to do the same we have done in Ldapchild. Instead of loading a highest category and its
+    //parameters to a variable. We need to structure this class/AbstractLdapNodestats to carry the parameters
+    //of the highestRootIds keys as object fields and get populated int he constructor
     public void getOneHigestCategory() {
-	currentLdapChild=fetch.loadOneHighestCat();
-	System.out.println(currentLdapChild.toString());
+	currentRootCategory=fetch.loadOneHighestCat();
+	System.out.println(currentRootCategory.toString());
 	/*root.status="Covered";
 	fetch.markAsCovered(root);*/
     }
-    
+    //Move method since it uses currentLdapchild more 
     public void loadChildren(){
-	fetch.createLdapObjectsFromLdapFileLoadToMap(childNodes, currentLdapChild.getLdapFile());
+	fetch.createLdapObjectsFromLdapFileLoadToMap(childNodes, currentRootCategory.getLdapFile());
     }
     
     @Override
@@ -61,7 +61,7 @@ public class RootNode extends AbstractNode{
     }
     
     public String toString(){
-	return currentLdapChild.toString();
+	return currentRootCategory.toString();
     }
     @Override
     public void notifyObserver(INodeStats nodeStats) {
