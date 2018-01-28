@@ -70,9 +70,11 @@ public class FetchFromPropertyFile {
 	    Iterator<String> iter=nodeProperties.getKeys();
 	    while(iter.hasNext()){
 		ldapKey=iter.next();
-		INode child=new LdapChild(ldapKey, nodeProperties.getBoolean(ldapKey));
-		if(nodeProperties.getBoolean(ldapKey))
+		if(nodeProperties.getBoolean(ldapKey)){
+		    INode child=new LdapChild(ldapKey, nodeProperties.getBoolean(ldapKey));
 		    childNodes.add(child);
+		}
+		    
 	    }
 	} catch (ConfigurationException e) {
 	    e.printStackTrace();
