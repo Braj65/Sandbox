@@ -5,15 +5,16 @@ import java.util.List;
 
 import com.amzn.model.constants.Property;
 import com.amzn.model.nodes.nodeEntity.INodeStats;
+import com.amzn.model.nodes.nodeEntity.ldapNodeEntity.AbstractParentNodeStats;
 import com.amzn.model.utility.LoadHighRoots;
 
 public class RootNode implements INode{
     
-    private List<INode> highRootChilds;
+    private List<AbstractParentNodeStats> highRootChilds;
     private LoadHighRoots highRootLoader;
     
     public RootNode(){
-	highRootChilds=new ArrayList<INode>();
+	highRootChilds=new ArrayList<AbstractParentNodeStats>();
 	highRootLoader=new LoadHighRoots();
     }
     
