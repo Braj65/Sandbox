@@ -40,6 +40,12 @@ public class LoadLeafChildren implements ILoadChidrenFromProp{
 		    .contains(fullLdapName.substring(0, fullLdapName.indexOf(".")));
     }
     
+    //Netx improvement. Create all childNode in first visit. Then in subsequent visits based on
+    //the dlap name, based on some part of ldap name, all childnodes created earlier will be
+    //transfered from that repo to current list of childnodes of the ldap object
+    //So the childnodes created in the first time needs to be created and categorized in a manner such
+    //that all child which may belong too same ldap parent are in one bin
+    //After visitng the last ldap object we may discard the bin.
     public void createChildObjectsFromChildFile(List<INode> childNodes, String fullLdapName){
 	Iterator<String> iter=childNodeProperties.getKeys();
 	String key;

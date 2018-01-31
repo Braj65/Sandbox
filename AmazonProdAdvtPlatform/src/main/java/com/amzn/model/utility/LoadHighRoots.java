@@ -15,6 +15,9 @@ import com.amzn.model.nodes.nodeEntity.ldapNodeEntity.AbstractParentNodeStats;
 
 public class LoadHighRoots {
     private File rootFile=null;
+    //find a way to share the same Properties config between all the objects of same child level
+    //If the child has different file to laod properties config from then only load the other file
+    //else reuse the existing config object. Same what we have done in loading leafChildren class
     private PropertiesConfiguration propConfigs;
     
     public LoadHighRoots(){
