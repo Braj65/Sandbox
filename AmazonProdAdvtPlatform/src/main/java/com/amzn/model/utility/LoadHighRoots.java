@@ -16,6 +16,11 @@ import com.amzn.model.nodes.nodeEntity.ldapNodeEntity.AbstractParentNodeStats;
 public class LoadHighRoots {
     private File rootFile=null;
     private PropertiesConfiguration propConfigs;
+    
+    public LoadHighRoots(){
+	propConfigs=new PropertiesConfiguration();
+    }
+    
     public void createChildObjectsFromChildFile(List<INode> childNodes, String propFileName){
 	rootFile=new File(propFileName);
 	try {

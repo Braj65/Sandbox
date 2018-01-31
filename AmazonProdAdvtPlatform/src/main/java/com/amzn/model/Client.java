@@ -1,11 +1,11 @@
 package com.amzn.model;
 
-import com.amzn.model.nodes.highestRootNodes.HighRootNode;
+import com.amzn.model.nodes.RootNode;
 
 public class Client {
     
     public static void main(String[] args) {
-	HighRootNode node=new HighRootNode();
+	RootNode node=new RootNode();
 	node.loadChildren();
 	node.interpretChild();	
     }

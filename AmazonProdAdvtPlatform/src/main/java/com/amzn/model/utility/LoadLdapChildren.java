@@ -27,6 +27,10 @@ public class LoadLdapChildren implements ILoadChidrenFromProp{
     private PropertiesConfigurationLayout layout=null;
     private File rootFile=null;
     
+    public LoadLdapChildren(){
+	nodeProperties=new PropertiesConfiguration();
+    }
+    
 /*    public AbstractParentNodeStats loadOneHighestCat(){
 	String category="";
 	try{
