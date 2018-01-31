@@ -1,24 +1,25 @@
-package com.amzn.model.nodes;
+package com.amzn.model.nodes.highestRootNodes;
 
 import java.util.List;
 import java.util.Map;
 
-import com.amzn.model.nodes.nodeEntity.INodeStats;
+import com.amzn.model.nodes.INode;
 import com.amzn.model.nodes.nodeEntity.ldapNodeEntity.AbstractLdapNodeStats;
-import com.amzn.model.utility.FetchFromPropertyFile;
+import com.amzn.model.utility.LoadLdapChildren;
 
-public abstract class AbstractNode implements INode{
+public abstract class AbstractHighRootNode implements INode{
     
     protected List<INode> childNodes;
     //It shouldn't be of AbstractLdapNodeStats. Rather of RootNode type. Maybe change the 
     //AbstractLdapNodeStats class name
     protected AbstractLdapNodeStats currentRootCategory;
-    protected FetchFromPropertyFile fetch;
+    protected LoadLdapChildren fetch;
+    protected INode observer;
     
     
     @Override
     public void register(INode observer) {
-	// TODO Auto-generated method stub
+	this.observer=observer;
 	
     }
     @Override

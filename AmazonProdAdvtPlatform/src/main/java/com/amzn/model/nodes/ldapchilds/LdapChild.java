@@ -17,10 +17,11 @@ public class LdapChild extends AbstractLdapChild{
 
     @Override
     public void interpretChild() {
-	for(INode child:children){
-	    child.register(this);
-	    child.loadChildren();
-	    child.interpretChild();
+	for(int i=0;i<children.size();i++){
+	    children.get(i).register(this);
+	    children.get(i).loadChildren();
+	    children.get(i).interpretChild();
+	    children.set(i, null);
 	}	
     }
 

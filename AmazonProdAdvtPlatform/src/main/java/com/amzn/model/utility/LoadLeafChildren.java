@@ -12,7 +12,7 @@ import com.amzn.model.constants.Property;
 import com.amzn.model.nodes.INode;
 import com.amzn.model.nodes.childnodes.ChildNode;
 
-public class LoadLeafChildren {
+public class LoadLeafChildren implements ILoadChidrenFromProp{
     
     private PropertiesConfiguration childNodeProperties=null;
     
@@ -27,7 +27,7 @@ public class LoadLeafChildren {
 	} catch (ConfigurationException e) {
 	    e.printStackTrace();
 	}
-	iterateAndLoadLeafNodes(childNodes, fullLdapName);
+	createChildObjectsFromChildFile(childNodes, fullLdapName);
     }
     
     public boolean ifLoadedChildNodesDifferentPromPreviousLoad(String fullLdapName){
@@ -40,7 +40,7 @@ public class LoadLeafChildren {
 		    .contains(fullLdapName.substring(0, fullLdapName.indexOf(".")));
     }
     
-    public void iterateAndLoadLeafNodes(List<INode> childNodes, String fullLdapName){
+    public void createChildObjectsFromChildFile(List<INode> childNodes, String fullLdapName){
 	Iterator<String> iter=childNodeProperties.getKeys();
 	String key;
 	while(iter.hasNext()){

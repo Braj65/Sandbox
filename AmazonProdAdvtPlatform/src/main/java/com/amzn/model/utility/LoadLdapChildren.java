@@ -21,7 +21,7 @@ import com.amzn.model.nodes.nodeEntity.INodeStats;
 import com.amzn.model.nodes.nodeEntity.NodeStats;
 import com.amzn.model.nodes.nodeEntity.ldapNodeEntity.AbstractLdapNodeStats;
 
-public class FetchFromPropertyFile {
+public class LoadLdapChildren implements ILoadChidrenFromProp{
     private static final String NODE_COVERED="Covered";
     private PropertiesConfiguration nodeProperties=null;
     private PropertiesConfigurationLayout layout=null;
@@ -64,7 +64,7 @@ public class FetchFromPropertyFile {
     //Pass an object of the respective class(LDap or child) and delegate the creation back to the object
     //Since we will be passing the object reference in INode the object will know which method to call
     //to create the object and return
-    public void createLdapObjectsFromLdapFileLoadToMap(List<INode> childNodes, String ldapFileName){
+    public void createChildObjectsFromChildFile(List<INode> childNodes, String ldapFileName){
 	File ldpapPath=new File(Property.getFilePathFromLdap(ldapFileName));
 	String ldapKey="";
 	

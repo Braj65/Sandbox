@@ -26,6 +26,6 @@ public class ChildNode extends AbstractChildNode{
 
     @Override
     public void register(INode observer) {
-	this.observer=observer.getObserver();
+	this.observer=observer;
     }
 }
