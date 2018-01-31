@@ -10,17 +10,17 @@ import com.amzn.model.utility.LoadHighRoots;
 
 public class RootNode implements INode{
     
-    private List<AbstractParentNodeStats> highRootChilds;
+    private List<INode> highRootChilds;
     private LoadHighRoots highRootLoader;
     
     public RootNode(){
-	highRootChilds=new ArrayList<AbstractParentNodeStats>();
+	highRootChilds=new ArrayList<INode>();
 	highRootLoader=new LoadHighRoots();
     }
     
     @Override
     public void loadChildren(){
-	highRootLoader.loadHighRootLevelChildren(highRootChilds, Property.Value.ROOT_CATEGORIES.getString());
+	highRootLoader.createChildObjectsFromChildFile(highRootChilds, Property.Value.ROOT_CATEGORIES.getString());
     }
 
     @Override

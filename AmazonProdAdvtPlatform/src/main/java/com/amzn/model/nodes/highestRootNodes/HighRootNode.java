@@ -9,13 +9,15 @@ import org.apache.commons.configuration.PropertiesConfiguration;
 import com.amzn.model.nodes.INode;
 import com.amzn.model.nodes.ldapchilds.AbstractLdapChild;
 import com.amzn.model.nodes.nodeEntity.INodeStats;
+import com.amzn.model.nodes.nodeEntity.ldapNodeEntity.AbstractParentNodeStats;
 import com.amzn.model.utility.LoadLdapChildren;
 
 public class HighRootNode extends AbstractHighRootNode{
     
-    public HighRootNode(){
+    public HighRootNode(AbstractParentNodeStats rootNodeStats){
 	childNodes=new ArrayList<INode>();
 	fetch=new LoadLdapChildren();
+	currentRootCategory=rootNodeStats;
 //	currentRootCategory=fetch.loadOneHighestCat();
     }
     //Here we need to do the same we have done in Ldapchild. Instead of loading a highest category and its
