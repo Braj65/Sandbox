@@ -18,10 +18,4 @@ public abstract class AbstractChildNode implements INode{
     public void loadChildren() {
 	
     }
-    
-    @Override
-    public INode getObserver() {
-	// TODO Auto-generated method stub
-	return null;
-    }
 }

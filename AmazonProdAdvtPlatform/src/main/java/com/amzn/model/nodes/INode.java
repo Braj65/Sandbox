@@ -7,6 +7,5 @@ public interface INode {
     void interpretChild();
     void loadChildren();
     void register(INode observer);
-    INode getObserver();
     void notifyObserver(INodeStats nodeStats);
 }

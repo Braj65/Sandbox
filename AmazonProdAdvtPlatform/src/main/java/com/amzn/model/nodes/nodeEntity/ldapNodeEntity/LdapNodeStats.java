@@ -1,6 +1,6 @@
 package com.amzn.model.nodes.nodeEntity.ldapNodeEntity;
 
-public class LdapNodeStats extends AbstractLdapNodeStats{
+public class LdapNodeStats extends AbstractParentNodeStats{
 
     public LdapNodeStats(Builder builder) {
 	super();

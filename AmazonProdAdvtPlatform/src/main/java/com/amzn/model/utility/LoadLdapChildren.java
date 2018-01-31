@@ -19,7 +19,7 @@ import com.amzn.model.nodes.ldapchilds.LdapChild;
 import com.amzn.model.nodes.nodeEntity.AbstractNodeStats;
 import com.amzn.model.nodes.nodeEntity.INodeStats;
 import com.amzn.model.nodes.nodeEntity.NodeStats;
-import com.amzn.model.nodes.nodeEntity.ldapNodeEntity.AbstractLdapNodeStats;
+import com.amzn.model.nodes.nodeEntity.ldapNodeEntity.AbstractParentNodeStats;
 
 public class LoadLdapChildren implements ILoadChidrenFromProp{
     private static final String NODE_COVERED="Covered";
@@ -27,7 +27,7 @@ public class LoadLdapChildren implements ILoadChidrenFromProp{
     private PropertiesConfigurationLayout layout=null;
     private File rootFile=null;
     
-    public AbstractLdapNodeStats loadOneHighestCat(){
+    public AbstractParentNodeStats loadOneHighestCat(){
 	String category="";
 	try{
 	    rootFile=new File(Property.Value.ROOT_CATEGORIES.getString());
@@ -37,10 +37,10 @@ public class LoadLdapChildren implements ILoadChidrenFromProp{
 	}catch(Exception e){
 	    e.printStackTrace();
 	}
-	return AbstractLdapNodeStats.getNullLdapNode();
+	return AbstractParentNodeStats.getNullLdapNode();
     }
     
-    public AbstractLdapNodeStats rootNodeParameters(){
+    public AbstractParentNodeStats rootNodeParameters(){
 	String rootNode=null;
 	Iterator<String> iter=nodeProperties.getKeys();
 	while(iter.hasNext()){
@@ -51,9 +51,9 @@ public class LoadLdapChildren implements ILoadChidrenFromProp{
 		break;		
 	}
 	if(nodeProperties.getList(rootNode).get(2).equals(NODE_COVERED))
-	    return AbstractLdapNodeStats.getNullLdapNode();
+	    return AbstractParentNodeStats.getNullLdapNode();
 	else
-	    return new AbstractLdapNodeStats.Builder()
+	    return new AbstractParentNodeStats.Builder()
 			.setNodeStats(createNewNodeStats(nodeProperties.getList(rootNode), rootNode))
 			.setLdapFile((String)nodeProperties.getList(rootNode).get(1))
 			.setStatus((String)nodeProperties.getList(rootNode).get(2))
@@ -85,7 +85,7 @@ public class LoadLdapChildren implements ILoadChidrenFromProp{
 	}
     }
     
-    public void markAsCovered(AbstractLdapNodeStats overrideNode){
+    public void markAsCovered(AbstractParentNodeStats overrideNode){
 	try {
 	    FileWriter fw=new FileWriter(Property.Value.ROOT_CATEGORIES.getString());
 	    layout=nodeProperties.getLayout();

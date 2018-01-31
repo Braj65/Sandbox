@@ -2,13 +2,13 @@ package com.amzn.model.nodes.nodeEntity.ldapNodeEntity;
 
 import com.amzn.model.nodes.nodeEntity.INodeStats;
 
-public abstract class AbstractLdapNodeStats {
+public abstract class AbstractParentNodeStats {
     
     protected INodeStats nodeStats;
     protected String LdapFile, status;
     
-    public static AbstractLdapNodeStats getNullLdapNode(){
-	return new AbstractLdapNodeStats.LdapNullNode();
+    public static AbstractParentNodeStats getNullLdapNode(){
+	return new AbstractParentNodeStats.LdapNullNode();
     }
     
     public INodeStats getNodeStats() {
@@ -42,12 +42,12 @@ public abstract class AbstractLdapNodeStats {
 	    return this;
 	}
 	
-	public AbstractLdapNodeStats build(){
+	public AbstractParentNodeStats build(){
 	    return new LdapNodeStats(this);
 	}
     }
     
-    public static class LdapNullNode extends AbstractLdapNodeStats{
+    public static class LdapNullNode extends AbstractParentNodeStats{
 	public String toString(){
 	    return new StringBuilder().append(nodeStats.toString()+" ldapFile-"+LdapFile+" Status-"+status)
 		    .toString();

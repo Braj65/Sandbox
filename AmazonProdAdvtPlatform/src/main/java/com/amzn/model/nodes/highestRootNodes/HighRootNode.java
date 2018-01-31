@@ -16,7 +16,7 @@ public class HighRootNode extends AbstractHighRootNode{
     public HighRootNode(){
 	childNodes=new ArrayList<INode>();
 	fetch=new LoadLdapChildren();
-	currentRootCategory=fetch.loadOneHighestCat();
+//	currentRootCategory=fetch.loadOneHighestCat();
     }
     //Here we need to do the same we have done in Ldapchild. Instead of loading a highest category and its
     //parameters to a variable. We need to structure this class/AbstractLdapNodestats to carry the parameters

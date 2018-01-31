@@ -40,12 +40,6 @@ public class RootNode implements INode{
     }
 
     @Override
-    public INode getObserver() {
-	// TODO Auto-generated method stub
-	return null;
-    }
-
-    @Override
     public void notifyObserver(INodeStats nodeStats) {
 	System.out.println(nodeStats.toString());	
     }
