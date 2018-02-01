@@ -14,9 +14,9 @@ public class RootNode implements INode{
     private List<INode> highRootChilds;
     private ILoadChildrenFromProp highRootLoader;
     
-    public RootNode(){
+    public RootNode(String fileName){
 	highRootChilds=new ArrayList<INode>();
-	highRootLoader=LoaderFactory.getPropLoader(Property.Value.ROOT_CATEGORIES.getString());
+	highRootLoader=LoaderFactory.getPropLoader(fileName);
     }
     
     @Override    

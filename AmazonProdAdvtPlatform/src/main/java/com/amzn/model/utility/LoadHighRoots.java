@@ -26,7 +26,7 @@ public class LoadHighRoots implements ILoadChildrenFromProp {
     private PropertiesConfiguration propConfigs;
 
     public LoadHighRoots(String propFileName) {
-	rootFile = new File(Property.Value.ROOT_CATEGORIES.toString());
+	rootFile = new File(Property.Value.ROOT_CATEGORIES.getString());
 	try {
 	    propConfigs = new PropertiesConfiguration(rootFile);
 	    LoaderFactory.registerPropLoader(propFileName, this);

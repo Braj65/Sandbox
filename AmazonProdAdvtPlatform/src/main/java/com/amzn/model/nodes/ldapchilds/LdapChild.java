@@ -8,7 +8,7 @@ public class LdapChild extends AbstractLdapChild{
     
     public LdapChild(String ldapName, Boolean toBeCrawled) {
 	super(ldapName, toBeCrawled);
-	loadLeafs=LoaderFactory.getPropLoader(ldapName);	
+	loadLeafs=LoaderFactory.getPropLoader(ldapName.substring(0, ldapName.indexOf("."))+".properties");	
     }
     
     @Override
