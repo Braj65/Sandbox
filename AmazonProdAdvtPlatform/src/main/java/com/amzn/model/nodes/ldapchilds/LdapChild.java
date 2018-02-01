@@ -2,17 +2,19 @@ package com.amzn.model.nodes.ldapchilds;
 
 import com.amzn.model.nodes.INode;
 import com.amzn.model.utility.LoadLeafChildren;
+import com.amzn.model.utility.loaderFactory.LoaderFactory;
 
 public class LdapChild extends AbstractLdapChild{
     
     public LdapChild(String ldapName, Boolean toBeCrawled) {
 	super(ldapName, toBeCrawled);
-	loadLeafs=new LoadLeafChildren();	
+	loadLeafs=LoaderFactory.getPropLoader(ldapName);	
     }
     
     @Override
     public void loadChildren() {
-	loadLeafs.loadLeafNodesFromLdap(children, this.parentCategory);
+	LoadLeafChildren loadLeafss=(LoadLeafChildren)loadLeafs;
+	loadLeafss.preCreateChildObjects(children, loadLeafs.getPropConfigObj(), this.parentCategory);
     }
 
     @Override

@@ -11,13 +11,20 @@ import org.apache.commons.configuration.PropertiesConfiguration;
 import com.amzn.model.constants.Property;
 import com.amzn.model.nodes.INode;
 import com.amzn.model.nodes.childnodes.ChildNode;
+import com.amzn.model.utility.loaderFactory.LoaderFactory;
 
 public class LoadLeafChildren implements ILoadChildrenFromProp{
     
     private PropertiesConfiguration childNodeProperties=null;
-    
-    public LoadLeafChildren(){
-	childNodeProperties=new PropertiesConfiguration();
+    private String fullLdapName;
+    public LoadLeafChildren(String propFileName){
+	try {
+	    childNodeProperties=new PropertiesConfiguration(getChildFile(propFileName));
+	    LoaderFactory.registerPropLoader(propFileName, this);
+	} catch (ConfigurationException e) {
+	    // TODO Auto-generated catch block
+	    e.printStackTrace();
+	}
     }
     
     public void loadLeafNodesFromLdap(List<INode> childNodes,String fullLdapName){
@@ -58,6 +65,24 @@ public class LoadLeafChildren implements ILoadChildrenFromProp{
 	}
     }
     
+    public void preCreateChildObjects(List<INode> childNodes, PropertiesConfiguration propConfig,
+	    String fullLdapName){
+	this.fullLdapName=fullLdapName;
+	createChildObjectsFromChildFilex(childNodes, propConfig);
+    }
+    
+    public void createChildObjectsFromChildFilex(List<INode> childNodes, PropertiesConfiguration propConfig){
+	Iterator<String> iter=propConfig.getKeys();
+	String key;
+	while(iter.hasNext()){
+	    key=iter.next();
+	    if(key.contains(fullLdapName) && keyIsFirstBornOf(key, fullLdapName)){
+		INode leafNode=new ChildNode(key, childNodeProperties.getLong(key));
+		childNodes.add(leafNode);
+	    }
+	}
+    }
+    
     public boolean keyIsFirstBornOf(String child, String parentLdap){
 	return child.split("\\.").length-parentLdap.split("\\.").length==1;
     }
@@ -67,13 +92,17 @@ public class LoadLeafChildren implements ILoadChildrenFromProp{
 		fullLdapName.substring(0, fullLdapName.indexOf("."))+".properties");
     }
     
-    public PropertiesConfiguration getLeafNodeProperties(){
-	return childNodeProperties;
+    public File getChildFile(String childFileName){
+	return new File(Property.getChildNodePath()+childFileName);
     }
+    
+    public PropertiesConfiguration getPropConfigObj(){
+	return childNodeProperties;
+    }    
     
     public void setLeafNodeProperties(PropertiesConfiguration prevPropertiesConfig){
 	this.childNodeProperties=prevPropertiesConfig;
-    }    
+    }
     
     /*public LeafChildProperties getLeafPropConfig(String fullLdapName){
 	if(leafPropertiesFile!=null && leafPropertiesFile.getLeafFile().equals(getLdapFile(fullLdapName)))

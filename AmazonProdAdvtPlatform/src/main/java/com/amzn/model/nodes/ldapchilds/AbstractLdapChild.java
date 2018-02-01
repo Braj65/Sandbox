@@ -8,6 +8,7 @@ import org.apache.commons.configuration.PropertiesConfiguration;
 
 import com.amzn.model.nodes.INode;
 import com.amzn.model.nodes.nodeEntity.INodeStats;
+import com.amzn.model.utility.ILoadChildrenFromProp;
 import com.amzn.model.utility.LoadLeafChildren;
 
 public abstract class AbstractLdapChild implements INode{
@@ -17,7 +18,7 @@ public abstract class AbstractLdapChild implements INode{
     protected INode observer;
     //The reason for removing loadlea could be keep this Ldap class focus on two things-
     //It should carry its own object fields and its chidren list and thats it
-    protected LoadLeafChildren loadLeafs;
+    protected ILoadChildrenFromProp loadLeafs;
     
     public AbstractLdapChild(String ldapName, Boolean toBeScrapped){
 	children=new ArrayList<INode>();
@@ -35,7 +36,7 @@ public abstract class AbstractLdapChild implements INode{
     
     //loadLeafs is used heavily in three methods. Maybe move method is required for it
     public PropertiesConfiguration getLeafNodeProperties(){
-	return this.loadLeafs.getLeafNodeProperties();
+	return this.loadLeafs.getPropConfigObj();
     }
     
     public void setLeafNodeProperties(PropertiesConfiguration prevPropertiesConfig){

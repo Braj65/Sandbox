@@ -11,17 +11,19 @@ import com.amzn.model.nodes.ldapchilds.AbstractLdapChild;
 import com.amzn.model.nodes.nodeEntity.INodeStats;
 import com.amzn.model.nodes.nodeEntity.ldapNodeEntity.AbstractParentNodeStats;
 import com.amzn.model.utility.LoadLdapChildren;
+import com.amzn.model.utility.loaderFactory.LoaderFactory;
 
 public class HighRootNode extends AbstractHighRootNode{
     
+    
     public HighRootNode(AbstractParentNodeStats rootNodeStats){
 	childNodes=new ArrayList<INode>();
-	fetch=new LoadLdapChildren();
+	ldapLoader=LoaderFactory.getPropLoader(rootNodeStats.getLdapFile());
 	currentRootCategory=rootNodeStats;
     }
 
     public void loadChildren(){
-	fetch.createChildObjectsFromChildFile(childNodes, currentRootCategory.getLdapFile());
+	ldapLoader.createChildObjectsFromChildFilex(childNodes, ldapLoader.getPropConfigObj());
     }
     
     @Override

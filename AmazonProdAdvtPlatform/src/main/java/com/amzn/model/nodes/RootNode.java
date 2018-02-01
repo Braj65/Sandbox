@@ -5,21 +5,23 @@ import java.util.List;
 
 import com.amzn.model.constants.Property;
 import com.amzn.model.nodes.nodeEntity.INodeStats;
+import com.amzn.model.utility.ILoadChildrenFromProp;
 import com.amzn.model.utility.LoadHighRoots;
+import com.amzn.model.utility.loaderFactory.LoaderFactory;
 
 public class RootNode implements INode{
     
     private List<INode> highRootChilds;
-    private LoadHighRoots highRootLoader;
+    private ILoadChildrenFromProp highRootLoader;
     
     public RootNode(){
 	highRootChilds=new ArrayList<INode>();
-	highRootLoader=new LoadHighRoots();
+	highRootLoader=LoaderFactory.getPropLoader(Property.Value.ROOT_CATEGORIES.getString());
     }
     
-    @Override
+    @Override    
     public void loadChildren(){
-	highRootLoader.createChildObjectsFromChildFile(highRootChilds, Property.Value.ROOT_CATEGORIES.getString());
+	highRootLoader.createChildObjectsFromChildFilex(highRootChilds, highRootLoader.getPropConfigObj());
     }
 
     @Override
@@ -42,9 +44,5 @@ public class RootNode implements INode{
     @Override
     public void notifyObserver(INodeStats nodeStats) {
 	System.out.println(nodeStats.toString());	
-    }
-    
-    
-    
-    
+    }    
 }
