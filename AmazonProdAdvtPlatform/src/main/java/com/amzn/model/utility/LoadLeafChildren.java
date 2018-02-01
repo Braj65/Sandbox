@@ -12,7 +12,7 @@ import com.amzn.model.constants.Property;
 import com.amzn.model.nodes.INode;
 import com.amzn.model.nodes.childnodes.ChildNode;
 
-public class LoadLeafChildren implements ILoadChidrenFromProp{
+public class LoadLeafChildren implements ILoadChildrenFromProp{
     
     private PropertiesConfiguration childNodeProperties=null;
     

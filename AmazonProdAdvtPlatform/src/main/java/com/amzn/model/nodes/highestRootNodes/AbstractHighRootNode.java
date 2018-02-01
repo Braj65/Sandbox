@@ -10,8 +10,6 @@ import com.amzn.model.utility.LoadLdapChildren;
 public abstract class AbstractHighRootNode implements INode{
     
     protected List<INode> childNodes;
-    //It shouldn't be of AbstractLdapNodeStats. Rather of RootNode type. Maybe change the 
-    //AbstractLdapNodeStats class name
     protected AbstractParentNodeStats currentRootCategory;
     protected LoadLdapChildren fetch;
     protected INode observer;

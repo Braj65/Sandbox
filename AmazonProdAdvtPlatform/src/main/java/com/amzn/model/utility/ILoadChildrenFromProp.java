@@ -4,6 +4,6 @@ import java.util.List;
 
 import com.amzn.model.nodes.INode;
 
-public interface ILoadChidrenFromProp {    
+public interface ILoadChildrenFromProp {    
     void createChildObjectsFromChildFile(List<INode> childNodes, String childFileName);
 }

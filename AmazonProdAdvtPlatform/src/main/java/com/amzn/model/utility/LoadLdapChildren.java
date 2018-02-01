@@ -21,8 +21,7 @@ import com.amzn.model.nodes.nodeEntity.INodeStats;
 import com.amzn.model.nodes.nodeEntity.NodeStats;
 import com.amzn.model.nodes.nodeEntity.ldapNodeEntity.AbstractParentNodeStats;
 
-public class LoadLdapChildren implements ILoadChidrenFromProp{
-    private static final String NODE_COVERED="Covered";
+public class LoadLdapChildren implements ILoadChildrenFromProp{
     private PropertiesConfiguration nodeProperties=null;
     private PropertiesConfigurationLayout layout=null;
     private File rootFile=null;
@@ -30,39 +29,6 @@ public class LoadLdapChildren implements ILoadChidrenFromProp{
     public LoadLdapChildren(){
 	nodeProperties=new PropertiesConfiguration();
     }
-    
-/*    public AbstractParentNodeStats loadOneHighestCat(){
-	String category="";
-	try{
-	    rootFile=new File(Property.Value.ROOT_CATEGORIES.getString());
-	    nodeProperties=new PropertiesConfiguration(rootFile); 
-	    return rootNodeParameters();
-		
-	}catch(Exception e){
-	    e.printStackTrace();
-	}
-	return AbstractParentNodeStats.getNullLdapNode();
-    }*/
-    
-/*    public AbstractParentNodeStats rootNodeParameters(){
-	String rootNode=null;
-	Iterator<String> iter=nodeProperties.getKeys();
-	while(iter.hasNext()){
-	    rootNode=iter.next();
-	    if(nodeProperties.getList(rootNode).get(2).equals(NODE_COVERED))
-		continue;
-	    else
-		break;		
-	}
-	if(nodeProperties.getList(rootNode).get(2).equals(NODE_COVERED))
-	    return AbstractParentNodeStats.getNullLdapNode();
-	else
-	    return new AbstractParentNodeStats.Builder()
-			.setNodeStats(createNewNodeStats(nodeProperties.getList(rootNode), rootNode))
-			.setLdapFile((String)nodeProperties.getList(rootNode).get(1))
-			.setStatus((String)nodeProperties.getList(rootNode).get(2))
-			.build();
-    }*/
     
     //If we can abstract it to a parent class. SInce this method is almost same in LoadLeafChidren.
     //Pass an object of the respective class(LDap or child) and delegate the creation back to the object

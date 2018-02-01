@@ -13,7 +13,7 @@ import com.amzn.model.nodes.nodeEntity.AbstractNodeStats;
 import com.amzn.model.nodes.nodeEntity.INodeStats;
 import com.amzn.model.nodes.nodeEntity.ldapNodeEntity.AbstractParentNodeStats;
 
-public class LoadHighRoots {
+public class LoadHighRoots implements ILoadChildrenFromProp{
     private File rootFile=null;
     //find a way to share the same Properties config between all the objects of same child level
     //If the child has different file to laod properties config from then only load the other file
