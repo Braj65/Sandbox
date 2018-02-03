@@ -37,12 +37,7 @@ public class LoadHighRoots implements ILoadChildrenFromProp {
     }
     
     @Override
-    public void createChildObjectsFromChildFile(List<INode> childNodes, String childFileName) {
-	// TODO Auto-generated method stub
-	
-    }
-
-    public void createChildObjectsFromChildFilex(List<INode> childNodes, PropertiesConfiguration prop) {
+    public void createChildObjectsFromChildFile(List<INode> childNodes, PropertiesConfiguration prop) {
 	Iterator<String> iter = propConfigs.getKeys();
 	String highRootNode;
 	while (iter.hasNext()) {

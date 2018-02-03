@@ -21,7 +21,7 @@ public class RootNode implements INode{
     
     @Override    
     public void loadChildren(){
-	highRootLoader.createChildObjectsFromChildFilex(highRootChilds, highRootLoader.getPropConfigObj());
+	highRootLoader.createChildObjectsFromChildFile(highRootChilds, highRootLoader.getPropConfigObj());
     }
 
     @Override

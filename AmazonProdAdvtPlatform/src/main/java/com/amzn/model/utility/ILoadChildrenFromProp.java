@@ -7,8 +7,7 @@ import org.apache.commons.configuration.PropertiesConfiguration;
 import com.amzn.model.nodes.INode;
 
 public interface ILoadChildrenFromProp {    
-    void createChildObjectsFromChildFile(List<INode> childNodes, String childFileName);
-    void createChildObjectsFromChildFilex(List<INode> childNodes,PropertiesConfiguration propConfigObj);
+    void createChildObjectsFromChildFile(List<INode> childNodes,PropertiesConfiguration propConfigObj);
     PropertiesConfiguration getPropConfigObj();
     void setLeafNodeProperties(PropertiesConfiguration prevPropertiesConfig);
 }

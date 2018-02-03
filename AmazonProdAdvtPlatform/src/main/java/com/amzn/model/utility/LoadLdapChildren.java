@@ -37,9 +37,16 @@ public class LoadLdapChildren implements ILoadChildrenFromProp {
 	    e.printStackTrace();
 	}
     }
-
+    
+    // If we can abstract it to a parent class. SInce this method is almost same
+    // in LoadLeafChidren.
+    // Pass an object of the respective class(LDap or child) and delegate the
+    // creation back to the object
+    // Since we will be passing the object reference in INode the object will
+    // know which method to call
+    // to create the object and return
     @Override
-    public void createChildObjectsFromChildFilex(List<INode> childNodes, PropertiesConfiguration propConfigObj) {
+    public void createChildObjectsFromChildFile(List<INode> childNodes, PropertiesConfiguration propConfigObj) {
 	String ldapKey;
 	Iterator<String> iter = propConfigObj.getKeys();
 	while (iter.hasNext()) {
@@ -52,33 +59,6 @@ public class LoadLdapChildren implements ILoadChildrenFromProp {
 	}
     }
 
-    // If we can abstract it to a parent class. SInce this method is almost same
-    // in LoadLeafChidren.
-    // Pass an object of the respective class(LDap or child) and delegate the
-    // creation back to the object
-    // Since we will be passing the object reference in INode the object will
-    // know which method to call
-    // to create the object and return
-    public void createChildObjectsFromChildFile(List<INode> childNodes, String ldapFileName) {
-	File ldpapPath=new File(Property.getFilePathFromLdap(ldapFileName));
-	String ldapKey="";
-	
-	nodeProperties.clear();
-	try {
-	    nodeProperties.load(ldpapPath);
-	    Iterator<String> iter=nodeProperties.getKeys();
-	    while(iter.hasNext()){
-		ldapKey=iter.next();
-		if(nodeProperties.getBoolean(ldapKey)){
-		    INode child=new LdapChild(ldapKey, nodeProperties.getBoolean(ldapKey));
-		    childNodes.add(child);
-		}
-		    
-	    }
-	} catch (ConfigurationException e) {
-	    e.printStackTrace();
-	}    
-    }
 
     public void markAsCovered(AbstractParentNodeStats overrideNode) {
 	try {

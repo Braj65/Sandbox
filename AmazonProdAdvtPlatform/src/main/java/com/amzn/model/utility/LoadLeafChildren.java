@@ -27,7 +27,7 @@ public class LoadLeafChildren implements ILoadChildrenFromProp{
 	}
     }
     
-    public void loadLeafNodesFromLdap(List<INode> childNodes,String fullLdapName){
+/*    public void loadLeafNodesFromLdap(List<INode> childNodes,String fullLdapName){
 	try {
 	    if(ifLoadedChildNodesDifferentPromPreviousLoad(fullLdapName))
 		childNodeProperties.load(getLdapFile(fullLdapName));
@@ -35,7 +35,7 @@ public class LoadLeafChildren implements ILoadChildrenFromProp{
 	    e.printStackTrace();
 	}
 	createChildObjectsFromChildFile(childNodes, fullLdapName);
-    }
+    }*/
     
     public boolean ifLoadedChildNodesDifferentPromPreviousLoad(String fullLdapName){
 	return (childNodeProperties.isEmpty() || 
@@ -47,31 +47,19 @@ public class LoadLeafChildren implements ILoadChildrenFromProp{
 		    .contains(fullLdapName.substring(0, fullLdapName.indexOf(".")));
     }
     
+    public void preCreateChildObjects(List<INode> childNodes, PropertiesConfiguration propConfig,
+	    String fullLdapName){
+	this.fullLdapName=fullLdapName;
+	createChildObjectsFromChildFile(childNodes, propConfig);
+    }
+    
     //Netx improvement. Create all childNode in first visit. Then in subsequent visits based on
     //the dlap name, based on some part of ldap name, all childnodes created earlier will be
     //transfered from that repo to current list of childnodes of the ldap object
     //So the childnodes created in the first time needs to be created and categorized in a manner such
     //that all child which may belong too same ldap parent are in one bin
-    //After visitng the last ldap object we may discard the bin.
-    public void createChildObjectsFromChildFile(List<INode> childNodes, String fullLdapName){
-	Iterator<String> iter=childNodeProperties.getKeys();
-	String key;
-	while(iter.hasNext()){
-	    key=iter.next();
-	    if(key.contains(fullLdapName) && keyIsFirstBornOf(key, fullLdapName)){
-		INode leafNode=new ChildNode(key, childNodeProperties.getLong(key));
-		childNodes.add(leafNode);
-	    }
-	}
-    }
-    
-    public void preCreateChildObjects(List<INode> childNodes, PropertiesConfiguration propConfig,
-	    String fullLdapName){
-	this.fullLdapName=fullLdapName;
-	createChildObjectsFromChildFilex(childNodes, propConfig);
-    }
-    
-    public void createChildObjectsFromChildFilex(List<INode> childNodes, PropertiesConfiguration propConfig){
+    //After visitng the last ldap object we may discard the bin.    
+    public void createChildObjectsFromChildFile(List<INode> childNodes, PropertiesConfiguration propConfig){
 	Iterator<String> iter=propConfig.getKeys();
 	String key;
 	while(iter.hasNext()){
