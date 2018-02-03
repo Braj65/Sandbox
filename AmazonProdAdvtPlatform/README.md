@@ -1,1 +1,1 @@
-Going to fill in some time  Going through martin's content__Going to apply martin's content and lazy load today
+Going to apply martin's chapter Organizing data__Going to apply martin's content and lazy load today
