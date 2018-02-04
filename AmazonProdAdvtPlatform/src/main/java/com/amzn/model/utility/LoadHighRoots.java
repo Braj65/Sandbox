@@ -37,7 +37,7 @@ public class LoadHighRoots implements ILoadChildrenFromProp {
     }
     
     @Override
-    public void createChildObjectsFromChildFile(List<INode> childNodes, PropertiesConfiguration prop) {
+    public void createChildObjectsFromChildFile(List<INode> childNodes) {
 	Iterator<String> iter = propConfigs.getKeys();
 	String highRootNode;
 	while (iter.hasNext()) {
@@ -53,10 +53,6 @@ public class LoadHighRoots implements ILoadChildrenFromProp {
 	return new AbstractNodeStats.Builder().setNodeName(category)
 		.setNodeId(Long.parseLong((String) categories.get(0))).build();
 
-    }
-
-    public PropertiesConfiguration getPropConfigObj() {
-	return propConfigs;
     }
 
     @Override

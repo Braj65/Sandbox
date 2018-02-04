@@ -47,10 +47,9 @@ public class LoadLeafChildren implements ILoadChildrenFromProp{
 		    .contains(fullLdapName.substring(0, fullLdapName.indexOf(".")));
     }*/
     
-    public void preCreateChildObjects(List<INode> childNodes, PropertiesConfiguration propConfig,
-	    String fullLdapName){
+    public void preCreateChildObjects(List<INode> childNodes, String fullLdapName){
 	this.fullLdapName=fullLdapName;
-	createChildObjectsFromChildFile(childNodes, propConfig);
+	createChildObjectsFromChildFile(childNodes);
     }
     
     //Netx improvement. Create all childNode in first visit. Then in subsequent visits based on
@@ -59,8 +58,8 @@ public class LoadLeafChildren implements ILoadChildrenFromProp{
     //So the childnodes created in the first time needs to be created and categorized in a manner such
     //that all child which may belong too same ldap parent are in one bin
     //After visitng the last ldap object we may discard the bin.    
-    public void createChildObjectsFromChildFile(List<INode> childNodes, PropertiesConfiguration propConfig){
-	Iterator<String> iter=propConfig.getKeys();
+    public void createChildObjectsFromChildFile(List<INode> childNodes){
+	Iterator<String> iter=childNodeProperties.getKeys();
 	String key;
 	while(iter.hasNext()){
 	    key=iter.next();
@@ -83,11 +82,7 @@ public class LoadLeafChildren implements ILoadChildrenFromProp{
     public File getChildFile(String childFileName){
 	return new File(Property.getChildNodePath()+childFileName);
     }
-    
-    public PropertiesConfiguration getPropConfigObj(){
-	return childNodeProperties;
-    }    
-    
+        
     public void setLeafNodeProperties(PropertiesConfiguration prevPropertiesConfig){
 	this.childNodeProperties=prevPropertiesConfig;
     }

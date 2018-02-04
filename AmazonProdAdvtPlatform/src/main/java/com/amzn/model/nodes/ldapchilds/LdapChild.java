@@ -14,7 +14,7 @@ public class LdapChild extends AbstractLdapChild{
     @Override
     public void loadChildren() {
 	LoadLeafChildren loadLeafss=(LoadLeafChildren)loadLeafs;
-	loadLeafss.preCreateChildObjects(children, loadLeafs.getPropConfigObj(), this.parentCategory);
+	loadLeafss.preCreateChildObjects(children, this.parentCategory);
     }
 
     @Override

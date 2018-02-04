@@ -22,7 +22,7 @@ public class HighRootNode extends AbstractHighRootNode {
     }
 
     public void loadChildren() {
-	ldapLoader.createChildObjectsFromChildFile(childNodes, ldapLoader.getPropConfigObj());
+	ldapLoader.createChildObjectsFromChildFile(childNodes);
     }
 
     public void interpretChild() {

@@ -46,9 +46,9 @@ public class LoadLdapChildren implements ILoadChildrenFromProp {
     // know which method to call
     // to create the object and return
     @Override
-    public void createChildObjectsFromChildFile(List<INode> childNodes, PropertiesConfiguration propConfigObj) {
+    public void createChildObjectsFromChildFile(List<INode> childNodes) {
 	String ldapKey;
-	Iterator<String> iter = propConfigObj.getKeys();
+	Iterator<String> iter = nodeProperties.getKeys();
 	while (iter.hasNext()) {
 	    ldapKey = iter.next();
 	    if (nodeProperties.getBoolean(ldapKey)) {
@@ -79,10 +79,6 @@ public class LoadLdapChildren implements ILoadChildrenFromProp {
     public INodeStats createNewNodeStats(List<Object> categories, String category) {
 	return new AbstractNodeStats.Builder().setNodeName(category)
 		.setNodeId(Long.parseLong((String) categories.get(0))).build();
-    }
-
-    public PropertiesConfiguration getPropConfigObj() {
-	return nodeProperties;
     }
 
     @Override
