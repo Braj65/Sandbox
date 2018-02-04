@@ -17,8 +17,12 @@ public class LoaderRegister {
 	if(pool.containsKey(str))
 	    return pool.get(str);
 	else{
-	    System.out.println("Prop loader for the particular file name doesn't exists");
+	    System.out.println("Prop loader for the particular file name "+str+" doesn't exists");
 	    throw new RuntimeException("Prop loader Not present");
 	}
+    }
+    
+    public void clearPropLoader(String str){
+	pool.remove(str);
     }
 }

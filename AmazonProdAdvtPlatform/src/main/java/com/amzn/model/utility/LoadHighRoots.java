@@ -16,7 +16,7 @@ import com.amzn.model.nodes.nodeEntity.ldapNodeEntity.AbstractParentNodeStats;
 import com.amzn.model.utility.loaderFactory.LoaderFactory;
 
 public class LoadHighRoots implements ILoadChildrenFromProp {
-    private File rootFile = null;
+    private String rootFileName = null;
     // find a way to share the same Properties config between all the objects of
     // same child level
     // If the child has different file to laod properties config from then only
@@ -26,10 +26,11 @@ public class LoadHighRoots implements ILoadChildrenFromProp {
     private PropertiesConfiguration propConfigs;
 
     public LoadHighRoots(String propFileName) {
-	rootFile = new File(Property.Value.ROOT_CATEGORIES.getString());
+	rootFileName=propFileName;
+	File rootFile = new File(Property.Value.ROOT_CATEGORIES.getString());
 	try {
 	    propConfigs = new PropertiesConfiguration(rootFile);
-	    LoaderFactory.registerPropLoader(propFileName, this);
+	    LoaderFactory.registerPropLoader(rootFileName, this);
 	} catch (ConfigurationException e) {
 	    // TODO Auto-generated catch block
 	    e.printStackTrace();
@@ -46,6 +47,7 @@ public class LoadHighRoots implements ILoadChildrenFromProp {
 		    .setNodeStats(createNewNodeStats(propConfigs.getList(highRootNode), highRootNode))
 		    .setLdapFile((String) propConfigs.getList(highRootNode).get(1))
 		    .setStatus((String) propConfigs.getList(highRootNode).get(2)).build()));
+	    propConfigs.clearProperty(highRootNode);
 	}
     }
 
@@ -53,11 +55,5 @@ public class LoadHighRoots implements ILoadChildrenFromProp {
 	return new AbstractNodeStats.Builder().setNodeName(category)
 		.setNodeId(Long.parseLong((String) categories.get(0))).build();
 
-    }
-
-    @Override
-    public void setLeafNodeProperties(PropertiesConfiguration prevPropertiesConfig) {
-	// TODO Auto-generated method stub
-	
     }
 }

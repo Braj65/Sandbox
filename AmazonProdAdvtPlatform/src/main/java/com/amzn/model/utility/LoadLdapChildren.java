@@ -25,13 +25,14 @@ import com.amzn.model.utility.loaderFactory.LoaderFactory;
 public class LoadLdapChildren implements ILoadChildrenFromProp {
     private PropertiesConfiguration nodeProperties = null;
     private PropertiesConfigurationLayout layout = null;
-    private File rootFile = null;
+    private String rootFileName = null;
 
     public LoadLdapChildren(String propFileName) {
-	rootFile=new File(Property.getFilePathFromLdap(propFileName));
+	rootFileName=propFileName;
+	File rootFile=new File(Property.getFilePathFromLdap(rootFileName));
 	try {
 	    nodeProperties = new PropertiesConfiguration(rootFile);
-	    LoaderFactory.registerPropLoader(propFileName, this);
+	    LoaderFactory.registerPropLoader(rootFileName, this);
 	} catch (ConfigurationException e) {
 	    // TODO Auto-generated catch block
 	    e.printStackTrace();
@@ -55,7 +56,7 @@ public class LoadLdapChildren implements ILoadChildrenFromProp {
 		INode child = new LdapChild(ldapKey);
 		childNodes.add(child);
 	    }
-
+	    nodeProperties.clearProperty(ldapKey);
 	}
     }
 
@@ -69,7 +70,7 @@ public class LoadLdapChildren implements ILoadChildrenFromProp {
 			    + overrideNode.getStatus());
 	    nodeProperties.save(fw);
 	    File destFile = new File(Property.Value.WRITEROOT_CATEGORIES.getString());
-	    FileUtils.copyFile(rootFile, destFile);
+//	    FileUtils.copyFile(rootFile, destFile);
 	} catch (Exception e) {
 	    // TODO Auto-generated catch block
 	    e.printStackTrace();
@@ -80,10 +81,5 @@ public class LoadLdapChildren implements ILoadChildrenFromProp {
 	return new AbstractNodeStats.Builder().setNodeName(category)
 		.setNodeId(Long.parseLong((String) categories.get(0))).build();
     }
-
-    @Override
-    public void setLeafNodeProperties(PropertiesConfiguration prevPropertiesConfig) {
-	// TODO Auto-generated method stub
-	
-    }
+    
 }

@@ -8,5 +8,4 @@ import com.amzn.model.nodes.INode;
 
 public interface ILoadChildrenFromProp {    
     void createChildObjectsFromChildFile(List<INode> childNodes);
-    void setLeafNodeProperties(PropertiesConfiguration prevPropertiesConfig);
 }

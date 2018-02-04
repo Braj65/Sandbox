@@ -8,13 +8,13 @@ public class LdapChild extends AbstractLdapChild{
     
     public LdapChild(String ldapName) {
 	super(ldapName);
-	loadLeafs=LoaderFactory.getPropLoader(ldapName.substring(0, ldapName.indexOf("."))+".properties");	
+	loadLeafs=LoaderFactory.getPropLoader(ldapName.substring(0, ldapName.indexOf("."))+".properties");
     }
     
     @Override
     public void loadChildren() {
-	LoadLeafChildren loadLeafss=(LoadLeafChildren)loadLeafs;
-	loadLeafss.preCreateChildObjects(children, this.parentCategory);
+	LoadLeafChildren childLoadLeaf=(LoadLeafChildren)loadLeafs;
+	childLoadLeaf.preCreateChildObjects(children, this.parentCategory);
     }
 
     @Override

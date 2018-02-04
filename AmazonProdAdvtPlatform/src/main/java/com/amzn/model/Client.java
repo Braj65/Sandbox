@@ -24,5 +24,4 @@ public class Client {
 	node.loadChildren();
 	node.interpretChild();
     }
-
 }

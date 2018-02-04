@@ -15,5 +15,9 @@ public class LoaderFactory {
     public static void registerPropLoader(String str, ILoadChildrenFromProp propLoader){
 	register.register(str, propLoader);
     }
+    
+    public static void clearPropLoader(String str){
+	register.clearPropLoader(str);
+    }
 
 }

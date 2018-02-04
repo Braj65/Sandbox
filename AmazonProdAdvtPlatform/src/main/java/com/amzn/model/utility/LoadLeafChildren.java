@@ -66,6 +66,7 @@ public class LoadLeafChildren implements ILoadChildrenFromProp{
 	    if(key.contains(fullLdapName) && keyIsFirstBornOf(key, fullLdapName)){
 		INode leafNode=new ChildNode(key, childNodeProperties.getLong(key));
 		childNodes.add(leafNode);
+		childNodeProperties.clearProperty(key);
 	    }
 	}
     }
@@ -81,10 +82,6 @@ public class LoadLeafChildren implements ILoadChildrenFromProp{
     
     public File getChildFile(String childFileName){
 	return new File(Property.getChildNodePath()+childFileName);
-    }
-        
-    public void setLeafNodeProperties(PropertiesConfiguration prevPropertiesConfig){
-	this.childNodeProperties=prevPropertiesConfig;
     }
     
     /*public LeafChildProperties getLeafPropConfig(String fullLdapName){
