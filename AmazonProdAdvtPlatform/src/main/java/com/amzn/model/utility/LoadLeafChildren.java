@@ -37,7 +37,7 @@ public class LoadLeafChildren implements ILoadChildrenFromProp{
 	createChildObjectsFromChildFile(childNodes, fullLdapName);
     }*/
     
-    public boolean ifLoadedChildNodesDifferentPromPreviousLoad(String fullLdapName){
+    /*public boolean ifLoadedChildNodesDifferentPromPreviousLoad(String fullLdapName){
 	return (childNodeProperties.isEmpty() || 
 		    !ifReceivedFullLdapNameHasRootLdapSameAsInThePrevLoadedProp(fullLdapName));
     }
@@ -45,7 +45,7 @@ public class LoadLeafChildren implements ILoadChildrenFromProp{
     public boolean ifReceivedFullLdapNameHasRootLdapSameAsInThePrevLoadedProp(String fullLdapName){
 	return childNodeProperties.getFile().getName()
 		    .contains(fullLdapName.substring(0, fullLdapName.indexOf(".")));
-    }
+    }*/
     
     public void preCreateChildObjects(List<INode> childNodes, PropertiesConfiguration propConfig,
 	    String fullLdapName){

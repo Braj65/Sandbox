@@ -34,7 +34,7 @@ public class HighRootNode extends AbstractHighRootNode {
 	}
     }
 
-    public void interpretChildx() {
+/*    public void interpretChildx() {
 	PropertiesConfiguration tempLeafChildProp = null;
 	for (int i = 0; i < 1; i++) {
 	    tempLeafChildProp = processFirstLdapObjectAndNestedChildren(childNodes.get(i));
@@ -60,7 +60,7 @@ public class HighRootNode extends AbstractHighRootNode {
 	child.loadChildren();
 	child.interpretChild();
 	return ((AbstractLdapChild) child).getLeafNodeProperties();
-    }
+    }*/
 
     public String toString() {
 	return currentRootCategory.toString();

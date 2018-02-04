@@ -52,7 +52,7 @@ public class LoadLdapChildren implements ILoadChildrenFromProp {
 	while (iter.hasNext()) {
 	    ldapKey = iter.next();
 	    if (nodeProperties.getBoolean(ldapKey)) {
-		INode child = new LdapChild(ldapKey, nodeProperties.getBoolean(ldapKey));
+		INode child = new LdapChild(ldapKey);
 		childNodes.add(child);
 	    }
 

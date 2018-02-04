@@ -6,8 +6,8 @@ import com.amzn.model.utility.loaderFactory.LoaderFactory;
 
 public class LdapChild extends AbstractLdapChild{
     
-    public LdapChild(String ldapName, Boolean toBeCrawled) {
-	super(ldapName, toBeCrawled);
+    public LdapChild(String ldapName) {
+	super(ldapName);
 	loadLeafs=LoaderFactory.getPropLoader(ldapName.substring(0, ldapName.indexOf("."))+".properties");	
     }
     
