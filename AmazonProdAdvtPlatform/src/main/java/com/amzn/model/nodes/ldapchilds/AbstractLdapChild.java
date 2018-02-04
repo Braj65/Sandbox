@@ -32,15 +32,5 @@ public abstract class AbstractLdapChild implements INode{
     @Override
     public void notifyObserver(INodeStats stats) {
 	observer.notifyObserver(stats);
-    }
-    
-    //loadLeafs is used heavily in three methods. Maybe move method is required for it
-    /*public PropertiesConfiguration getLeafNodeProperties(){
-	return this.loadLeafs.getPropConfigObj();
-    }
-    
-    public void setLeafNodeProperties(PropertiesConfiguration prevPropertiesConfig){
-	this.loadLeafs.setLeafNodeProperties(prevPropertiesConfig);
-    }*/
-    
+    }    
 }

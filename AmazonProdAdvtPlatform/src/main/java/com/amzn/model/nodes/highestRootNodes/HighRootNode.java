@@ -34,34 +34,6 @@ public class HighRootNode extends AbstractHighRootNode {
 	}
     }
 
-/*    public void interpretChildx() {
-	PropertiesConfiguration tempLeafChildProp = null;
-	for (int i = 0; i < 1; i++) {
-	    tempLeafChildProp = processFirstLdapObjectAndNestedChildren(childNodes.get(i));
-	    childNodes.set(i, null);
-	}
-	for (int i = 1; i < childNodes.size(); i++) {
-	    tempLeafChildProp = processRestLdapObjectAndNestedChildren(childNodes.get(i), tempLeafChildProp);
-	    childNodes.set(i, null);
-	}
-    }
-
-    public PropertiesConfiguration processFirstLdapObjectAndNestedChildren(INode child) {
-	child.register(this);
-	child.loadChildren();
-	child.interpretChild();
-	return ((AbstractLdapChild) child).getLeafNodeProperties();
-    }
-
-    public PropertiesConfiguration processRestLdapObjectAndNestedChildren(INode child,
-	    PropertiesConfiguration prevLdapChildLeafNodeProp) {
-	child.register(this);
-	((AbstractLdapChild) child).setLeafNodeProperties(prevLdapChildLeafNodeProp);
-	child.loadChildren();
-	child.interpretChild();
-	return ((AbstractLdapChild) child).getLeafNodeProperties();
-    }*/
-
     public String toString() {
 	return currentRootCategory.toString();
     }
