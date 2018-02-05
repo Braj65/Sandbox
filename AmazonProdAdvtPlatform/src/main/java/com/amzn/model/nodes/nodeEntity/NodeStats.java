@@ -10,5 +10,5 @@ public class NodeStats extends AbstractNodeStats{
 
     public String toString() {
 	return new StringBuilder().append("Node Name-"+nodeName+" Node Id-"+nodeId).toString();
-    }   
+    }
 }

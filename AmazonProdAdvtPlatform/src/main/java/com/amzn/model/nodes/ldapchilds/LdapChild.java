@@ -6,15 +6,17 @@ import com.amzn.model.utility.loaderFactory.LoaderFactory;
 
 public class LdapChild extends AbstractLdapChild{
     
-    public LdapChild(String ldapName) {
+    public LdapChild(String ldapName, boolean toBeCrawled) {
 	super(ldapName);
+	this.toBeCrawled=toBeCrawled;
 	loadLeafs=LoaderFactory.getPropLoader(ldapName.substring(0, ldapName.indexOf("."))+".properties");
     }
     
     @Override
     public void loadChildren() {
 	LoadLeafChildren childLoadLeaf=(LoadLeafChildren)loadLeafs;
-	childLoadLeaf.preCreateChildObjects(children, this.parentCategory);
+	childLoadLeaf.preCreateChildObjects(children, parentCategory);
+//	childLoadLeaf.beforeCreatingChildObjects(this);
     }
 
     @Override

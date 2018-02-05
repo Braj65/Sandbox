@@ -1,9 +1,13 @@
 package com.amzn.model.utility;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
 
 import org.apache.commons.configuration.ConfigurationException;
 import org.apache.commons.configuration.PropertiesConfiguration;
@@ -11,6 +15,7 @@ import org.apache.commons.configuration.PropertiesConfiguration;
 import com.amzn.model.constants.Property;
 import com.amzn.model.nodes.INode;
 import com.amzn.model.nodes.childnodes.ChildNode;
+import com.amzn.model.nodes.ldapchilds.AbstractLdapChild;
 import com.amzn.model.utility.loaderFactory.LoaderFactory;
 
 public class LoadLeafChildren implements ILoadChildrenFromProp{
@@ -20,6 +25,7 @@ public class LoadLeafChildren implements ILoadChildrenFromProp{
     public LoadLeafChildren(String propFileName){
 	try {
 	    childNodeProperties=new PropertiesConfiguration(getChildFile(propFileName));
+//	    preCreateChildObjects();
 	    LoaderFactory.registerPropLoader(propFileName, this);
 	} catch (ConfigurationException e) {
 	    // TODO Auto-generated catch block
@@ -52,6 +58,23 @@ public class LoadLeafChildren implements ILoadChildrenFromProp{
 	createChildObjectsFromChildFile(childNodes);
     }
     
+    public void beforeCreatingChildObjects(AbstractLdapChild ldap){
+	this.fullLdapName=ldap.parentCategory;
+	if(ldap.toBeCrawled){
+	    newCreateChildObjectsFromChildren(ldap.children);
+	}
+	childNodeProperties.clearProperty(ldap.parentCategory);
+    }
+    
+    public void newCreateChildObjectsFromChildren(List<INode> childNodes){
+	try{
+	    childNodes.addAll((List<INode>)(Object)childNodeProperties.getList(fullLdapName));   
+	}catch(Exception e){
+//	    e.printStackTrace();
+	    childNodes.add((INode)(Object)childNodeProperties.getProperty(fullLdapName));
+	}
+	
+    }
     //Netx improvement. Create all childNode in first visit. Then in subsequent visits based on
     //the dlap name, based on some part of ldap name, all childnodes created earlier will be
     //transfered from that repo to current list of childnodes of the ldap object
@@ -84,9 +107,16 @@ public class LoadLeafChildren implements ILoadChildrenFromProp{
 	return new File(Property.getChildNodePath()+childFileName);
     }
     
-    /*public LeafChildProperties getLeafPropConfig(String fullLdapName){
-	if(leafPropertiesFile!=null && leafPropertiesFile.getLeafFile().equals(getLdapFile(fullLdapName)))
-	    return leafPropertiesFile;
-	return null;
-    }*/
+    public void preCreateChildObjects(){
+	PropertiesConfiguration extracted=new PropertiesConfiguration();
+	Iterator<String> iter=childNodeProperties.getKeys();
+	String key;
+	String parentLdap;
+	while(iter.hasNext()){
+	    key=iter.next();
+	    parentLdap=key.substring(0, key.lastIndexOf("."));
+	    extracted.addProperty(parentLdap, new ChildNode(key, childNodeProperties.getLong(key)));	    
+	}
+	childNodeProperties=extracted;
+    }
 }

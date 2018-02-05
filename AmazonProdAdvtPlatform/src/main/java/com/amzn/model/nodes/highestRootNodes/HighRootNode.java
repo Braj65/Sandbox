@@ -30,7 +30,7 @@ public class HighRootNode extends AbstractHighRootNode {
 	    childNodes.get(i).register(this);
 	    childNodes.get(i).loadChildren();
 	    childNodes.get(i).interpretChild();
-	    childNodes.set(i, null);	    
+	    childNodes.set(i, null); 
 	}
     }
 

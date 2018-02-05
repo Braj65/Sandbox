@@ -9,9 +9,11 @@ public abstract class AbstractChildNode implements INode{
     protected INode observer;
     
     public AbstractChildNode(String childNodeName, Long nodeId){
-	nodeStats=new AbstractNodeStats.Builder()
+	AbstractNodeStats.Builder builder=new AbstractNodeStats.Builder();
+	nodeStats=builder
 		.setNodeName(childNodeName)
 		.setNodeId(nodeId).build();
+	builder=null;
     }
     
     @Override

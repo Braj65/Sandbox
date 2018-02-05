@@ -13,9 +13,10 @@ import com.amzn.model.utility.LoadLeafChildren;
 
 public abstract class AbstractLdapChild implements INode{
     
-    protected List<INode> children;
-    protected String parentCategory;
+    public List<INode> children;
+    public String parentCategory;
     protected INode observer;
+    public boolean toBeCrawled;
     //The reason for removing loadlea could be keep this Ldap class focus on two things-
     //It should carry its own object fields and its chidren list and thats it
     protected ILoadChildrenFromProp loadLeafs;
@@ -32,5 +33,6 @@ public abstract class AbstractLdapChild implements INode{
     @Override
     public void notifyObserver(INodeStats stats) {
 	observer.notifyObserver(stats);
-    }    
+    }
+    
 }
