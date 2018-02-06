@@ -1,9 +1,9 @@
-package com.amzn.model.utility.loaderFactory;
+package com.amzn.model.nodesToBeCrawled.utility.loaderFactory;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import com.amzn.model.utility.ILoadChildrenFromProp;
+import com.amzn.model.nodesToBeCrawled.utility.ILoadChildrenFromProp;
 
 public class LoaderRegister {
     

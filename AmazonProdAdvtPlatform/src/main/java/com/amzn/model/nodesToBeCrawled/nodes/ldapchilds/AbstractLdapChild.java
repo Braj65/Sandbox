@@ -1,4 +1,4 @@
-package com.amzn.model.nodes.ldapchilds;
+package com.amzn.model.nodesToBeCrawled.nodes.ldapchilds;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -6,10 +6,10 @@ import java.util.List;
 
 import org.apache.commons.configuration.PropertiesConfiguration;
 
-import com.amzn.model.nodes.INode;
-import com.amzn.model.nodes.nodeEntity.INodeStats;
-import com.amzn.model.utility.ILoadChildrenFromProp;
-import com.amzn.model.utility.LoadLeafChildren;
+import com.amzn.model.nodesToBeCrawled.nodes.INode;
+import com.amzn.model.nodesToBeCrawled.nodes.nodeEntity.INodeStats;
+import com.amzn.model.nodesToBeCrawled.utility.ILoadChildrenFromProp;
+import com.amzn.model.nodesToBeCrawled.utility.LoadLeafChildren;
 
 public abstract class AbstractLdapChild implements INode{
     

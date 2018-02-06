@@ -1,13 +1,13 @@
-package com.amzn.model.nodes;
+package com.amzn.model.nodesToBeCrawled.nodes;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import com.amzn.model.constants.Property;
-import com.amzn.model.nodes.nodeEntity.INodeStats;
-import com.amzn.model.utility.ILoadChildrenFromProp;
-import com.amzn.model.utility.LoadHighRoots;
-import com.amzn.model.utility.loaderFactory.LoaderFactory;
+import com.amzn.model.nodesToBeCrawled.constants.Property;
+import com.amzn.model.nodesToBeCrawled.nodes.nodeEntity.INodeStats;
+import com.amzn.model.nodesToBeCrawled.utility.ILoadChildrenFromProp;
+import com.amzn.model.nodesToBeCrawled.utility.LoadHighRoots;
+import com.amzn.model.nodesToBeCrawled.utility.loaderFactory.LoaderFactory;
 
 public class RootNode implements INode{
     

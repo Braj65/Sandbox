@@ -1,4 +1,4 @@
-package com.amzn.model.utility;
+package com.amzn.model.nodesToBeCrawled.utility;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -12,11 +12,11 @@ import java.util.Properties;
 import org.apache.commons.configuration.ConfigurationException;
 import org.apache.commons.configuration.PropertiesConfiguration;
 
-import com.amzn.model.constants.Property;
-import com.amzn.model.nodes.INode;
-import com.amzn.model.nodes.childnodes.ChildNode;
-import com.amzn.model.nodes.ldapchilds.AbstractLdapChild;
-import com.amzn.model.utility.loaderFactory.LoaderFactory;
+import com.amzn.model.nodesToBeCrawled.constants.Property;
+import com.amzn.model.nodesToBeCrawled.nodes.INode;
+import com.amzn.model.nodesToBeCrawled.nodes.childnodes.ChildNode;
+import com.amzn.model.nodesToBeCrawled.nodes.ldapchilds.AbstractLdapChild;
+import com.amzn.model.nodesToBeCrawled.utility.loaderFactory.LoaderFactory;
 
 public class LoadLeafChildren implements ILoadChildrenFromProp{
     

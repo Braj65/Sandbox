@@ -1,4 +1,4 @@
-package com.amzn.model.utility;
+package com.amzn.model.nodesToBeCrawled.utility;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -13,14 +13,14 @@ import org.apache.commons.configuration.PropertiesConfiguration;
 import org.apache.commons.configuration.PropertiesConfigurationLayout;
 import org.apache.commons.io.FileUtils;
 
-import com.amzn.model.constants.Property;
-import com.amzn.model.nodes.INode;
-import com.amzn.model.nodes.ldapchilds.LdapChild;
-import com.amzn.model.nodes.nodeEntity.AbstractNodeStats;
-import com.amzn.model.nodes.nodeEntity.INodeStats;
-import com.amzn.model.nodes.nodeEntity.NodeStats;
-import com.amzn.model.nodes.nodeEntity.ldapNodeEntity.AbstractParentNodeStats;
-import com.amzn.model.utility.loaderFactory.LoaderFactory;
+import com.amzn.model.nodesToBeCrawled.constants.Property;
+import com.amzn.model.nodesToBeCrawled.nodes.INode;
+import com.amzn.model.nodesToBeCrawled.nodes.ldapchilds.LdapChild;
+import com.amzn.model.nodesToBeCrawled.nodes.nodeEntity.AbstractNodeStats;
+import com.amzn.model.nodesToBeCrawled.nodes.nodeEntity.INodeStats;
+import com.amzn.model.nodesToBeCrawled.nodes.nodeEntity.NodeStats;
+import com.amzn.model.nodesToBeCrawled.nodes.nodeEntity.ldapNodeEntity.AbstractParentNodeStats;
+import com.amzn.model.nodesToBeCrawled.utility.loaderFactory.LoaderFactory;
 
 public class LoadLdapChildren implements ILoadChildrenFromProp {
     private PropertiesConfiguration nodeProperties = null;

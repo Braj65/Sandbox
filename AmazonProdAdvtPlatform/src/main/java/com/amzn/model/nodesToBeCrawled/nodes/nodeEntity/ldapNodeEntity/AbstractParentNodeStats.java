@@ -1,6 +1,6 @@
-package com.amzn.model.nodes.nodeEntity.ldapNodeEntity;
+package com.amzn.model.nodesToBeCrawled.nodes.nodeEntity.ldapNodeEntity;
 
-import com.amzn.model.nodes.nodeEntity.INodeStats;
+import com.amzn.model.nodesToBeCrawled.nodes.nodeEntity.INodeStats;
 
 public abstract class AbstractParentNodeStats {
     

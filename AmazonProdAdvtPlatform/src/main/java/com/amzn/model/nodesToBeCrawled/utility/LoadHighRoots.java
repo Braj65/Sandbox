@@ -1,4 +1,4 @@
-package com.amzn.model.utility;
+package com.amzn.model.nodesToBeCrawled.utility;
 
 import java.io.File;
 import java.util.Iterator;
@@ -7,13 +7,13 @@ import java.util.List;
 import org.apache.commons.configuration.ConfigurationException;
 import org.apache.commons.configuration.PropertiesConfiguration;
 
-import com.amzn.model.constants.Property;
-import com.amzn.model.nodes.INode;
-import com.amzn.model.nodes.highestRootNodes.HighRootNode;
-import com.amzn.model.nodes.nodeEntity.AbstractNodeStats;
-import com.amzn.model.nodes.nodeEntity.INodeStats;
-import com.amzn.model.nodes.nodeEntity.ldapNodeEntity.AbstractParentNodeStats;
-import com.amzn.model.utility.loaderFactory.LoaderFactory;
+import com.amzn.model.nodesToBeCrawled.constants.Property;
+import com.amzn.model.nodesToBeCrawled.nodes.INode;
+import com.amzn.model.nodesToBeCrawled.nodes.highestRootNodes.HighRootNode;
+import com.amzn.model.nodesToBeCrawled.nodes.nodeEntity.AbstractNodeStats;
+import com.amzn.model.nodesToBeCrawled.nodes.nodeEntity.INodeStats;
+import com.amzn.model.nodesToBeCrawled.nodes.nodeEntity.ldapNodeEntity.AbstractParentNodeStats;
+import com.amzn.model.nodesToBeCrawled.utility.loaderFactory.LoaderFactory;
 
 public class LoadHighRoots implements ILoadChildrenFromProp {
     private String rootFileName = null;

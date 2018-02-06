@@ -1,4 +1,4 @@
-package com.amzn.model.nodes.nodeEntity.ldapNodeEntity;
+package com.amzn.model.nodesToBeCrawled.nodes.nodeEntity.ldapNodeEntity;
 
 public class LdapNodeStats extends AbstractParentNodeStats{
 

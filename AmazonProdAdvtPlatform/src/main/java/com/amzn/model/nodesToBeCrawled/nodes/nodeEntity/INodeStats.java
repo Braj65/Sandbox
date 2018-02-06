@@ -1,4 +1,4 @@
-package com.amzn.model.nodes.nodeEntity;
+package com.amzn.model.nodesToBeCrawled.nodes.nodeEntity;
 
 public interface INodeStats {
     

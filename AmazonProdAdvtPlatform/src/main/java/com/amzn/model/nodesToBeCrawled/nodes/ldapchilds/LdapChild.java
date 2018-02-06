@@ -1,8 +1,8 @@
-package com.amzn.model.nodes.ldapchilds;
+package com.amzn.model.nodesToBeCrawled.nodes.ldapchilds;
 
-import com.amzn.model.nodes.INode;
-import com.amzn.model.utility.LoadLeafChildren;
-import com.amzn.model.utility.loaderFactory.LoaderFactory;
+import com.amzn.model.nodesToBeCrawled.nodes.INode;
+import com.amzn.model.nodesToBeCrawled.utility.LoadLeafChildren;
+import com.amzn.model.nodesToBeCrawled.utility.loaderFactory.LoaderFactory;
 
 public class LdapChild extends AbstractLdapChild{
     

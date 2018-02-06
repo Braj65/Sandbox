@@ -1,7 +1,7 @@
-package com.amzn.model.nodes.childnodes;
+package com.amzn.model.nodesToBeCrawled.nodes.childnodes;
 
-import com.amzn.model.nodes.INode;
-import com.amzn.model.nodes.nodeEntity.INodeStats;
+import com.amzn.model.nodesToBeCrawled.nodes.INode;
+import com.amzn.model.nodesToBeCrawled.nodes.nodeEntity.INodeStats;
 
 public class ChildNode extends AbstractChildNode{
     

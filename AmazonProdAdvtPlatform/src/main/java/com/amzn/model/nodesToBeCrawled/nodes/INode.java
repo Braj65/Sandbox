@@ -1,6 +1,6 @@
-package com.amzn.model.nodes;
+package com.amzn.model.nodesToBeCrawled.nodes;
 
-import com.amzn.model.nodes.nodeEntity.INodeStats;
+import com.amzn.model.nodesToBeCrawled.nodes.nodeEntity.INodeStats;
 
 public interface INode {
     

@@ -1,4 +1,4 @@
-package com.amzn.model.nodes.nodeEntity;
+package com.amzn.model.nodesToBeCrawled.nodes.nodeEntity;
 
 public abstract class AbstractNodeStats implements INodeStats {
     protected String nodeName;

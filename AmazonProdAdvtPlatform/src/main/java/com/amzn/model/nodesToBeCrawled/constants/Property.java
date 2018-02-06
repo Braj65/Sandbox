@@ -1,4 +1,4 @@
-package com.amzn.model.constants;
+package com.amzn.model.nodesToBeCrawled.constants;
 
 public class Property {
     private final static String slash=System.getProperty("file.separator");

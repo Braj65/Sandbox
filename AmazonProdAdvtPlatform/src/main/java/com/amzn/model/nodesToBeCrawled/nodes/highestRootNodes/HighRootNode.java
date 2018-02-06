@@ -1,4 +1,4 @@
-package com.amzn.model.nodes.highestRootNodes;
+package com.amzn.model.nodesToBeCrawled.nodes.highestRootNodes;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -6,12 +6,12 @@ import java.util.Set;
 
 import org.apache.commons.configuration.PropertiesConfiguration;
 
-import com.amzn.model.nodes.INode;
-import com.amzn.model.nodes.ldapchilds.AbstractLdapChild;
-import com.amzn.model.nodes.nodeEntity.INodeStats;
-import com.amzn.model.nodes.nodeEntity.ldapNodeEntity.AbstractParentNodeStats;
-import com.amzn.model.utility.LoadLdapChildren;
-import com.amzn.model.utility.loaderFactory.LoaderFactory;
+import com.amzn.model.nodesToBeCrawled.nodes.INode;
+import com.amzn.model.nodesToBeCrawled.nodes.ldapchilds.AbstractLdapChild;
+import com.amzn.model.nodesToBeCrawled.nodes.nodeEntity.INodeStats;
+import com.amzn.model.nodesToBeCrawled.nodes.nodeEntity.ldapNodeEntity.AbstractParentNodeStats;
+import com.amzn.model.nodesToBeCrawled.utility.LoadLdapChildren;
+import com.amzn.model.nodesToBeCrawled.utility.loaderFactory.LoaderFactory;
 
 public class HighRootNode extends AbstractHighRootNode {
 

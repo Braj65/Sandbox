@@ -1,12 +1,12 @@
-package com.amzn.model;
+package com.amzn.model.nodesToBeCrawled;
 
-import com.amzn.model.constants.Property;
-import com.amzn.model.nodes.RootNode;
-import com.amzn.model.utility.ILoadChildrenFromProp;
-import com.amzn.model.utility.LoadHighRoots;
-import com.amzn.model.utility.LoadLdapChildren;
-import com.amzn.model.utility.LoadLeafChildren;
-import com.amzn.model.utility.loaderFactory.LoaderFactory;
+import com.amzn.model.nodesToBeCrawled.constants.Property;
+import com.amzn.model.nodesToBeCrawled.nodes.RootNode;
+import com.amzn.model.nodesToBeCrawled.utility.ILoadChildrenFromProp;
+import com.amzn.model.nodesToBeCrawled.utility.LoadHighRoots;
+import com.amzn.model.nodesToBeCrawled.utility.LoadLdapChildren;
+import com.amzn.model.nodesToBeCrawled.utility.LoadLeafChildren;
+import com.amzn.model.nodesToBeCrawled.utility.loaderFactory.LoaderFactory;
 
 public class Client {
     
