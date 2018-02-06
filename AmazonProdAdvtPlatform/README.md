@@ -1,1 +1,1 @@
-Going to apply martin's chapter Organizing data__Going to apply martin's content. Didn't got a chance to apply__lazyload now. Will try again in future
+Going to apply martin's chapter Organizing data__Found no application of lazy load right now. Will try in future. Going to start working on scrapping the website.
