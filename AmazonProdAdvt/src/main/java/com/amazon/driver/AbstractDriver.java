@@ -7,14 +7,15 @@ import org.apache.axiom.om.OMElement;
 import org.apache.axiom.om.OMFactory;
 import org.apache.axis2.transport.http.HTTPConstants;
 
+import com.amazon.driver.keys.AWSKeys;
 import com.amazon.stubs.AWSECommerceServiceStub;
 
 import pack.test.SignedRequestsHelper;
 
 public class AbstractDriver {
     
-    private static final String AWS_ACCESS_KEY_ID = "AKIAJBRG4SMARCVPZXGQ";
-    private static final String AWS_SECRET_KEY = "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";
+    private static final String AWS_ACCESS_KEY_ID = AWSKeys.AWS_ACCESS_KEY_ID.toString();
+    private static final String AWS_SECRET_KEY = AWSKeys.AWS_SECRET_KEY.toString();
     public static AWSECommerceServiceStub stub = null;
     public static HashSet<String> uniq = null;
     
