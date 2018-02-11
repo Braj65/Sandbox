@@ -29,4 +29,8 @@ public abstract class AbstractSortApplied {
     public void loadItemSearchArr(){
 	itemSrchParamsReqArr[pageNum%2]=itemSrchReq;
     }
+    
+    public ItemSearchRequest[] getReqArr(){
+	return itemSrchParamsReqArr;
+    }
 }

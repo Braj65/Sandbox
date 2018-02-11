@@ -6,7 +6,8 @@ public class AWESProperty {
     public enum Value{
 	AWS_ACCESS_KEY_ID("Access_Key","AKIAJBRG4SMARCVPZXGQ"),
 	AWS_SECRET_KEY("Secret_Key","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"),
-	AWS_WSDL_DOC("Wsdl_Doc","http://security.amazonaws.com/doc/2007-01-01/");
+	AWS_WSDL_DOC("Wsdl_Doc","http://security.amazonaws.com/doc/2007-01-01/"),
+	ASSOCIATE_TAG("Associate_Tag","isnnfoiwnit0d-21");
 	
 	private final String property, defaultVal;
 	private String value;
