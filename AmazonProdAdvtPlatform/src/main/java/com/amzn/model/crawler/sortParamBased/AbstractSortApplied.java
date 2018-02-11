@@ -5,8 +5,6 @@ import org.apache.axis2.databinding.types.PositiveInteger;
 import com.amazon.webservices.awsecommerceservice._2013_08_01.ItemSearchRequest;
 import com.amazon.webservices.awsecommerceservice._2013_08_01.Items_type3;
 
-import junit.framework.Assert;
-
 public abstract class AbstractSortApplied {
     
     private ItemSearchRequest itemSrchParamsReq=null;
