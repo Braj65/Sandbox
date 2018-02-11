@@ -7,20 +7,28 @@ import com.amzn.model.crawler.AWSEStub.StubFactory;
 import com.amzn.model.crawler.sortParamBased.AbstractSortApplied;
 
 public class BatchExecutor {
-    ItemSearchResponse resp=null;
-    ItemSearch itemSearchReq=null;
+    private ItemSearchResponse resp=null;
+    private ItemSearch itemSearchReq=null;
+    private AbstractSortApplied batchSearchParams=null;
     
-    public BatchExecutor(){
+    public BatchExecutor(AbstractSortApplied batchSearchParams){
+	this.batchSearchParams=batchSearchParams;
 	itemSearchReq=new ItemSearch();
     }
     
-    public void loadSearchReq(AbstractSortApplied batchSearchParams){
+    public void loadSearchReq(){
 	itemSearchReq.setRequest(batchSearchParams.getReqArr());
 	itemSearchReq.setAssociateTag(AWESProperty.Value.ASSOCIATE_TAG.getString());
 	resp=StubFactory.getStubInstance().itemSearch(itemSearchReq);
     }
     
-    public void getErrorsInResponse(){
-	System.out.println(resp.getOperationRequest().getErrors().getError()[0].getMessage());
+    public ItemSearchResponse getResponse(){
+	return resp;
     }
+    
+    public void validateResponsePagesCount(){
+	batchSearchParams.validateResponsePagesCount(resp.getItems());
+    }
+    
+    
 }
