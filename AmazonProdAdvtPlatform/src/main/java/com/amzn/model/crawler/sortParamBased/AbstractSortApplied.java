@@ -4,41 +4,39 @@ import org.apache.axis2.databinding.types.PositiveInteger;
 
 import com.amazon.webservices.awsecommerceservice._2013_08_01.ItemSearchRequest;
 import com.amazon.webservices.awsecommerceservice._2013_08_01.Items_type3;
+import com.amzn.model.crawler.reqRespParams.RequestParams;
 
 public abstract class AbstractSortApplied {
     
-    private ItemSearchRequest itemSrchParamsReq=null;
-    private ItemSearchRequest[] itemSrchParamsReqArr=null;
-    private final static int cntOfAllowedReq=2;
+    private RequestParams requestParams;
     
     public AbstractSortApplied(){
-	itemSrchParamsReq=new ItemSearchRequest();
-	itemSrchParamsReqArr=new ItemSearchRequest[cntOfAllowedReq];
+	requestParams=new RequestParams();
     }
     
     public void gamesSearchRequest(){
-	itemSrchParamsReq.setSearchIndex(RequestParams.getSearchIndex());
-	itemSrchParamsReq.setBrowseNode(RequestParams.getBrowseNodeIs());
-	itemSrchParamsReq.setItemPage(new PositiveInteger(Integer.toString(pageNum)));
-	itemSrchParamsReq.setResponseGroup(ResponseParams.getRespParams());
+	requestParams.itemSrchParamsReq.setSearchIndex(RequestParams.getSearchIndex());
+	requestParams.itemSrchParamsReq.setBrowseNode(RequestParams.getBrowseNodeIs());
+	requestParams.itemSrchParamsReq.setItemPage(new PositiveInteger(Integer.toString(pageNum)));
+	requestParams.itemSrchParamsReq.setResponseGroup(ResponseParams.getRespParams());
     }
     
     public void applySortParam(){
-	itemSrchParamsReq.setSort(sortParam);
+	requestParams.itemSrchParamsReq.setSort(sortParam);
     }
     
     public void loadItemSearchArr(){
-	itemSrchParamsReqArr[pageNum%2]=itemSrchParamsReq;
+	requestParams.itemSrchParamsReqArr[pageNum%2]=requestParams.itemSrchParamsReq;
     }
     
     public ItemSearchRequest[] getReqArr(){
-	return itemSrchParamsReqArr;
+	return requestParams.itemSrchParamsReqArr;
     }
     
     public void validateResponsePagesCount(Items_type3[] items){
 	boolean flag=false;
 	for(int i=0;i<items.length;i++){
-	    flag=flag || items[i].getTotalPages().compareTo(itemSrchParamsReqArr[i].getItemPage())!=0;
+	    flag=flag || items[i].getTotalPages().compareTo(requestParams.itemSrchParamsReqArr[i].getItemPage())!=0;
 	}
 	if(!flag)
 	    throw new RuntimeException("Error in class Abstractsort applied. Mismatch in"
