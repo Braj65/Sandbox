@@ -18,9 +18,14 @@ public class FetchSortParams {
     public String[] getSortingParams(){
 	try {
 	    response=StubFactory.getStubInstance().itemSearch(request);
+	    if(response.getOpsErrors()!=null){
+		return response.getParams();
+	    }
+	    return response.getParamsFromItemOne();
 	} catch (RemoteException e) {
 	    // TODO Auto-generated catch block
 	    e.printStackTrace();
 	}
+	return null;
     }
 }
