@@ -19,7 +19,12 @@ public class BatchExecutor {
     public void loadSearchReq(){
 	itemSearchReq.setRequest(batchSearchParams.getReqArr());
 	itemSearchReq.setAssociateTag(AWESProperty.Value.ASSOCIATE_TAG.getString());
+	try{
 	resp=StubFactory.getStubInstance().itemSearch(itemSearchReq);
+	}catch(Exception e){
+	    e.printStackTrace();
+	    
+	}
     }
     
     public ItemSearchResponse getResponse(){
