@@ -16,9 +16,8 @@ import com.amzn.model.crawlerx.commpacks.ResponseHolder;
 
 import pack.test.SignedRequestsHelper;
 
-public abstract class StubContainer {
-    protected static final StubContainer INSTANCE = new StubContainer();
-    protected static final NullStubContainer NULLINSTANCE = INSTANCE.new NullStubContainer();
+public abstract class StubContainer implements IStubContainer{
+    protected static final NullStubContainer NULLINSTANCE = new NullStubContainer();
     protected AWSECommerceServiceStub stub = null;
     private static String operation = null;
 
@@ -37,27 +36,44 @@ public abstract class StubContainer {
 	    stub._getServiceClient().addHeader(getChild("Signature", "http://security.amazonaws.com/doc/2007-01-01/", "aws",
 		    SignedRequestsHelper.getInstance(AWESProperty.Value.AWS_SECRET_KEY.getString())
 		    .sign(operation, timeStamp)));
+	    addStubOperation(timeStamp);
 	} catch (Exception e) {
 	    // TODO Auto-generated catch block
 	    e.printStackTrace();
 	}
     }
     
-    protected abstract void addStubOperation(String timeStamp);
-
-    private OMElement getChild(String localName, String nameSpaceURI, String prefix, String key) {
+    protected abstract void addStubOperation(String timeStamp) throws Exception;
+    
+    protected OMElement getChild(String localName, String nameSpaceURI, String prefix, String key) {
 	OMElement hdChild = OMAbstractFactory.getOMFactory().createOMElement(localName, nameSpaceURI, prefix);
 	hdChild.setText(key);
 	return hdChild;
     }
-
-    public ResponseHolder itemSearch(RequestHolder sarchReq) throws RemoteException {
-	return new ResponseHolder(stub.itemSearch(sarchReq.getItemSearch()));
+    
+    @Override
+    public ResponseHolder browseNodeLookup(RequestHolder nodeLookupReq) {
+	// TODO Auto-generated method stub
+	return null;
     }
 
-    public class NullStubContainer extends StubContainer {
+    @Override
+    public ResponseHolder itemSearch(RequestHolder sarchReq) {
+	return null;
+    }
+
+    public static class NullStubContainer extends StubContainer {
 	public ResponseHolder itemSearch(RequestHolder searchReq) {
 	    return new NullResponseHolder(null);
+	}
+
+	@Override
+	protected void addStubOperation(String timeStamp) throws Exception {}
+
+	@Override
+	public ResponseHolder browseNodeLookup(RequestHolder nodeLookupReq) {
+	    // TODO Auto-generated method stub
+	    return null;
 	}
     }
 }
