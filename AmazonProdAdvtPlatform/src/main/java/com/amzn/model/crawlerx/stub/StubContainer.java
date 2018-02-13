@@ -16,15 +16,13 @@ import com.amzn.model.crawlerx.commpacks.ResponseHolder;
 
 import pack.test.SignedRequestsHelper;
 
-public class StubContainer {
+public abstract class StubContainer {
     protected static final StubContainer INSTANCE = new StubContainer();
     protected static final NullStubContainer NULLINSTANCE = INSTANCE.new NullStubContainer();
-    private AWSECommerceServiceStub stub = null;
-    private static final String ACCESSKEY = "AWSAccessKeyId";
+    protected AWSECommerceServiceStub stub = null;
     private static String operation = null;
 
-    protected StubContainer() {
-	
+    protected StubContainer() {	
 	try {
 	    String timeStamp=SignedRequestsHelper.soapTimestamp();
 	    stub = new AWSECommerceServiceStub();
@@ -43,8 +41,9 @@ public class StubContainer {
 	    // TODO Auto-generated catch block
 	    e.printStackTrace();
 	}
-
     }
+    
+    protected abstract void addStubOperation(String timeStamp);
 
     private OMElement getChild(String localName, String nameSpaceURI, String prefix, String key) {
 	OMElement hdChild = OMAbstractFactory.getOMFactory().createOMElement(localName, nameSpaceURI, prefix);
@@ -60,9 +59,5 @@ public class StubContainer {
 	public ResponseHolder itemSearch(RequestHolder searchReq) {
 	    return new NullResponseHolder(null);
 	}
-    }
-    
-    public static void setOperation(String ops){
-	operation=ops;
     }
 }
