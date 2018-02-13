@@ -14,34 +14,55 @@ import com.amzn.model.crawlerx.commpacks.NullResponseHolder;
 import com.amzn.model.crawlerx.commpacks.RequestHolder;
 import com.amzn.model.crawlerx.commpacks.ResponseHolder;
 
+import pack.test.SignedRequestsHelper;
+
 public class StubContainer {
     protected static final StubContainer INSTANCE = new StubContainer();
     protected static final NullStubContainer NULLINSTANCE = INSTANCE.new NullStubContainer();
     private AWSECommerceServiceStub stub = null;
     private static final String ACCESSKEY = "AWSAccessKeyId";
+    private static String operation = null;
 
     protected StubContainer() {
+	
 	try {
+	    String timeStamp=SignedRequestsHelper.soapTimestamp();
 	    stub = new AWSECommerceServiceStub();
-	} catch (AxisFault e) {
+	    stub._getServiceClient().getOptions().setProperty(HTTPConstants.CHUNKED, "false");
+	    stub._getServiceClient()
+		    .addHeader(getChild("AWSAccessKeyId", "http://security.amazonaws.com/doc/2007-01-01/", "aws",
+			    AWESProperty.Value.AWS_ACCESS_KEY_ID.getString()));
+	    
+	    stub._getServiceClient().addHeader(getChild("Timestamp", "http://security.amazonaws.com/doc/2007-01-01/", "aws",
+		    timeStamp));
+
+	    stub._getServiceClient().addHeader(getChild("Signature", "http://security.amazonaws.com/doc/2007-01-01/", "aws",
+		    SignedRequestsHelper.getInstance(AWESProperty.Value.AWS_SECRET_KEY.getString())
+		    .sign(operation, timeStamp)));
+	} catch (Exception e) {
 	    // TODO Auto-generated catch block
 	    e.printStackTrace();
 	}
-	stub._getServiceClient().getOptions().setProperty(HTTPConstants.CHUNKED, "false");
-	// getChild("AWSAccessKeyId")
+
     }
 
-    private OMElement getChild(String localName, String nameSpaceURI, String prefix) {
-	return OMAbstractFactory.getOMFactory().createOMElement(localName, nameSpaceURI, prefix);
+    private OMElement getChild(String localName, String nameSpaceURI, String prefix, String key) {
+	OMElement hdChild = OMAbstractFactory.getOMFactory().createOMElement(localName, nameSpaceURI, prefix);
+	hdChild.setText(key);
+	return hdChild;
     }
 
     public ResponseHolder itemSearch(RequestHolder sarchReq) throws RemoteException {
 	return new ResponseHolder(stub.itemSearch(sarchReq.getItemSearch()));
     }
-    
-    public class NullStubContainer extends StubContainer{
-	public ResponseHolder itemSearch(RequestHolder searchReq){
+
+    public class NullStubContainer extends StubContainer {
+	public ResponseHolder itemSearch(RequestHolder searchReq) {
 	    return new NullResponseHolder(null);
 	}
+    }
+    
+    public static void setOperation(String ops){
+	operation=ops;
     }
 }
