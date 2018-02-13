@@ -6,7 +6,9 @@
 !/AmazonProdAdvtPlatform/src
 !/AmazonProdAdvtPlatform/build.gradle
 !/AmazonProdAPI
-/AmazonProdAPI/build/*
+/AmazonProdAPI/*
+!/AmazonProdAPI/src
+!/AmazonProdAPI/build.gradle
 !/ScaleConcepts
 /ScaleConcepts/*
 !/ScaleConcepts/src
