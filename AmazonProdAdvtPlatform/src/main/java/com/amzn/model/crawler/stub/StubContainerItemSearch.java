@@ -1,9 +1,9 @@
-package com.amzn.model.crawlerx.stub;
+package com.amzn.model.crawler.stub;
 
 import java.rmi.RemoteException;
 
-import com.amzn.model.crawlerx.commpacks.RequestHolder;
-import com.amzn.model.crawlerx.commpacks.ResponseHolder;
+import com.amzn.model.crawler.commpacks.RequestHolder;
+import com.amzn.model.crawler.commpacks.ResponseHolder;
 
 import pack.test.SignedRequestsHelper;
 
@@ -17,9 +17,9 @@ public class StubContainerItemSearch extends StubContainer{
 		    SignedRequestsHelper.getInstance(AWESProperty.Value.AWS_SECRET_KEY.getString())
 		    .sign(OPERATION, timeStamp)));	
     }
-    
+
     @Override
-    public ResponseHolder itemSearch(RequestHolder sarchReq) {
+    public ResponseHolder executeOperation(RequestHolder sarchReq) {
 	return new ResponseHolder(stub.itemSearch(sarchReq.getItemSearch()));
     }
 }

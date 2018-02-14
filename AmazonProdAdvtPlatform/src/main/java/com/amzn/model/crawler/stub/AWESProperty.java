@@ -1,4 +1,4 @@
-package com.amzn.model.crawlerx.stub;
+package com.amzn.model.crawler.stub;
 
 public class AWESProperty {
     private final static String slash=System.getProperty("file.separator");

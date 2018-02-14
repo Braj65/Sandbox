@@ -1,10 +1,10 @@
-package com.amzn.model.crawlerx.sortedCrawl;
+package com.amzn.model.crawler.sortedCrawl;
 
 import java.util.List;
 
-import com.amzn.model.crawlerx.commpacks.RequestHolder;
-import com.amzn.model.crawlerx.commpacks.ResponseHolder;
-import com.amzn.model.crawlerx.stub.StubFactory;
+import com.amzn.model.crawler.commpacks.RequestHolder;
+import com.amzn.model.crawler.commpacks.ResponseHolder;
+import com.amzn.model.crawler.stub.StubFactory;
 
 public class AbstractSortCrawl {
     private RequestHolder request;

@@ -1,6 +1,6 @@
-package com.amzn.model.crawlerx;
+package com.amzn.model.crawler;
 
-import com.amzn.model.crawlerx.stub.StubFactory;
+import com.amzn.model.crawler.stub.StubFactory;
 
 public class Client {
     

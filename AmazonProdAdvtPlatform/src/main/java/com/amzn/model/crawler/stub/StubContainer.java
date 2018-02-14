@@ -1,4 +1,4 @@
-package com.amzn.model.crawlerx.stub;
+package com.amzn.model.crawler.stub;
 
 import java.rmi.RemoteException;
 
@@ -10,9 +10,9 @@ import org.apache.axis2.transport.http.HTTPConstants;
 import com.amazon.stubs.AWSECommerceServiceStub;
 import com.amazon.webservices.awsecommerceservice._2013_08_01.ItemSearch;
 import com.amazon.webservices.awsecommerceservice._2013_08_01.ItemSearchResponse;
-import com.amzn.model.crawlerx.commpacks.NullResponseHolder;
-import com.amzn.model.crawlerx.commpacks.RequestHolder;
-import com.amzn.model.crawlerx.commpacks.ResponseHolder;
+import com.amzn.model.crawler.commpacks.NullResponseHolder;
+import com.amzn.model.crawler.commpacks.RequestHolder;
+import com.amzn.model.crawler.commpacks.ResponseHolder;
 
 import pack.test.SignedRequestsHelper;
 
@@ -50,17 +50,6 @@ public abstract class StubContainer implements IStubContainer{
 	hdChild.setText(key);
 	return hdChild;
     }
-    
-    @Override
-    public ResponseHolder browseNodeLookup(RequestHolder nodeLookupReq) {
-	// TODO Auto-generated method stub
-	return null;
-    }
-
-    @Override
-    public ResponseHolder itemSearch(RequestHolder sarchReq) {
-	return null;
-    }
 
     public static class NullStubContainer extends StubContainer {
 	public ResponseHolder itemSearch(RequestHolder searchReq) {
@@ -71,9 +60,7 @@ public abstract class StubContainer implements IStubContainer{
 	protected void addStubOperation(String timeStamp) throws Exception {}
 
 	@Override
-	public ResponseHolder browseNodeLookup(RequestHolder nodeLookupReq) {
-	    // TODO Auto-generated method stub
-	    return null;
-	}
+	public ResponseHolder executeOperation(RequestHolder sarchReq) {return null;}
+	
     }
 }
