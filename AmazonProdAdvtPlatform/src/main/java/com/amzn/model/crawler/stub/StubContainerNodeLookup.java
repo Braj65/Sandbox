@@ -5,9 +5,13 @@ import com.amzn.model.crawler.commpacks.ResponseHolder;
 
 import pack.test.SignedRequestsHelper;
 
-public class StubContainerNodeLookup extends StubContainer{
-    protected static final StubContainer NODELOOKUPINSTANCE = new StubContainerNodeLookup();
+public class StubContainerNodeLookup extends AbsStubContainer{
+    protected static final AbsStubContainer NODELOOKUPINSTANCE = new StubContainerNodeLookup();
     public static final String OPERATION="BrowseNodeLookup";
+    
+    private StubContainerNodeLookup(){
+	super();
+    }
 
     @Override
     protected void addStubOperation(String timeStamp) throws Exception {

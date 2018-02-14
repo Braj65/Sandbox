@@ -7,19 +7,23 @@ import com.amzn.model.crawler.commpacks.ResponseHolder;
 
 import pack.test.SignedRequestsHelper;
 
-public class StubContainerItemSearch extends StubContainer{
-    protected static final StubContainer ITEMSEARCHINSTANCE = new StubContainerItemSearch();
+public class StubContainerItemSearch extends AbsStubContainer{
+    protected static final AbsStubContainer ITEMSEARCHINSTANCE = new StubContainerItemSearch();
     public static final String OPERATION="ItemSearch";
+    
+    private StubContainerItemSearch(){
+	super();
+    }
 
     @Override
     protected void addStubOperation(String timeStamp) throws Exception {
 	stub._getServiceClient().addHeader(getChild("Signature", "http://security.amazonaws.com/doc/2007-01-01/", "aws",
 		    SignedRequestsHelper.getInstance(AWESProperty.Value.AWS_SECRET_KEY.getString())
-		    .sign(OPERATION, timeStamp)));	
+		    .sign(OPERATION, timeStamp)));
     }
 
     @Override
-    public ResponseHolder executeOperation(RequestHolder sarchReq) {
+    public ResponseHolder executeOperation(RequestHolder sarchReq) throws RemoteException {
 	return new ResponseHolder(stub.itemSearch(sarchReq.getItemSearch()));
     }
 }

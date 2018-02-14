@@ -17,7 +17,7 @@ public class FetchSortParams {
     
     public String[] getSortingParams(){
 	try {
-	    response=StubFactory.getStubInstance().itemSearch(request);
+	    response=StubFactory.getStubInstance("ItemSearch").executeOperation(request);
 	    if(response.getOpsErrors()!=null){
 		return response.getParams();
 	    }

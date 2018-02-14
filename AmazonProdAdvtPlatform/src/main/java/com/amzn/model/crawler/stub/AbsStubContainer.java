@@ -16,12 +16,11 @@ import com.amzn.model.crawler.commpacks.ResponseHolder;
 
 import pack.test.SignedRequestsHelper;
 
-public abstract class StubContainer implements IStubContainer{
+public abstract class AbsStubContainer implements IStubContainer{
     protected static final NullStubContainer NULLINSTANCE = new NullStubContainer();
     protected AWSECommerceServiceStub stub = null;
-    private static String operation = null;
 
-    protected StubContainer() {	
+    protected AbsStubContainer() {	
 	try {
 	    String timeStamp=SignedRequestsHelper.soapTimestamp();
 	    stub = new AWSECommerceServiceStub();
@@ -32,10 +31,7 @@ public abstract class StubContainer implements IStubContainer{
 	    
 	    stub._getServiceClient().addHeader(getChild("Timestamp", "http://security.amazonaws.com/doc/2007-01-01/", "aws",
 		    timeStamp));
-
-	    stub._getServiceClient().addHeader(getChild("Signature", "http://security.amazonaws.com/doc/2007-01-01/", "aws",
-		    SignedRequestsHelper.getInstance(AWESProperty.Value.AWS_SECRET_KEY.getString())
-		    .sign(operation, timeStamp)));
+	    
 	    addStubOperation(timeStamp);
 	} catch (Exception e) {
 	    // TODO Auto-generated catch block
@@ -51,7 +47,7 @@ public abstract class StubContainer implements IStubContainer{
 	return hdChild;
     }
 
-    public static class NullStubContainer extends StubContainer {
+    public static class NullStubContainer extends AbsStubContainer {
 	public ResponseHolder itemSearch(RequestHolder searchReq) {
 	    return new NullResponseHolder(null);
 	}
