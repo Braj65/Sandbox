@@ -2,8 +2,9 @@ package com.amzn.model.crawler.stub;
 
 import java.rmi.RemoteException;
 
-import com.amzn.model.crawler.commpacks.RequestHolder;
+import com.amazon.webservices.awsecommerceservice._2013_08_01.ItemSearch;
 import com.amzn.model.crawler.commpacks.ResponseHolder;
+import com.amzn.model.crawler.commpacks.requests.IRequestHolder;
 
 import pack.test.SignedRequestsHelper;
 
@@ -23,7 +24,7 @@ public class StubContainerItemSearch extends AbsStubContainer{
     }
 
     @Override
-    public ResponseHolder executeOperation(RequestHolder sarchReq) throws RemoteException {
-	return new ResponseHolder(stub.itemSearch(sarchReq.getItemSearch()));
+    public ResponseHolder executeOperation(IRequestHolder sarchReq) throws RemoteException {
+	return new ResponseHolder(stub.itemSearch((ItemSearch)sarchReq.getReqContainer()));
     }
 }

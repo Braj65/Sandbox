@@ -2,8 +2,8 @@ package com.amzn.model.crawler.sortParams;
 
 import java.rmi.RemoteException;
 
-import com.amzn.model.crawler.commpacks.RequestHolder;
 import com.amzn.model.crawler.commpacks.ResponseHolder;
+import com.amzn.model.crawler.commpacks.requests.RequestHolder;
 import com.amzn.model.crawler.stub.StubFactory;
 
 public class FetchSortParams {

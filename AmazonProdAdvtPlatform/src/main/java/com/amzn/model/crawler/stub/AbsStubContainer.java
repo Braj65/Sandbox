@@ -11,8 +11,8 @@ import com.amazon.stubs.AWSECommerceServiceStub;
 import com.amazon.webservices.awsecommerceservice._2013_08_01.ItemSearch;
 import com.amazon.webservices.awsecommerceservice._2013_08_01.ItemSearchResponse;
 import com.amzn.model.crawler.commpacks.NullResponseHolder;
-import com.amzn.model.crawler.commpacks.RequestHolder;
 import com.amzn.model.crawler.commpacks.ResponseHolder;
+import com.amzn.model.crawler.commpacks.requests.RequestHolder;
 
 import pack.test.SignedRequestsHelper;
 

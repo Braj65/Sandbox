@@ -1,10 +1,11 @@
-package com.amzn.model.crawler.commpacks;
+package com.amzn.model.crawler.commpacks.requestParams;
 
 import java.math.BigInteger;
 
 import org.apache.axis2.databinding.types.PositiveInteger;
 
 import com.amazon.webservices.awsecommerceservice._2013_08_01.ItemSearchRequest;
+import com.amzn.model.crawler.commpacks.requests.RequestHolderItemSearch;
 
 public class RequestParams {
     
@@ -12,7 +13,7 @@ public class RequestParams {
     private PositiveInteger itemPageStart, itemPageEnd;
     private String[] responseGroup;
     
-    public void loadRequest(RequestHolder request){
+    public void loadRequest(RequestHolderItemSearch request){
 	ItemSearchRequest srchReq=null;
 	itemPageStart=(PositiveInteger) itemPageStart.subtract(PositiveInteger.ONE);
 	while(itemPageStart.compareTo(itemPageEnd.abs())!=1){
@@ -22,7 +23,7 @@ public class RequestParams {
 	    srchReq.setItemPage(itemPageStart);
 	    srchReq.setResponseGroup(responseGroup);
 	    srchReq.setSort(getSortParam());
-	    request.itemSrchRequestArr[itemPageStart.intValue()]=srchReq;
+	    request.requestArr[itemPageStart.intValue()]=srchReq;
 	    itemPageStart=(PositiveInteger) itemPageStart.add(PositiveInteger.ONE);
 	}
     }

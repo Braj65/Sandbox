@@ -1,8 +1,12 @@
 package com.amzn.model.crawler.commpacks;
 
+import org.apache.axis2.databinding.ADBBean;
+
 import com.amazon.webservices.awsecommerceservice._2013_08_01.ItemSearchResponse;
 import com.amazon.webservices.awsecommerceservice._2013_08_01.Item_type3;
 import com.amazon.webservices.awsecommerceservice._2013_08_01.Items_type3;
+import com.amzn.model.crawler.commpacks.requests.IRequestHolder;
+import com.amzn.model.crawler.commpacks.requests.RequestHolder;
 
 public class ResponseHolder {
     private ItemSearchResponse resp=null;
@@ -10,11 +14,11 @@ public class ResponseHolder {
     private Item_type3 itemOfItemTypes=null;
     
 
-    public ResponseHolder(ItemSearchResponse itemSearch) {
+    public ResponseHolder(ADBBean itemSearch) {
 	// TODO Auto-generated constructor stub
     }
     
-    public void validateResponsePagesCount(RequestHolder request){
+    public void validateResponsePagesCount(IRequestHolder request){
 	boolean flag=false;
 	for(int i=0;i<itemsOfResp.length;i++){
 	    flag=flag || 

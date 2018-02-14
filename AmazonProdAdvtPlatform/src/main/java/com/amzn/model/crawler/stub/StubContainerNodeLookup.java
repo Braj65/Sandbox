@@ -1,7 +1,10 @@
 package com.amzn.model.crawler.stub;
 
-import com.amzn.model.crawler.commpacks.RequestHolder;
+import java.rmi.RemoteException;
+
+import com.amazon.webservices.awsecommerceservice._2013_08_01.BrowseNodeLookup;
 import com.amzn.model.crawler.commpacks.ResponseHolder;
+import com.amzn.model.crawler.commpacks.requests.IRequestHolder;
 
 import pack.test.SignedRequestsHelper;
 
@@ -21,7 +24,7 @@ public class StubContainerNodeLookup extends AbsStubContainer{
     }
     
     @Override
-    public ResponseHolder executeOperation(RequestHolder sarchReq) {
-	return new ResponseHolder(stub.browseNodeLookup(searchReq.getBrowseNodeLookup()));
+    public ResponseHolder executeOperation(IRequestHolder searchReq) throws RemoteException {
+	return new ResponseHolder(stub.browseNodeLookup((BrowseNodeLookup)searchReq.getReqContainer()));
     }
 }
