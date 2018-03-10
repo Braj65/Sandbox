@@ -12,7 +12,7 @@ import com.amazon.webservices.awsecommerceservice._2013_08_01.ItemSearch;
 import com.amazon.webservices.awsecommerceservice._2013_08_01.ItemSearchResponse;
 import com.amzn.model.crawler.commpacks.NullResponseHolder;
 import com.amzn.model.crawler.commpacks.ResponseHolder;
-import com.amzn.model.crawler.commpacks.requests.RequestHolder;
+import com.amzn.model.crawler.commpacks.requests.IRequestHolder;
 
 import pack.test.SignedRequestsHelper;
 
@@ -48,7 +48,7 @@ public abstract class AbsStubContainer implements IStubContainer{
     }
 
     public static class NullStubContainer extends AbsStubContainer {
-	public ResponseHolder itemSearch(RequestHolder searchReq) {
+	public ResponseHolder itemSearch(IRequestHolder searchReq) {
 	    return new NullResponseHolder(null);
 	}
 
@@ -56,7 +56,7 @@ public abstract class AbsStubContainer implements IStubContainer{
 	protected void addStubOperation(String timeStamp) throws Exception {}
 
 	@Override
-	public ResponseHolder executeOperation(RequestHolder sarchReq) {return null;}
+	public ResponseHolder executeOperation(IRequestHolder sarchReq) {return null;}
 	
     }
 }

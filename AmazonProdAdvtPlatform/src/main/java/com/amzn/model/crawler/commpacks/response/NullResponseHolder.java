@@ -1,4 +1,4 @@
-package com.amzn.model.crawler.commpacks;
+package com.amzn.model.crawler.commpacks.response;
 
 import com.amazon.webservices.awsecommerceservice._2013_08_01.ItemSearchResponse;
 
