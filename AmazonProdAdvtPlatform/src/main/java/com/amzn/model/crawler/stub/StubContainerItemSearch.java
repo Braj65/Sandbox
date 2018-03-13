@@ -3,8 +3,8 @@ package com.amzn.model.crawler.stub;
 import java.rmi.RemoteException;
 
 import com.amazon.webservices.awsecommerceservice._2013_08_01.ItemSearch;
-import com.amzn.model.crawler.commpacks.ResponseHolder;
 import com.amzn.model.crawler.commpacks.requests.IRequestHolder;
+import com.amzn.model.crawler.commpacks.response.ResponseHolder;
 
 import pack.test.SignedRequestsHelper;
 
