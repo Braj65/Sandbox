@@ -8,4 +8,5 @@ import com.amazon.webservices.awsecommerceservice._2013_08_01.ItemSearch;
 public interface IRequestHolder {
     
     public ADBBean getReqContainer();
+    public ADBBean[] getReqArr();
 }

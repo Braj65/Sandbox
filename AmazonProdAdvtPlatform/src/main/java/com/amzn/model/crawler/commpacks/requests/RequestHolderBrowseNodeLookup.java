@@ -25,4 +25,10 @@ public class RequestHolderBrowseNodeLookup extends AbsRequestHolder{
 	// TODO Auto-generated method stub
 	return null;
     }
+
+    @Override
+    public ADBBean[] getReqArr() {
+	// TODO Auto-generated method stub
+	return null;
+    }
 }

@@ -49,4 +49,9 @@ public class RequestHolderItemSearch extends AbsRequestHolder {
 	requestContainer.setAssociateTag(AWESProperty.Value.ASSOCIATE_TAG.getString());
 	return requestContainer;
     }
+
+    @Override
+    public ADBBean[] getReqArr() {
+	return requestArr;
+    }
 }

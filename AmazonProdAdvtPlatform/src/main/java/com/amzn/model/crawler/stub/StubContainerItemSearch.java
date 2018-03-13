@@ -24,7 +24,7 @@ public class StubContainerItemSearch extends AbsStubContainer{
     }
 
     @Override
-    public ResponseHolder executeOperation(IRequestHolder sarchReq) throws RemoteException {
-	return new ResponseHolder(stub.itemSearch((ItemSearch)sarchReq.getReqContainer()));
+    public ResponseHolder executeOperation(IRequestHolder searchReq) throws RemoteException {
+	return new ResponseHolder(stub.itemSearch((ItemSearch)searchReq.getReqContainer()));
     }
 }
