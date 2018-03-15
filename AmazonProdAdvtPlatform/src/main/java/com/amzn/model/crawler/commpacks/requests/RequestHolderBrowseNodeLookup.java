@@ -31,4 +31,10 @@ public class RequestHolderBrowseNodeLookup extends AbsRequestHolder{
 	// TODO Auto-generated method stub
 	return null;
     }
+
+    @Override
+    public void createItemSearchRequest() {
+	// TODO Auto-generated method stub
+	
+    }
 }

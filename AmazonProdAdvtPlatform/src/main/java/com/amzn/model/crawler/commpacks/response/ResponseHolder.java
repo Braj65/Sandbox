@@ -1,5 +1,7 @@
 package com.amzn.model.crawler.commpacks.response;
 
+import java.util.HashMap;
+
 import org.apache.axis2.databinding.ADBBean;
 
 import com.amazon.webservices.awsecommerceservice._2013_08_01.Errors_type0;
@@ -13,12 +15,13 @@ public class ResponseHolder {
     private ItemSearchResponse resp=null;
     private Items_type3[] itemsOfResp=null;
     private Item_type3 itemOfItemTypes=null;
-    private ResponseParams respParams;
+    private ResponseItem respItem;
     
-    
+    private HashMap<String, ResponseItem> itemSet=new HashMap<String, ResponseItem>(); 
 
-    public ResponseHolder(ADBBean itemSearch) {
-	// TODO Auto-generated constructor stub
+    public ResponseHolder(ADBBean itemSearchResp) {
+	resp=(ItemSearchResponse) itemSearchResp;
+	respItem=new ResponseItem();
     }
     
     public void validateResponsePagesCount(IRequestHolder request){
@@ -49,15 +52,24 @@ public class ResponseHolder {
 	return params.substring(params.indexOf("'"), params.lastIndexOf("'")+1).split(",");
     }
 
-    public void parseForItems() {
+    public HashMap<String, ResponseItem> parseForItems() {
 	itemsOfResp=resp.getItems();
 	for(Items_type3 currItemList:itemsOfResp){
 	    if(currItemList.getItem()==null)
 		return itemSet;
 	    for(Item_type3 currItem:currItemList.getItem()){
-		respParams.populate(currItem);
+		respItem.populate(currItem);
+		if(respItem.OLowNewPrice!=null){
+		    respItem.price=respItem.OLowNewPrice.getFormattedPrice();
+		}else if(respItem.VLowSalePrice!=null){
+		    respItem.price=respItem.VLowSalePrice.toString();
+		}else if(respItem.VLowPrice!=null){
+		    respItem.price=respItem.VLowPrice.toString();
+		}
+		itemSet.put(respItem.ASIN, respItem);
 	    }
 	}
+	return itemSet;
     }
 
 }

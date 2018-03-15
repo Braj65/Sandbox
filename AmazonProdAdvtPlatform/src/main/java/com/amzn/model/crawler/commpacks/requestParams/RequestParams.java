@@ -15,17 +15,22 @@ public class RequestParams {
     
     public void loadRequest(RequestHolderItemSearch request){
 	ItemSearchRequest srchReq=null;
-	itemPageStart=(PositiveInteger) itemPageStart.subtract(PositiveInteger.ONE);
+//	itemPageStart=new PositiveInteger(itemPageStart.subtract(PositiveInteger.ONE).toString());
 	while(itemPageStart.compareTo(itemPageEnd.abs())!=1){
 	    srchReq=request.getSingleItemSearch();
 	    srchReq.setSearchIndex(srchIndex);
 	    srchReq.setBrowseNode(browseNodeId);
 	    srchReq.setItemPage(itemPageStart);
 	    srchReq.setResponseGroup(responseGroup);
-	    srchReq.setSort(getSortParam());
+	    srchReq.setSort(sortParam);
 	    request.requestArr[itemPageStart.intValue()]=srchReq;
-	    itemPageStart=(PositiveInteger) itemPageStart.add(PositiveInteger.ONE);
+	    itemPageStart=new PositiveInteger(itemPageStart.add(PositiveInteger.ONE).toString());
 	}
+	resetItemPageStart();
+    }
+    
+    public void resetItemPageStart(){
+	itemPageStart=new PositiveInteger(Integer.toString(1));
     }
     
     public String getSrchIndex() {
@@ -56,8 +61,8 @@ public class RequestParams {
     public PositiveInteger getItemPageEnd() {
         return itemPageEnd;
     }
-    public void setItemPageEnd(PositiveInteger itemPageEnd) {
-        this.itemPageEnd = itemPageEnd;
+    public void setItemPageEnd(PositiveInteger ten) {
+        this.itemPageEnd = ten;
     }
     public String[] getResponseGroup() {
         return responseGroup;

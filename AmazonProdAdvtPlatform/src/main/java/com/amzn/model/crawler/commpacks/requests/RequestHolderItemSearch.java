@@ -1,5 +1,7 @@
 package com.amzn.model.crawler.commpacks.requests;
 
+import java.util.LinkedList;
+import java.util.Queue;
 import java.util.Stack;
 
 import org.apache.axis2.databinding.ADBBean;
@@ -13,12 +15,13 @@ import com.amzn.model.crawler.stub.AWESProperty;
 public class RequestHolderItemSearch extends AbsRequestHolder {
     
     //
-    protected Stack<ItemSearchRequest[]> listReqArrBiGrouped=null;
+    protected LinkedList<ItemSearchRequest[]> listReqArrBiGrouped=null;
     
     public RequestHolderItemSearch(RequestParams requestParams){
 	this.requestParams=requestParams;
-	listReqArrBiGrouped=new Stack<ItemSearchRequest[]>();
-	requestArr=new ItemSearchRequest[requestParams.getItemPageEnd().intValue()];
+	listReqArrBiGrouped=new LinkedList<ItemSearchRequest[]>();
+	requestArr=new ItemSearchRequest[requestParams.getItemPageEnd().intValue()+1];
+//	requestArr=new ItemSearchRequest[posIntReqParams.get("itemPageEnd").intValue()+1];
 	requestContainer=new ItemSearch();
     }
     
@@ -32,11 +35,11 @@ public class RequestHolderItemSearch extends AbsRequestHolder {
     }
     
     public void loadSrchReqArrList(){
-	for(int i=requestParams.getItemPageStart().intValue();i<requestParams.getItemPageEnd().intValue();
+	for(int i=requestParams.getItemPageStart().intValue();i<=requestParams.getItemPageEnd().intValue();
 		i+=2){
 	    ItemSearchRequest[] subArr={(ItemSearchRequest) requestArr[i],
 		    (ItemSearchRequest) requestArr[i+1]};
-	    listReqArrBiGrouped.push(subArr);
+	    listReqArrBiGrouped.add(subArr);
 	}
     }
     
@@ -45,7 +48,7 @@ public class RequestHolderItemSearch extends AbsRequestHolder {
     }
     
     public ADBBean getReqContainer(){
-	requestContainer.setRequest(listReqArrBiGrouped.pop());
+	requestContainer.setRequest(listReqArrBiGrouped.getFirst());
 	requestContainer.setAssociateTag(AWESProperty.Value.ASSOCIATE_TAG.getString());
 	return requestContainer;
     }

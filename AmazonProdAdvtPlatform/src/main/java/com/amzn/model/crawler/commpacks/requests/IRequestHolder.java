@@ -9,4 +9,5 @@ public interface IRequestHolder {
     
     public ADBBean getReqContainer();
     public ADBBean[] getReqArr();
+    public void createItemSearchRequest();
 }

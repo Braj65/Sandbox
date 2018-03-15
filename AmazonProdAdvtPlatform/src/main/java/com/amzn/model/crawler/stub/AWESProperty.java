@@ -4,8 +4,8 @@ public class AWESProperty {
     private final static String slash=System.getProperty("file.separator");
     
     public enum Value{
-	AWS_ACCESS_KEY_ID("Access_Key","AKIAJBRG4SMARCVPZXGQ"),
-	AWS_SECRET_KEY("Secret_Key","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"),
+	AWS_ACCESS_KEY_ID("Access_Key","AKIAJ27BG3CPSXHSZ5ZQ"),
+	AWS_SECRET_KEY("Secret_Key","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"),
 	AWS_WSDL_DOC("Wsdl_Doc","http://security.amazonaws.com/doc/2007-01-01/"),
 	ASSOCIATE_TAG("Associate_Tag","isnnfoiwnit0d-21");
 	
