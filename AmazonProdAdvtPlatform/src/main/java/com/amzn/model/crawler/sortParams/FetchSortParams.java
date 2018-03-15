@@ -12,8 +12,8 @@ public class FetchSortParams {
     private IRequestHolder request=null;
     private ResponseHolder response=null;
     
-    public FetchSortParams(RequestParams requestParams){
-	request=new RequestHolderItemSearch(requestParams);
+    public FetchSortParams(/*RequestParams requestParams*/){
+	request=new RequestHolderItemSearch(/*requestParams*/);
     }
     
     public String[] getSortingParams(){
