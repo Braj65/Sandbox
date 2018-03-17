@@ -22,15 +22,20 @@ public class RequestContainer {
     private List<ItemSearchRequest[]> biGroupedList=new ArrayList<ItemSearchRequest[]>();
     
     private void createItemSrchReqRepo(){
-	
+	int currentPage=ITEM_PAGE_START_FOR_PRECREATE;
 	while(ITEM_PAGE_START_FOR_PRECREATE<=ITEM_PAGE_END_FOR_PRECREATE){
 	    srchReq=new ItemSearchRequest();
-	    this.copyEssentialsTo(srchReq);
+	    srchReq.setItemPage(new PositiveInteger(Integer.toString(currentPage++)));
+	    srchReq.setResponseGroup(responseGroup);
 	    srchReqArr[ITEM_PAGE_START_FOR_PRECREATE-1]=srchReq;
 	}
+	currentPage=ITEM_PAGE_START_FOR_PRECREATE;
     }
     
-    public void copyEssentialsTo(ItemSearchRequest currSrchReq){
-	
+    private void loadItemSearchContainer(){
+	for(int i=ITEM_PAGE_START_FOR_PRECREATE;i<=ITEM_PAGE_END_FOR_PRECREATE;i+=2){
+	    ItemSearchRequest[] biGroupedArr={srchReqArr[i], srchReqArr[i+1]};
+	    biGroupedList.add(biGroupedArr);
+	}
     }
 }
