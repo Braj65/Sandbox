@@ -11,12 +11,26 @@ import com.amazon.webservices.awsecommerceservice._2013_08_01.ItemSearchRequest;
 
 public class RequestContainer {
     
+    private final Integer ITEM_PAGE_START_FOR_PRECREATE=1, ITEM_PAGE_END_FOR_PRECREATE=10;
+    
     private Map<String, String> strReqParams=new HashMap<String, String>();
     private Map<String, PositiveInteger> posIntReqParams=new HashMap<String, PositiveInteger>();
     private String[] responseGroup;
     
     private ItemSearchRequest srchReq;
-    private ItemSearchRequest srchReqArr[];
+    private ItemSearchRequest srchReqArr[]=new ItemSearchRequest[ITEM_PAGE_END_FOR_PRECREATE];
     private List<ItemSearchRequest[]> biGroupedList=new ArrayList<ItemSearchRequest[]>();
     
+    private void createItemSrchReqRepo(){
+	
+	while(ITEM_PAGE_START_FOR_PRECREATE<=ITEM_PAGE_END_FOR_PRECREATE){
+	    srchReq=new ItemSearchRequest();
+	    this.copyEssentialsTo(srchReq);
+	    srchReqArr[ITEM_PAGE_START_FOR_PRECREATE-1]=srchReq;
+	}
+    }
+    
+    public void copyEssentialsTo(ItemSearchRequest currSrchReq){
+	
+    }
 }
