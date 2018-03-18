@@ -35,7 +35,13 @@ public class AbstractSortCrawl {
     private Integer ACTUAL_PAGE_END;
     
     public void crawl(){
-	
+//	int currPageCount=ACTUAL_PAGE_END;
+	for(int currPageCount=1;currPageCount<ACTUAL_PAGE_END;currPageCount+=2){
+	    StubFactory.getStubInstance("ItemSearch").executeOperation(reqHolder.getSrchReqContainer(currPageCount));
+	}
+	if(ACTUAL_PAGE_END%2!=0){
+	    StubFactory.getStubInstance("ItemSearch").executeOperation(reqHolder.getSingleReqLoadedContainer(ACTUAL_PAGE_END-1));
+	}
     }
     
 }

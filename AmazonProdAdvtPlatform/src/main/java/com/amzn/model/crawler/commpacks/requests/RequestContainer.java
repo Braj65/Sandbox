@@ -7,6 +7,7 @@ import java.util.Map;
 
 import org.apache.axis2.databinding.types.PositiveInteger;
 
+import com.amazon.webservices.awsecommerceservice._2013_08_01.ItemSearch;
 import com.amazon.webservices.awsecommerceservice._2013_08_01.ItemSearchRequest;
 
 public class RequestContainer {
@@ -20,6 +21,7 @@ public class RequestContainer {
     private ItemSearchRequest srchReq;
     private ItemSearchRequest srchReqArr[]=new ItemSearchRequest[ITEM_PAGE_END_FOR_PRECREATE];
     public List<ItemSearchRequest[]> biGroupedList=new ArrayList<ItemSearchRequest[]>();
+    private ItemSearch srchReqContainer;
     
     public void createItemSrchReqRepo(){
 	int currentPage=ITEM_PAGE_START_FOR_PRECREATE;
@@ -53,6 +55,12 @@ public class RequestContainer {
 	    for(ItemSearchRequest srchReq:srchReqArr){
 		srchReq.setSort(sortParam);
 	    }
+	}
+    }
+    
+    public void getSrchReqContainer(int reqPosition){
+	for(int i=reqPosition-1;i<=reqPosition;i++){
+	    
 	}
     }
 }
