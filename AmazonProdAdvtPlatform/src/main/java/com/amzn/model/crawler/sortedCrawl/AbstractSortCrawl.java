@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import com.amzn.model.crawler.commpacks.requests.IRequestHolder;
+import com.amzn.model.crawler.commpacks.requests.RequestContainer;
 import com.amzn.model.crawler.commpacks.response.ResponseHolder;
 import com.amzn.model.crawler.commpacks.response.ResponseItem;
 import com.amzn.model.crawler.stub.StubFactory;
@@ -29,4 +30,12 @@ public class AbstractSortCrawl {
 	}
 	return result;
     }
+    
+    private RequestContainer reqHolder;
+    private Integer ACTUAL_PAGE_END;
+    
+    public void crawl(){
+	
+    }
+    
 }

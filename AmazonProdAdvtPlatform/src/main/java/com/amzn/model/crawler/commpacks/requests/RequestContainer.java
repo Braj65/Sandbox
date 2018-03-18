@@ -19,23 +19,40 @@ public class RequestContainer {
     
     private ItemSearchRequest srchReq;
     private ItemSearchRequest srchReqArr[]=new ItemSearchRequest[ITEM_PAGE_END_FOR_PRECREATE];
-    private List<ItemSearchRequest[]> biGroupedList=new ArrayList<ItemSearchRequest[]>();
+    public List<ItemSearchRequest[]> biGroupedList=new ArrayList<ItemSearchRequest[]>();
     
-    private void createItemSrchReqRepo(){
+    public void createItemSrchReqRepo(){
 	int currentPage=ITEM_PAGE_START_FOR_PRECREATE;
-	while(ITEM_PAGE_START_FOR_PRECREATE<=ITEM_PAGE_END_FOR_PRECREATE){
+	while(currentPage<=ITEM_PAGE_END_FOR_PRECREATE){
 	    srchReq=new ItemSearchRequest();
 	    srchReq.setItemPage(new PositiveInteger(Integer.toString(currentPage++)));
 	    srchReq.setResponseGroup(responseGroup);
-	    srchReqArr[ITEM_PAGE_START_FOR_PRECREATE-1]=srchReq;
+	    srchReqArr[currentPage-1]=srchReq;
 	}
 	currentPage=ITEM_PAGE_START_FOR_PRECREATE;
     }
     
-    private void loadItemSearchContainer(){
+    public void loadItemSearchContainer(){
 	for(int i=ITEM_PAGE_START_FOR_PRECREATE;i<=ITEM_PAGE_END_FOR_PRECREATE;i+=2){
-	    ItemSearchRequest[] biGroupedArr={srchReqArr[i], srchReqArr[i+1]};
+	    ItemSearchRequest[] biGroupedArr={srchReqArr[i-1], srchReqArr[i]};
 	    biGroupedList.add(biGroupedArr);
+	}
+    }
+    
+    public void addSrchIndexAndNodeIdToSrchReqs(String srchIndex, String nodeId){
+	for(ItemSearchRequest[] srchReqArr:biGroupedList){
+	    for(ItemSearchRequest srchReq:srchReqArr){
+		srchReq.setSearchIndex(srchIndex);
+		srchReq.setBrowseNode(nodeId);
+	    }
+	}
+    }
+    
+    public void addSortParamToSrchReqs(String sortParam){
+	for(ItemSearchRequest[] srchReqArr:biGroupedList){
+	    for(ItemSearchRequest srchReq:srchReqArr){
+		srchReq.setSort(sortParam);
+	    }
 	}
     }
 }
