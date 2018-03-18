@@ -1,5 +1,6 @@
 package com.amzn.model.crawler.sortedCrawl;
 
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -37,10 +38,20 @@ public class AbstractSortCrawl {
     public void crawl(){
 //	int currPageCount=ACTUAL_PAGE_END;
 	for(int currPageCount=1;currPageCount<ACTUAL_PAGE_END;currPageCount+=2){
-	    StubFactory.getStubInstance("ItemSearch").executeOperation(reqHolder.getSrchReqContainer(currPageCount));
+	    try {
+		StubFactory.getStubInstance("ItemSearch").executeOperation(reqHolder.getSrchReqContainer(currPageCount));
+	    } catch (RemoteException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	    }
 	}
 	if(ACTUAL_PAGE_END%2!=0){
-	    StubFactory.getStubInstance("ItemSearch").executeOperation(reqHolder.getSingleReqLoadedContainer(ACTUAL_PAGE_END-1));
+	    try {
+		StubFactory.getStubInstance("ItemSearch").executeOperation(reqHolder.getSingleReqLoadedContainer(ACTUAL_PAGE_END-1));
+	    } catch (RemoteException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	    }
 	}
     }
     

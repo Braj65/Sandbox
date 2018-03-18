@@ -5,10 +5,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.axis2.databinding.ADBBean;
 import org.apache.axis2.databinding.types.PositiveInteger;
 
 import com.amazon.webservices.awsecommerceservice._2013_08_01.ItemSearch;
 import com.amazon.webservices.awsecommerceservice._2013_08_01.ItemSearchRequest;
+import com.amzn.model.crawler.stub.AWESProperty;
 
 public class RequestContainer {
     
@@ -21,7 +23,7 @@ public class RequestContainer {
     private ItemSearchRequest srchReq;
     private ItemSearchRequest srchReqArr[]=new ItemSearchRequest[ITEM_PAGE_END_FOR_PRECREATE];
     public List<ItemSearchRequest[]> biGroupedList=new ArrayList<ItemSearchRequest[]>();
-    private ItemSearch srchReqContainer;
+    private ItemSearch srchReqContainer=new ItemSearch();
     
     public void createItemSrchReqRepo(){
 	int currentPage=ITEM_PAGE_START_FOR_PRECREATE;
@@ -58,9 +60,15 @@ public class RequestContainer {
 	}
     }
     
-    public void getSrchReqContainer(int reqPosition){
-	for(int i=reqPosition-1;i<=reqPosition;i++){
-	    
-	}
+    public ADBBean getSrchReqContainer(int reqPosition){
+	srchReqContainer.setRequest(new ItemSearchRequest[]{srchReqArr[reqPosition-1], srchReqArr[reqPosition]});
+	srchReqContainer.setAssociateTag(AWESProperty.Value.ASSOCIATE_TAG.getString());
+	return srchReqContainer;
+    }
+    
+    public ADBBean getSingleReqLoadedContainer(int reqPosition){
+	srchReqContainer.setRequest(new ItemSearchRequest[]{srchReqArr[reqPosition]});
+	srchReqContainer.setAssociateTag(AWESProperty.Value.ASSOCIATE_TAG.getString());
+	return srchReqContainer;
     }
 }
