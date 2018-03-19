@@ -37,8 +37,18 @@ public class AbstractSortCrawl {
     private RequestContainer reqHolder;
     private Integer ACTUAL_PAGE_END=10;
     
+    public AbstractSortCrawl(RequestContainer reqCont){
+	reqHolder=reqCont;
+    }
+    
     public void crawl(){
 	for(int currPageCount=1;currPageCount<ACTUAL_PAGE_END;currPageCount+=2){
+	    try {
+		Thread.sleep(2000);
+	    } catch (InterruptedException e1) {
+		// TODO Auto-generated catch block
+		e1.printStackTrace();
+	    }
 	    try {
 		StubFactory.getStubInstance("ItemSearch").executeOperation(reqHolder.getSrchReqContainer(currPageCount));
 	    } catch (RemoteException e) {
@@ -54,35 +64,17 @@ public class AbstractSortCrawl {
 		e.printStackTrace();
 	    }
 	}
+	try {
+		Thread.sleep(1000);
+	    } catch (InterruptedException e1) {
+		// TODO Auto-generated catch block
+		e1.printStackTrace();
+	    }
     }
     
     //Populate actual page count
     public void populateActualPageCount(){
 	
->>>>>>> Stashed changes
-    }
-    
-    private RequestContainer reqHolder;
-    private Integer ACTUAL_PAGE_END;
-    
-    public void crawl(){
-//	int currPageCount=ACTUAL_PAGE_END;
-	for(int currPageCount=1;currPageCount<ACTUAL_PAGE_END;currPageCount+=2){
-	    try {
-		StubFactory.getStubInstance("ItemSearch").executeOperation(reqHolder.getSrchReqContainer(currPageCount));
-	    } catch (RemoteException e) {
-		// TODO Auto-generated catch block
-		e.printStackTrace();
-	    }
-	}
-	if(ACTUAL_PAGE_END%2!=0){
-	    try {
-		StubFactory.getStubInstance("ItemSearch").executeOperation(reqHolder.getSingleReqLoadedContainer(ACTUAL_PAGE_END-1));
-	    } catch (RemoteException e) {
-		// TODO Auto-generated catch block
-		e.printStackTrace();
-	    }
-	}
-    }
-    
+
+    }    
 }
