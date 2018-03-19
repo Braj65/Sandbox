@@ -18,7 +18,7 @@ public class AbstractSortCrawl {
      
     private static final Integer PAGECOUNT=10;
     
-    public HashMap<String, ResponseItem> crawl(IRequestHolder request){
+    /*public HashMap<String, ResponseItem> crawl(IRequestHolder request){
 	for(int i=1;i<=PAGECOUNT/2;i++){
 	    try{
 		response=StubFactory.getStubInstance("ItemSearch").executeOperation(request);
@@ -28,5 +28,35 @@ public class AbstractSortCrawl {
 	    }
 	}
 	return result;
+<<<<<<< Updated upstream
+=======
+    }*/
+    
+    private RequestContainer reqHolder;
+    private Integer ACTUAL_PAGE_END=10;
+    
+    public void crawl(){
+	for(int currPageCount=1;currPageCount<ACTUAL_PAGE_END;currPageCount+=2){
+	    try {
+		StubFactory.getStubInstance("ItemSearch").executeOperation(reqHolder.getSrchReqContainer(currPageCount));
+	    } catch (RemoteException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	    }
+	}
+	if(ACTUAL_PAGE_END%2!=0){
+	    try {
+		StubFactory.getStubInstance("ItemSearch").executeOperation(reqHolder.getSingleReqLoadedContainer(ACTUAL_PAGE_END-1));
+	    } catch (RemoteException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	    }
+	}
+    }
+    
+    //Populate actual page count
+    public void populateActualPageCount(){
+	
+>>>>>>> Stashed changes
     }
 }

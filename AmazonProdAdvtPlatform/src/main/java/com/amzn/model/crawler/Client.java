@@ -7,6 +7,7 @@ import org.apache.axis2.databinding.types.PositiveInteger;
 
 import com.amzn.model.crawler.commpacks.requestParams.RequestParams;
 import com.amzn.model.crawler.commpacks.requests.IRequestHolder;
+import com.amzn.model.crawler.commpacks.requests.RequestContainer;
 import com.amzn.model.crawler.commpacks.requests.RequestHolderItemSearch;
 import com.amzn.model.crawler.commpacks.response.ResponseItem;
 import com.amzn.model.crawler.sortedCrawl.AbstractSortCrawl;
@@ -15,7 +16,7 @@ public class Client {
     
     public static void main(String[] args) {
 //	AbsStubContainer stub=StubFactory.getStubInstance("ItemSearch");
-	RequestParams reqParams=new RequestParams();
+/*	RequestParams reqParams=new RequestParams();
 	reqParams.setSrchIndex("VideoGames");
 	reqParams.setBrowseNodeId("2591141031");
 	reqParams.setResponseGroup(new String[] { "ItemAttributes", "Offers", "VariationSummary" });
@@ -23,6 +24,17 @@ public class Client {
 	reqParams.setItemPageStart(new PositiveInteger(Integer.toString(1)));
 	//reqParams.setSortParam(sortParam);
 	IRequestHolder request=new RequestHolderItemSearch(reqParams);
+<<<<<<< Updated upstream
+=======
+	
+	request.getStrReqParams().put("srchIndex", "VideoGames");
+	request.getStrReqParams().put("browseNodeId", "2591141031");
+	
+	request.setRespGroup(new String[] { "ItemAttributes", "Offers", "VariationSummary" });
+	request.getposIntReqParams().put("itemPageStart", new PositiveInteger(Integer.toString(1)));
+	request.getposIntReqParams().put("itemPageEnd", new PositiveInteger(Integer.toString(10)));
+	
+>>>>>>> Stashed changes
 	request.createItemSearchRequest();
 	AbstractSortCrawl sortCrawl=new AbstractSortCrawl();
 	HashMap<String, ResponseItem> result=sortCrawl.crawl(request);
@@ -31,7 +43,17 @@ public class Client {
 	    String ASIN=iter.next();
 	    ResponseItem resp=result.get(ASIN);
 	    System.out.println(resp.title);
-	}
+	}*/
+	
+	RequestContainer reqContainer=new RequestContainer();
+	//precreate start
+	reqContainer.addResponseGroup(new String[] { "ItemAttributes", "Offers", "VariationSummary" });
+	reqContainer.createItemSrchReqRepo();
+	//precreate over
+	reqContainer.addSrchIndexAndNodeIdToSrchReqs("VideoGames", "2591141031");
+	AbstractSortCrawl crawl=new AbstractSortCrawl();
+	
+	crawl.crawl();
     }
 
 }

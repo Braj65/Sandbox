@@ -7,6 +7,7 @@
 package com.amazon.stubs;
 
 import org.apache.axiom.soap.SOAPHeader;
+import org.apache.axis2.Constants;
 
 /*
  *  AWSECommerceServiceStub java implementation
@@ -441,7 +442,8 @@ public class AWSECommerceServiceStub extends org.apache.axis2.client.Stub
 
             // create a message context
             _messageContext = new org.apache.axis2.context.MessageContext();
-
+            /*_messageContext.setProperty(Constants.Configuration.HTTP_METHOD, 
+        	    Constants.Configuration.HTTP_METHOD_GET);*/
             // create SOAP envelope with that payload
             org.apache.axiom.soap.SOAPEnvelope env = null;
 
