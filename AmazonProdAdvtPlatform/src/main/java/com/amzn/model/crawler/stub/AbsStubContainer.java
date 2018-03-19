@@ -2,9 +2,11 @@ package com.amzn.model.crawler.stub;
 
 import org.apache.axiom.om.OMAbstractFactory;
 import org.apache.axiom.om.OMElement;
+import org.apache.axis2.databinding.ADBBean;
 import org.apache.axis2.transport.http.HTTPConstants;
 
 import com.amazon.stubs.AWSECommerceServiceStub;
+import com.amazon.webservices.awsecommerceservice._2013_08_01.ItemSearch;
 import com.amzn.model.crawler.commpacks.requests.IRequestHolder;
 import com.amzn.model.crawler.commpacks.response.NullResponseHolder;
 import com.amzn.model.crawler.commpacks.response.ResponseHolder;
@@ -51,7 +53,7 @@ public abstract class AbsStubContainer implements IStubContainer{
 	protected void addStubOperation(String timeStamp) throws Exception {}
 
 	@Override
-	public ResponseHolder executeOperation(IRequestHolder sarchReq) {return null;}
+	public ResponseHolder executeOperation(ADBBean sarchReq) {return null;}
 	
     }
 }
