@@ -9,7 +9,6 @@ import com.amazon.webservices.awsecommerceservice._2013_08_01.ItemSearchRequest;
 import com.amazon.webservices.awsecommerceservice._2013_08_01.ItemSearchResponse;
 import com.amazon.webservices.awsecommerceservice._2013_08_01.Item_type3;
 import com.amazon.webservices.awsecommerceservice._2013_08_01.Items_type3;
-import com.amzn.model.crawler.commpacks.requests.IRequestHolder;
 
 public class ResponseHolder {
     private ItemSearchResponse resp=null;
@@ -24,7 +23,7 @@ public class ResponseHolder {
 	respItem=new ResponseItem();
     }
     
-    public void validateResponsePagesCount(IRequestHolder request){
+/*    public void validateResponsePagesCount(IRequestHolder request){
 	boolean flag=false;
 	for(int i=0;i<itemsOfResp.length;i++){
 	    flag=flag || 
@@ -34,7 +33,7 @@ public class ResponseHolder {
 	if(!flag)
 	    throw new RuntimeException("Error in class Abstractsort applied. Mismatch in"
 	    	+ "page counts between request sent and response received");
-    }
+    }*/
     
     public Errors_type0 getOpsErrors(){
 	return resp.getOperationRequest().getErrors();

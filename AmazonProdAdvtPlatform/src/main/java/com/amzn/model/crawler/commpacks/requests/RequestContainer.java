@@ -1,8 +1,6 @@
 package com.amzn.model.crawler.commpacks.requests;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import org.apache.axis2.databinding.ADBBean;
@@ -22,7 +20,6 @@ public class RequestContainer {
     
     private ItemSearchRequest srchReq;
     private ItemSearchRequest srchReqArr[]=new ItemSearchRequest[ITEM_PAGE_END_FOR_PRECREATE];
-//    public List<ItemSearchRequest[]> biGroupedList=new ArrayList<ItemSearchRequest[]>();
     private ItemSearch srchReqContainer=new ItemSearch();
     
     public void createItemSrchReqRepo(){
@@ -37,13 +34,6 @@ public class RequestContainer {
 	currentPage=ITEM_PAGE_START_FOR_PRECREATE;
     }
     
-    /*public void loadItemSearchContainer(){
-	for(int i=ITEM_PAGE_START_FOR_PRECREATE;i<=ITEM_PAGE_END_FOR_PRECREATE;i+=2){
-	    ItemSearchRequest[] biGroupedArr={srchReqArr[i-1], srchReqArr[i]};
-	    biGroupedList.add(biGroupedArr);
-	}
-    }*/
-    
     public void addResponseGroup(String[] respGrp){
 	responseGroup=respGrp;
     }
@@ -53,23 +43,12 @@ public class RequestContainer {
 	    srchReq.setSearchIndex(srchIndex);
 	    srchReq.setBrowseNode(nodeId);
 	}
-	/*for(ItemSearchRequest[] srchReqArr:biGroupedList){
-	    for(ItemSearchRequest srchReq:srchReqArr){
-		srchReq.setSearchIndex(srchIndex);
-		srchReq.setBrowseNode(nodeId);
-	    }
-	}*/
     }
     
     public void addSortParamToSrchReqs(String sortParam){
 	for(ItemSearchRequest srchReq:srchReqArr){
 	    srchReq.setSort(sortParam);
 	}
-	/*for(ItemSearchRequest[] srchReqArr:biGroupedList){
-	    for(ItemSearchRequest srchReq:srchReqArr){
-		srchReq.setSort(sortParam);
-	    }
-	}*/
     }
     
     public ADBBean getSrchReqContainer(int reqPosition){

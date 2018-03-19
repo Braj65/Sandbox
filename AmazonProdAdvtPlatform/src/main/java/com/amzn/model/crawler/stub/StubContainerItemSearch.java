@@ -5,7 +5,6 @@ import java.rmi.RemoteException;
 import org.apache.axis2.databinding.ADBBean;
 
 import com.amazon.webservices.awsecommerceservice._2013_08_01.ItemSearch;
-import com.amzn.model.crawler.commpacks.requests.IRequestHolder;
 import com.amzn.model.crawler.commpacks.response.ResponseHolder;
 
 import pack.test.SignedRequestsHelper;

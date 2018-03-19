@@ -7,7 +7,6 @@ import org.apache.axis2.transport.http.HTTPConstants;
 
 import com.amazon.stubs.AWSECommerceServiceStub;
 import com.amazon.webservices.awsecommerceservice._2013_08_01.ItemSearch;
-import com.amzn.model.crawler.commpacks.requests.IRequestHolder;
 import com.amzn.model.crawler.commpacks.response.NullResponseHolder;
 import com.amzn.model.crawler.commpacks.response.ResponseHolder;
 
@@ -45,10 +44,7 @@ public abstract class AbsStubContainer implements IStubContainer{
     }
 
     public static class NullStubContainer extends AbsStubContainer {
-	public ResponseHolder itemSearch(IRequestHolder searchReq) {
-	    return new NullResponseHolder(null);
-	}
-
+	
 	@Override
 	protected void addStubOperation(String timeStamp) throws Exception {}
 
