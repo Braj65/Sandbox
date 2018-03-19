@@ -23,18 +23,7 @@ public class Client {
 	reqParams.setItemPageEnd(new PositiveInteger(Integer.toString(10)));
 	reqParams.setItemPageStart(new PositiveInteger(Integer.toString(1)));
 	//reqParams.setSortParam(sortParam);
-	IRequestHolder request=new RequestHolderItemSearch(reqParams);
-<<<<<<< Updated upstream
-=======
-	
-	request.getStrReqParams().put("srchIndex", "VideoGames");
-	request.getStrReqParams().put("browseNodeId", "2591141031");
-	
-	request.setRespGroup(new String[] { "ItemAttributes", "Offers", "VariationSummary" });
-	request.getposIntReqParams().put("itemPageStart", new PositiveInteger(Integer.toString(1)));
-	request.getposIntReqParams().put("itemPageEnd", new PositiveInteger(Integer.toString(10)));
-	
->>>>>>> Stashed changes
+
 	request.createItemSearchRequest();
 	AbstractSortCrawl sortCrawl=new AbstractSortCrawl();
 	HashMap<String, ResponseItem> result=sortCrawl.crawl(request);

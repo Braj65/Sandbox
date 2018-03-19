@@ -2,6 +2,7 @@ package com.amzn.model.crawler.commpacks.requestParams;
 
 import java.math.BigInteger;
 
+import org.apache.axis2.databinding.ADBBean;
 import org.apache.axis2.databinding.types.PositiveInteger;
 
 import com.amazon.webservices.awsecommerceservice._2013_08_01.ItemSearchRequest;
@@ -14,15 +15,15 @@ public class RequestParams {
     private String[] responseGroup;
     
     public void loadRequest(RequestHolderItemSearch request){
-	ItemSearchRequest srchReq=null;
+	ADBBean srchReq=null;
 //	itemPageStart=new PositiveInteger(itemPageStart.subtract(PositiveInteger.ONE).toString());
 	while(itemPageStart.compareTo(itemPageEnd.abs())!=1){
-	    srchReq=request.getSingleItemSearch();
-	    srchReq.setSearchIndex(srchIndex);
-	    srchReq.setBrowseNode(browseNodeId);
-	    srchReq.setItemPage(itemPageStart);
-	    srchReq.setResponseGroup(responseGroup);
-	    srchReq.setSort(sortParam);
+	    srchReq=(ItemSearchRequest)request.getSingleItemSearch();
+	    ((ItemSearchRequest) srchReq).setSearchIndex(srchIndex);
+	    ((ItemSearchRequest) srchReq).setBrowseNode(browseNodeId);
+	    ((ItemSearchRequest) srchReq).setItemPage(itemPageStart);
+	    ((ItemSearchRequest) srchReq).setResponseGroup(responseGroup);
+	    ((ItemSearchRequest) srchReq).setSort(sortParam);
 	    request.requestArr[itemPageStart.intValue()]=srchReq;
 	    itemPageStart=new PositiveInteger(itemPageStart.add(PositiveInteger.ONE).toString());
 	}

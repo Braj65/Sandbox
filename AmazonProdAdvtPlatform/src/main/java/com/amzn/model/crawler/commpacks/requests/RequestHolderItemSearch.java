@@ -17,11 +17,12 @@ public class RequestHolderItemSearch extends AbsRequestHolder {
     //
     protected LinkedList<ItemSearchRequest[]> listReqArrBiGrouped=null;
     
-    public RequestHolderItemSearch(RequestParams requestParams){
-	this.requestParams=requestParams;
+    public RequestHolderItemSearch(){
+//	this.requestParams=requestParams;
 	listReqArrBiGrouped=new LinkedList<ItemSearchRequest[]>();
-	requestArr=new ItemSearchRequest[requestParams.getItemPageEnd().intValue()+1];
-//	requestArr=new ItemSearchRequest[posIntReqParams.get("itemPageEnd").intValue()+1];
+//	requestArr=new ItemSearchRequest[requestParams.getItemPageEnd().intValue()+1];
+	requestArr=new ItemSearchRequest[posIntReqParams.get("itemPageEnd").intValue()+1];
+	request=new ItemSearchRequest();
 	requestContainer=new ItemSearch();
     }
     
@@ -43,8 +44,8 @@ public class RequestHolderItemSearch extends AbsRequestHolder {
 	}
     }
     
-    public ItemSearchRequest getSingleItemSearch(){
-	return new ItemSearchRequest();
+    public ADBBean getSingleItemSearch(){
+	return request;
     }
     
     public ADBBean getReqContainer(){
