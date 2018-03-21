@@ -20,6 +20,19 @@ public class RequestContainer {
     private ItemSearchRequest srchReqArr[]=new ItemSearchRequest[ITEM_PAGE_END_FOR_PRECREATE];
     private ItemSearch srchReqContainer=new ItemSearch();
     
+    public RequestContainer(String[] respGrp){
+	reqParameters=new RequestParameter(respGrp);
+    }
+    
+    public void createItemSrchRepo(String[] respGrp){
+	int currentPage=ITEM_PAGE_START_FOR_PRECREATE;
+	while(currentPage<=ITEM_PAGE_END_FOR_PRECREATE){
+	    srchReq=new ItemSearchRequest();
+	    srchReqArr[currentPage-1]=srchReq;
+	    currentPage++;
+	}
+    }
+    
     public void createItemSrchReqRepo(){
 	int currentPage=ITEM_PAGE_START_FOR_PRECREATE;
 	while(currentPage<=ITEM_PAGE_END_FOR_PRECREATE){
