@@ -14,4 +14,20 @@ public class RequestParameter {
     public RequestParameter(String[] respGrp){
 	responseGroup=respGrp;
     }
+    
+    public void fetchItemPageCnt(){
+	
+    }
+    
+    public void fetchSortParams(){
+	
+    }
+    
+    public void loadSrchIndex(String srchIndex){
+	
+    }
+    
+    public void loadNodeId(String nodeId){
+	
+    }
 }
