@@ -14,8 +14,8 @@ public class RequestContainer {
     
     private final Integer ITEM_PAGE_START_FOR_PRECREATE=1, ITEM_PAGE_END_FOR_PRECREATE=10;
     
-    public Map<String, String> strReqParams=new HashMap<String, String>();
-    public Map<String, PositiveInteger> posIntReqParams=new HashMap<String, PositiveInteger>();
+    /*public Map<String, String> strReqParams=new HashMap<String, String>();
+    public Map<String, PositiveInteger> posIntReqParams=new HashMap<String, PositiveInteger>();*/
     public String[] responseGroup;
     
     private ItemSearchRequest srchReq;

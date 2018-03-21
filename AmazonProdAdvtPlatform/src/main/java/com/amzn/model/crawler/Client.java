@@ -18,6 +18,7 @@ public class Client {
 	reqContainer.createItemSrchReqRepo();
 	//precreate over
 	reqContainer.addSrchIndexAndNodeIdToSrchReqs("VideoGames", "2591141031");
+	reqContainer.addSortParamToSrchReqs(null);
 	AbstractSortCrawl crawl=new AbstractSortCrawl(reqContainer);
 	
 	crawl.crawl();
