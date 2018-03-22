@@ -9,12 +9,14 @@ import org.apache.axis2.databinding.types.PositiveInteger;
 import com.amazon.webservices.awsecommerceservice._2013_08_01.ItemSearch;
 import com.amazon.webservices.awsecommerceservice._2013_08_01.ItemSearchRequest;
 import com.amzn.model.crawler.stub.AWESProperty;
+import com.amzn.model.nodesToBeCrawled.nodes.nodeEntity.NodeStats;
 
 public class RequestContainer {
     
     private final Integer ITEM_PAGE_START_FOR_PRECREATE=1, ITEM_PAGE_END_FOR_PRECREATE=10;
     
     private RequestParameter reqParameters;
+    private NodeStats incomingNode;
     
     private ItemSearchRequest srchReq;
     private ItemSearchRequest srchReqArr[]=new ItemSearchRequest[ITEM_PAGE_END_FOR_PRECREATE];
@@ -24,7 +26,7 @@ public class RequestContainer {
 	reqParameters=new RequestParameter(respGrp);
     }
     
-    public void createItemSrchRepo(String[] respGrp){
+    public void createItemSrchRepo(){
 	int currentPage=ITEM_PAGE_START_FOR_PRECREATE;
 	while(currentPage<=ITEM_PAGE_END_FOR_PRECREATE){
 	    srchReq=new ItemSearchRequest();
@@ -33,7 +35,15 @@ public class RequestContainer {
 	}
     }
     
-    public void createItemSrchReqRepo(){
+    public void loadNodeStats(NodeStats stats){
+	incomingNode=stats;
+    }
+    
+    public void loadEachReqWithItemPage(NodeStats node){
+	
+    }
+    
+    /*public void createItemSrchReqRepo(){
 	int currentPage=ITEM_PAGE_START_FOR_PRECREATE;
 	while(currentPage<=ITEM_PAGE_END_FOR_PRECREATE){
 	    srchReq=new ItemSearchRequest();
@@ -43,7 +53,7 @@ public class RequestContainer {
 	    currentPage++;
 	}
 	currentPage=ITEM_PAGE_START_FOR_PRECREATE;
-    }
+    }*/
     
     public void addResponseGroup(String[] respGrp){
 	responseGroup=respGrp;
