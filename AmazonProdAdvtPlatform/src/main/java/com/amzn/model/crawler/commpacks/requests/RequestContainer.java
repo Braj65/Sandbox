@@ -1,5 +1,6 @@
 package com.amzn.model.crawler.commpacks.requests;
 
+import java.rmi.RemoteException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -8,7 +9,11 @@ import org.apache.axis2.databinding.types.PositiveInteger;
 
 import com.amazon.webservices.awsecommerceservice._2013_08_01.ItemSearch;
 import com.amazon.webservices.awsecommerceservice._2013_08_01.ItemSearchRequest;
+import com.amazon.webservices.awsecommerceservice._2013_08_01.ItemSearchResponse;
+import com.amzn.model.crawler.commpacks.response.NullResponseHolder;
+import com.amzn.model.crawler.commpacks.response.ResponseHolder;
 import com.amzn.model.crawler.stub.AWESProperty;
+import com.amzn.model.crawler.stub.StubFactory;
 import com.amzn.model.nodesToBeCrawled.nodes.nodeEntity.NodeStats;
 
 public class RequestContainer {
@@ -39,8 +44,22 @@ public class RequestContainer {
 	incomingNode=stats;
     }
     
-    public void loadEachReqWithItemPage(NodeStats node){
+    public int loadEachReqWithItemPage(NodeStats node){
+	return runRequest().getTotalPages().intValue();
+    }
+    
+    public ResponseHolder runRequest(){
+	ItemSearchRequest[] singleReq={srchReqArr[0]};
+	srchReqContainer.setRequest(singleReq);
+	srchReqContainer.setAssociateTag(AWESProperty.Value.ASSOCIATE_TAG.getString());
 	
+	try {
+	    return StubFactory.getStubInstance("ItemSearch").executeOperation(srchReqContainer);
+	} catch (RemoteException e) {
+	    // TODO Auto-generated catch block
+	    e.printStackTrace();
+	}
+	return ResponseHolder.NULLINSTANCE;
     }
     
     /*public void createItemSrchReqRepo(){

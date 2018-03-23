@@ -3,6 +3,7 @@ package com.amzn.model.crawler.commpacks.response;
 import java.util.HashMap;
 
 import org.apache.axis2.databinding.ADBBean;
+import org.apache.axis2.databinding.types.NonNegativeInteger;
 
 import com.amazon.webservices.awsecommerceservice._2013_08_01.Errors_type0;
 import com.amazon.webservices.awsecommerceservice._2013_08_01.ItemSearchRequest;
@@ -16,7 +17,9 @@ public class ResponseHolder {
     private Item_type3 itemOfItemTypes=null;
     private ResponseItem respItem;
     
-    private HashMap<String, ResponseItem> itemSet=new HashMap<String, ResponseItem>(); 
+    private HashMap<String, ResponseItem> itemSet=new HashMap<String, ResponseItem>();
+    
+    public static final NullResponseHolder NULLINSTANCE=new NullResponseHolder(null);
 
     public ResponseHolder(ADBBean itemSearchResp) {
 	resp=(ItemSearchResponse) itemSearchResp;
@@ -50,6 +53,10 @@ public class ResponseHolder {
 	params=params.replaceAll("'", "");
 	return params.substring(params.indexOf("'"), params.lastIndexOf("'")+1).split(",");
     }
+    
+    public NonNegativeInteger getTotalPages(){
+	return resp.getItems()[0].getTotalPages();
+    }
 
     public HashMap<String, ResponseItem> parseForItems() {
 	itemsOfResp=resp.getItems();
@@ -69,6 +76,14 @@ public class ResponseHolder {
 	    }
 	}
 	return itemSet;
+    }
+    
+    public static class NullResponseHolder extends ResponseHolder{
+	private long currentTimeSec;
+	public NullResponseHolder(ADBBean itemSearchResp) {
+	    super(itemSearchResp);
+	    currentTimeSec=System.currentTimeMillis()/1000;
+	}
     }
 
 }
