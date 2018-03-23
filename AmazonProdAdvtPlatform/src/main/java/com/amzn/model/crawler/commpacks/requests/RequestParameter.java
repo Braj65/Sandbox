@@ -5,6 +5,9 @@ import java.util.Map;
 
 import org.apache.axis2.databinding.types.PositiveInteger;
 
+import com.amazon.webservices.awsecommerceservice._2013_08_01.ItemSearchRequest;
+import com.amzn.model.nodesToBeCrawled.nodes.nodeEntity.NodeStats;
+
 public class RequestParameter {
     
     public Map<String, String> strReqParams=new HashMap<String, String>();
@@ -15,8 +18,12 @@ public class RequestParameter {
 	responseGroup=respGrp;
     }
     
-    public void fetchItemPageCnt(){
-	
+    public void fetchItemPageCnt(NodeStats nodeStat){
+	ItemSearchRequest srchRequest=new ItemSearchRequest();
+	srchRequest.setSearchIndex(nodeStat.getSearchIndex());
+	strReqParams.put("srchIndex", nodeStat.getSearchIndex());
+	srchRequest.setBrowseNode(nodeStat.getNodeId().toString());
+	srchRequest.setItemPage(new PositiveInteger(Integer.toString(1)));
     }
     
     public void fetchSortParams(){

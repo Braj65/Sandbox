@@ -45,10 +45,14 @@ public class RequestContainer {
     }
     
     public int loadEachReqWithItemPage(NodeStats node){
+	srchReqArr[0].setSearchIndex(node.getSearchIndex());
+	srchReqArr[0].setBrowseNode(node.getNodeId().toString());
+	srchReqArr[0].setItemPage(new PositiveInteger(Integer.toString(1)));
+	
 	return runRequest().getTotalPages().intValue();
     }
     
-    public ResponseHolder runRequest(){
+    public ResponseHolder runRequest(){	
 	ItemSearchRequest[] singleReq={srchReqArr[0]};
 	srchReqContainer.setRequest(singleReq);
 	srchReqContainer.setAssociateTag(AWESProperty.Value.ASSOCIATE_TAG.getString());
