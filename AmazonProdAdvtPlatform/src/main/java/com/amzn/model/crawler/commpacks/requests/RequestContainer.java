@@ -1,35 +1,27 @@
 package com.amzn.model.crawler.commpacks.requests;
 
-import java.rmi.RemoteException;
-import java.util.HashMap;
-import java.util.Map;
-
 import org.apache.axis2.databinding.ADBBean;
-import org.apache.axis2.databinding.types.PositiveInteger;
 
+import com.amazon.webservices.awsecommerceservice._2013_08_01.ItemLookup;
+import com.amazon.webservices.awsecommerceservice._2013_08_01.ItemLookupRequest;
 import com.amazon.webservices.awsecommerceservice._2013_08_01.ItemSearch;
 import com.amazon.webservices.awsecommerceservice._2013_08_01.ItemSearchRequest;
-import com.amazon.webservices.awsecommerceservice._2013_08_01.ItemSearchResponse;
-import com.amzn.model.crawler.commpacks.response.NullResponseHolder;
-import com.amzn.model.crawler.commpacks.response.ResponseHolder;
 import com.amzn.model.crawler.stub.AWESProperty;
-import com.amzn.model.crawler.stub.StubFactory;
 import com.amzn.model.nodesToBeCrawled.nodes.nodeEntity.NodeStats;
 
 public class RequestContainer {
     
     private final Integer ITEM_PAGE_START_FOR_PRECREATE=1, ITEM_PAGE_END_FOR_PRECREATE=10;
     
-    private RequestParameter reqParameters;
+    public RequestParameter reqParameters;
     private NodeStats incomingNode;
     
     private ItemSearchRequest srchReq;
     private ItemSearchRequest srchReqArr[]=new ItemSearchRequest[ITEM_PAGE_END_FOR_PRECREATE];
     private ItemSearch srchReqContainer=new ItemSearch();
     
-    public RequestContainer(String[] respGrp){
-	reqParameters=new RequestParameter(respGrp);
-    }
+    ItemLookupRequest lookReq=new ItemLookupRequest();
+    
     
     public void createItemSrchRepo(){
 	int currentPage=ITEM_PAGE_START_FOR_PRECREATE;
@@ -38,32 +30,23 @@ public class RequestContainer {
 	    srchReqArr[currentPage-1]=srchReq;
 	    currentPage++;
 	}
+	srchReqContainer.setAssociateTag(AWESProperty.Value.ASSOCIATE_TAG.getString());
     }
     
     public void loadNodeStats(NodeStats stats){
 	incomingNode=stats;
+	reqParameters.setNodeStats(stats);
     }
     
-    public int loadEachReqWithItemPage(NodeStats node){
-	srchReqArr[0].setSearchIndex(node.getSearchIndex());
-	srchReqArr[0].setBrowseNode(node.getNodeId().toString());
-	srchReqArr[0].setItemPage(new PositiveInteger(Integer.toString(1)));
-	
-	return runRequest().getTotalPages().intValue();
-    }
-    
-    public ResponseHolder runRequest(){	
-	ItemSearchRequest[] singleReq={srchReqArr[0]};
-	srchReqContainer.setRequest(singleReq);
-	srchReqContainer.setAssociateTag(AWESProperty.Value.ASSOCIATE_TAG.getString());
-	
-	try {
-	    return StubFactory.getStubInstance("ItemSearch").executeOperation(srchReqContainer);
-	} catch (RemoteException e) {
-	    // TODO Auto-generated catch block
-	    e.printStackTrace();
+    public void loadEachReqWithSortParam(String sortParam){
+	for(ItemSearchRequest srchReq:srchReqArr){
+	    srchReq.setSort(sortParam);
 	}
-	return ResponseHolder.NULLINSTANCE;
+    }
+    
+    public ItemSearch getWrappedReq(int pageNum){
+	srchReqContainer.setRequest(new ItemSearchRequest[]{srchReqArr[pageNum-1], srchReqArr[pageNum]});
+	return srchReqContainer;
     }
     
     /*public void createItemSrchReqRepo(){
@@ -79,7 +62,7 @@ public class RequestContainer {
     }*/
     
     public void addResponseGroup(String[] respGrp){
-	responseGroup=respGrp;
+	reqParameters.setRespGrp(respGrp);
     }
     
     public void addSrchIndexAndNodeIdToSrchReqs(String srchIndex, String nodeId){
