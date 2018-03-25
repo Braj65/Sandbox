@@ -6,6 +6,9 @@ import com.amzn.model.crawler.commpacks.requests.RequestPool;
 import com.amzn.model.crawler.commpacks.response.ResponseHolder;
 import com.amzn.model.crawler.sortedCrawl.AbstractSortCrawl;
 import com.amzn.model.crawler.stub.StubFactory;
+import com.amzn.model.nodesToBeCrawled.nodes.nodeEntity.AbstractNodeStats;
+import com.amzn.model.nodesToBeCrawled.nodes.nodeEntity.INodeStats;
+import com.amzn.model.nodesToBeCrawled.nodes.nodeEntity.NodeStats;
 
 public class Client {
     
@@ -20,6 +23,8 @@ public class Client {
 	AbstractSortCrawl crawl=new AbstractSortCrawl(reqContainer);
 	
 	crawl.crawl();
+	INodeStats nodeStats=new AbstractNodeStats.Builder().setNodeId(Long.getLong("2591141031")).build();
+	nodeStats.setSearchIndex("VideoGames");
 	
 	//Create request container pool
 	RequestPool reqPool=new RequestPool();

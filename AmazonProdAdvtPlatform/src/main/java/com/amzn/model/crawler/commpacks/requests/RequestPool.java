@@ -33,8 +33,8 @@ public class RequestPool {
 	sortParamRepo.put(srchIndex, params);
     }
     
-    public void getSortParam(String srchIndex){
-	sortParamRepo.get(srchIndex);
+    public String[] getSortParams(String srchIndex){
+	return sortParamRepo.get(srchIndex);
     }
 
 }

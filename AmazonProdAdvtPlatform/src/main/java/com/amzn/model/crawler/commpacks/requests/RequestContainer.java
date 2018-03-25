@@ -5,6 +5,7 @@ import org.apache.axis2.databinding.ADBBean;
 import com.amazon.webservices.awsecommerceservice._2013_08_01.ItemSearch;
 import com.amazon.webservices.awsecommerceservice._2013_08_01.ItemSearchRequest;
 import com.amzn.model.crawler.stub.AWESProperty;
+import com.amzn.model.nodesToBeCrawled.nodes.nodeEntity.INodeStats;
 import com.amzn.model.nodesToBeCrawled.nodes.nodeEntity.NodeStats;
 
 public class RequestContainer {
@@ -12,7 +13,7 @@ public class RequestContainer {
     private final Integer ITEM_PAGE_START_FOR_PRECREATE=1, ITEM_PAGE_END_FOR_PRECREATE=10;
     
     public RequestParameter reqParameters;
-    private NodeStats incomingNode;
+    private INodeStats incomingNode;
     
     private ItemSearchRequest srchReq;
     private ItemSearchRequest srchReqArr[]=new ItemSearchRequest[ITEM_PAGE_END_FOR_PRECREATE];
@@ -29,7 +30,7 @@ public class RequestContainer {
 	srchReqContainer.setAssociateTag(AWESProperty.Value.ASSOCIATE_TAG.getString());
     }
     
-    public void loadNodeStats(NodeStats stats){
+    public void loadNodeStats(INodeStats stats){
 	incomingNode=stats;
 	reqParameters.setNodeStats(stats);
     }

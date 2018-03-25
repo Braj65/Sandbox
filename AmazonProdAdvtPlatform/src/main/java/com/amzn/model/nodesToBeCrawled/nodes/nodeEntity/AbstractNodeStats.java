@@ -3,7 +3,8 @@ package com.amzn.model.nodesToBeCrawled.nodes.nodeEntity;
 public abstract class AbstractNodeStats implements INodeStats {
     protected String nodeName;
     protected Long nodeId;
-
+    protected String srchIndex;
+    
     public static INodeStats getNullNode() {
 	return new AbstractNodeStats.NullNode();
     }
@@ -15,6 +16,16 @@ public abstract class AbstractNodeStats implements INodeStats {
     public Long getNodeId() {
 	return nodeId;
     }
+    
+    @Override
+    public String getSrchIndex() {
+	    return srchIndex;
+	}
+
+	@Override
+	public void setSearchIndex(String index) {
+	    srchIndex=index;	    
+	}
 
     public static class Builder {
 	protected String nodeName;

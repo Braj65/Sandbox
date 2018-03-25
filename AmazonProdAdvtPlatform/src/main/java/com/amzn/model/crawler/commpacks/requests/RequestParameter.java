@@ -11,6 +11,7 @@ import com.amazon.webservices.awsecommerceservice._2013_08_01.ItemSearchRequest;
 import com.amzn.model.crawler.commpacks.response.ResponseHolder;
 import com.amzn.model.crawler.stub.AWESProperty;
 import com.amzn.model.crawler.stub.StubFactory;
+import com.amzn.model.nodesToBeCrawled.nodes.nodeEntity.INodeStats;
 import com.amzn.model.nodesToBeCrawled.nodes.nodeEntity.NodeStats;
 
 public class RequestParameter {
@@ -18,7 +19,7 @@ public class RequestParameter {
     public Map<String, String> strReqParams=new HashMap<String, String>();
     public Map<String, PositiveInteger> posIntReqParams=new HashMap<String, PositiveInteger>();
     public String[] responseGroup;
-    public NodeStats incomingNode;
+    public INodeStats incomingNode;
     
     ItemSearchRequest srchRequest;
     
@@ -56,7 +57,7 @@ public class RequestParameter {
 	responseGroup=respGrp;
     }
     
-    public void setNodeStats(NodeStats stats){
+    public void setNodeStats(INodeStats stats){
 	incomingNode=stats;
     }
     
