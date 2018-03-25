@@ -46,6 +46,11 @@ public class RequestContainer {
 	return srchReqContainer;
     }
     
+    public ItemSearch getSingleReq(int pageNum){
+	srchReqContainer.setRequest(new ItemSearchRequest[]{srchReqArr[pageNum]});
+	return srchReqContainer;
+    }
+    
     /*public void createItemSrchReqRepo(){
 	int currentPage=ITEM_PAGE_START_FOR_PRECREATE;
 	while(currentPage<=ITEM_PAGE_END_FOR_PRECREATE){

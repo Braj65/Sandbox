@@ -35,7 +35,7 @@ public class RequestParameter {
     }
     
     public ResponseHolder dryRequestToFetchMeta(){
-	srchRequest.setSearchIndex(incomingNode.getSearchIndex());
+	srchRequest.setSearchIndex(incomingNode.getSrchIndex());
 	srchRequest.setBrowseNode(incomingNode.getNodeId().toString());
 	srchRequest.setItemPage(new PositiveInteger(Integer.toString(1)));
 	srchRequest.setResponseGroup(responseGroup);
