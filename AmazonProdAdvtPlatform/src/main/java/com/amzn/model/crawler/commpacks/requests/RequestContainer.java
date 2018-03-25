@@ -2,8 +2,6 @@ package com.amzn.model.crawler.commpacks.requests;
 
 import org.apache.axis2.databinding.ADBBean;
 
-import com.amazon.webservices.awsecommerceservice._2013_08_01.ItemLookup;
-import com.amazon.webservices.awsecommerceservice._2013_08_01.ItemLookupRequest;
 import com.amazon.webservices.awsecommerceservice._2013_08_01.ItemSearch;
 import com.amazon.webservices.awsecommerceservice._2013_08_01.ItemSearchRequest;
 import com.amzn.model.crawler.stub.AWESProperty;
@@ -19,9 +17,7 @@ public class RequestContainer {
     private ItemSearchRequest srchReq;
     private ItemSearchRequest srchReqArr[]=new ItemSearchRequest[ITEM_PAGE_END_FOR_PRECREATE];
     private ItemSearch srchReqContainer=new ItemSearch();
-    
-    ItemLookupRequest lookReq=new ItemLookupRequest();
-    
+
     
     public void createItemSrchRepo(){
 	int currentPage=ITEM_PAGE_START_FOR_PRECREATE;
