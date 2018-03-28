@@ -46,7 +46,7 @@ public class RequestContainer {
     }
     
     public ItemSearch getWrappedReq(int pageNum){
-	srchReqContainer.setRequest(new ItemSearchRequest[]{srchReqArr[pageNum-1], srchReqArr[pageNum]});
+	srchReqContainer.setRequest(new ItemSearchRequest[]{srchReqArr[pageNum], srchReqArr[pageNum+1]});
 	return srchReqContainer;
     }
     
@@ -68,6 +68,9 @@ public class RequestContainer {
     }*/
     
     public void addResponseGroup(String[] respGrp){
+	for(ItemSearchRequest srchReq:srchReqArr){
+	    srchReq.setResponseGroup(respGrp);
+	}
 	reqParameters.setRespGrp(respGrp);
     }
     

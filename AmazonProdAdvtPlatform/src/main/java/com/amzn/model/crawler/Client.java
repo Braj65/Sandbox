@@ -59,7 +59,7 @@ public class Client {
 	for(String sortParam:sortParams){
 	    singleReq.loadEachReqWithSortParam(sortParam);
 	    ItemSearch wrappedReq=null;
-	    for(int pageNum=1;pageNum<endPageVal;pageNum++){
+	    for(int pageNum=1;pageNum<endPageVal;pageNum+=2){
 		Thread.sleep(2000);
 		wrappedReq=singleReq.getWrappedReq(pageNum);
 		ResponseHolder resp=StubFactory.getStubInstance("ItemSearch").executeOperation(wrappedReq);
