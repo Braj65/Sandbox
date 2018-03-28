@@ -1,5 +1,7 @@
 package com.amzn.model.crawler;
 
+import java.rmi.RemoteException;
+
 import com.amazon.webservices.awsecommerceservice._2013_08_01.ItemSearch;
 import com.amzn.model.crawler.commpacks.requests.RequestContainer;
 import com.amzn.model.crawler.commpacks.requests.RequestPool;
@@ -12,8 +14,8 @@ import com.amzn.model.nodesToBeCrawled.nodes.nodeEntity.NodeStats;
 
 public class Client {
     
-    public static void main(String[] args) {	
-	RequestContainer reqContainer=new RequestContainer();
+    public static void main(String[] args) throws RemoteException, InterruptedException {	
+	/*RequestContainer reqContainer=new RequestContainer();
 	//precreate start
 	reqContainer.addResponseGroup(new String[] { "ItemAttributes", "Offers", "VariationSummary" });
 	reqContainer.createItemSrchReqRepo();
@@ -22,9 +24,11 @@ public class Client {
 	reqContainer.addSortParamToSrchReqs(null);
 	AbstractSortCrawl crawl=new AbstractSortCrawl(reqContainer);
 	
-	crawl.crawl();
-	INodeStats nodeStats=new AbstractNodeStats.Builder().setNodeId(Long.getLong("2591141031")).build();
-	nodeStats.setSearchIndex("VideoGames");
+	crawl.crawl();*/
+	
+	INodeStats nodeStats=new AbstractNodeStats.Builder().setNodeId(Long.getLong("2591141031"))
+		.setSearchIndex("VideoGames")
+		.build();
 	
 	//Create request container pool
 	RequestPool reqPool=new RequestPool();
@@ -56,8 +60,10 @@ public class Client {
 	    singleReq.loadEachReqWithSortParam(sortParam);
 	    ItemSearch wrappedReq=null;
 	    for(int pageNum=1;pageNum<endPageVal;pageNum++){
+		Thread.sleep(2000);
 		wrappedReq=singleReq.getWrappedReq(pageNum);
-		StubFactory.getStubInstance("ItemSearch").executeOperation(wrappedReq);
+		ResponseHolder resp=StubFactory.getStubInstance("ItemSearch").executeOperation(wrappedReq);
+		Thread.sleep(1000);
 	    }
 	    if(endPageVal%2!=0){
 		wrappedReq=singleReq.getSingleReq(endPageVal);

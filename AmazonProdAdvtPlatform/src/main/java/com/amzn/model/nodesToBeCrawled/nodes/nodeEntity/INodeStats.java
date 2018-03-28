@@ -7,6 +7,4 @@ public interface INodeStats {
     String toString();
     
     String getSrchIndex();
-    void setSearchIndex(String index);
-
 }
