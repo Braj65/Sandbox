@@ -17,8 +17,12 @@ public class RequestContainer {
     
     private ItemSearchRequest srchReq;
     private ItemSearchRequest srchReqArr[]=new ItemSearchRequest[ITEM_PAGE_END_FOR_PRECREATE];
-    private ItemSearch srchReqContainer=new ItemSearch();
+    private ItemSearch srchReqContainer;
 
+    public RequestContainer(){
+	reqParameters=new RequestParameter();
+	srchReqContainer=new ItemSearch();
+    }
     
     public void createItemSrchRepo(){
 	int currentPage=ITEM_PAGE_START_FOR_PRECREATE;

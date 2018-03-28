@@ -50,8 +50,9 @@ public class ResponseHolder {
 
     public String[] getSortParamsFromItemOne() {
 	String params=resp.getItems()[0].getRequest().getErrors().getError()[0].getMessage();
+	params=params.substring(params.indexOf("'"), params.lastIndexOf("'"));
 	params=params.replaceAll("'", "");
-	return params.substring(params.indexOf("'"), params.lastIndexOf("'")+1).split(",");
+	return params.split(",");
     }
     
     public NonNegativeInteger getTotalPages(){

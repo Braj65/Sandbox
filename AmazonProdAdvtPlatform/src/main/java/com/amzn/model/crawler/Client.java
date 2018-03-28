@@ -26,7 +26,7 @@ public class Client {
 	
 	crawl.crawl();*/
 	
-	INodeStats nodeStats=new AbstractNodeStats.Builder().setNodeId(Long.getLong("2591141031"))
+	INodeStats nodeStats=new AbstractNodeStats.Builder().setNodeId(Long.valueOf("2591141031"))
 		.setSearchIndex("VideoGames")
 		.build();
 	
