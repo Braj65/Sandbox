@@ -1,6 +1,7 @@
 package com.amzn.model.crawler.commpacks.requests;
 
 import org.apache.axis2.databinding.ADBBean;
+import org.apache.axis2.databinding.types.PositiveInteger;
 
 import com.amazon.webservices.awsecommerceservice._2013_08_01.ItemSearch;
 import com.amazon.webservices.awsecommerceservice._2013_08_01.ItemSearchRequest;
@@ -15,7 +16,6 @@ public class RequestContainer {
     public RequestParameter reqParameters;
     private INodeStats incomingNode;
     
-    private ItemSearchRequest srchReq;
     private ItemSearchRequest srchReqArr[]=new ItemSearchRequest[ITEM_PAGE_END_FOR_PRECREATE];
     private ItemSearch srchReqContainer;
 
@@ -27,15 +27,15 @@ public class RequestContainer {
     public void createItemSrchRepo(){
 	int currentPage=ITEM_PAGE_START_FOR_PRECREATE;
 	while(currentPage<=ITEM_PAGE_END_FOR_PRECREATE){
-	    srchReq=new ItemSearchRequest();
-	    srchReqArr[currentPage-1]=srchReq;
+	    srchReqArr[currentPage-1]=new ItemSearchRequest();
 	    currentPage++;
 	}
 	srchReqContainer.setAssociateTag(AWESProperty.Value.ASSOCIATE_TAG.getString());
     }
     
-    public void loadNodeStats(INodeStats stats){
+    public void loadSrchIndexNodeid(INodeStats stats){
 	incomingNode=stats;
+	addSrchIndexAndNodeIdToSrchReqs();
 	reqParameters.setNodeStats(stats);
     }
     
@@ -46,7 +46,9 @@ public class RequestContainer {
     }
     
     public ItemSearch getWrappedReq(int pageNum){
-	srchReqContainer.setRequest(new ItemSearchRequest[]{srchReqArr[pageNum], srchReqArr[pageNum+1]});
+	srchReqArr[pageNum%10].setItemPage(new PositiveInteger(new Integer(pageNum).toString()));
+	srchReqArr[(pageNum+1)%10].setItemPage(new PositiveInteger(new Integer(pageNum+1).toString()));
+	srchReqContainer.setRequest(new ItemSearchRequest[]{srchReqArr[pageNum%10], srchReqArr[(pageNum+1)%10]});
 	return srchReqContainer;
     }
     
@@ -74,10 +76,10 @@ public class RequestContainer {
 	reqParameters.setRespGrp(respGrp);
     }
     
-    public void addSrchIndexAndNodeIdToSrchReqs(String srchIndex, String nodeId){
+    public void addSrchIndexAndNodeIdToSrchReqs(){
 	for(ItemSearchRequest srchReq:srchReqArr){
-	    srchReq.setSearchIndex(srchIndex);
-	    srchReq.setBrowseNode(nodeId);
+	    srchReq.setSearchIndex(incomingNode.getSrchIndex());
+	    srchReq.setBrowseNode(incomingNode.getNodeId().toString());
 	}
     }
     

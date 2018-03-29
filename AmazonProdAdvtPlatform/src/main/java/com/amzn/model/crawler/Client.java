@@ -39,11 +39,12 @@ public class Client {
 	RequestContainer singleReq=reqPool.poll();
 	//in the request container load each request with property itempage. After fetching end itempage
 	//using the node stats
-	singleReq.loadNodeStats(nodeStats);
+	singleReq.loadSrchIndexNodeid(nodeStats);
 	singleReq.addResponseGroup(new String[] { "ItemAttributes", "Offers", "VariationSummary" });
 	int endPageVal=singleReq.reqParameters.createAmznSrchReq()
 		.dryRequestToFetchMeta().getTotalPages().intValue();
-	
+	if(endPageVal>10)
+	    endPageVal=10;
 	//fetch the sortparams and save with us
 	String[] sortParams=reqPool.getSortParams(nodeStats.getSrchIndex());
 	if(sortParams==null){
@@ -60,10 +61,14 @@ public class Client {
 	    singleReq.loadEachReqWithSortParam(sortParam);
 	    ItemSearch wrappedReq=null;
 	    for(int pageNum=1;pageNum<endPageVal;pageNum+=2){
-		Thread.sleep(2000);
-		wrappedReq=singleReq.getWrappedReq(pageNum);
-		ResponseHolder resp=StubFactory.getStubInstance("ItemSearch").executeOperation(wrappedReq);
-		Thread.sleep(1000);
+		try{
+		    Thread.sleep(2000);
+		    wrappedReq=singleReq.getWrappedReq(pageNum);
+		    ResponseHolder resp=StubFactory.getStubInstance("ItemSearch").executeOperation(wrappedReq);
+		    Thread.sleep(1000);
+		}catch(Exception e){
+		    e.printStackTrace();
+		}
 	    }
 	    if(endPageVal%2!=0){
 		wrappedReq=singleReq.getSingleReq(endPageVal);
