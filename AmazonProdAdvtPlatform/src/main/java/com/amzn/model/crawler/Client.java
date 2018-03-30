@@ -53,16 +53,15 @@ public class Client {
 	String[] sortParams=reqPool.getSortParams(nodeStats.getSrchIndex());
 	if(sortParams==null){
 	ResponseHolder response=StubFactory.getStubInstance("ItemSearch")
-		.executeOperation(singleReq.setSortParam("XXX").createAmznSrchReq());
+		.executeOperation(singleReq.setSortParamInSrhcReq("XXX")
+		.createAmznSrchReq());		
 		
-		
-	response=singleReq.reqParameters.createAmznSrchReq().setSortParam("XXX")
-			.dryRequestToFetchMeta();
 	    if(response.getOpsErrors()!=null)
 		sortParams=response.getSortParams();
 	    else
 		sortParams=response.getSortParamsFromItemOne();
-	    reqPool.setSortParam(nodeStats.getSrchIndex(), sortParams);
+	    singleReq.setSortParam(sortParams);
+//	    reqPool.setSortParam(nodeStats.getSrchIndex(), sortParams);
 	}
 	    
 	for(String sortParam:sortParams){
@@ -72,7 +71,8 @@ public class Client {
 		try{
 		    Thread.sleep(2000);
 		    wrappedReq=singleReq.getWrappedReq(pageNum);
-		    ResponseHolder resp=StubFactory.getStubInstance("ItemSearch").executeOperation(wrappedReq);
+		    ResponseHolder resp=StubFactory.getStubInstance("ItemSearch")
+			    .executeOperation(wrappedReq);
 		    Thread.sleep(1000);
 		}catch(Exception e){
 		    e.printStackTrace();
@@ -80,7 +80,8 @@ public class Client {
 	    }
 	    if(endPageVal%2!=0){
 		wrappedReq=singleReq.getSingleReq(endPageVal);
-		StubFactory.getStubInstance("ItemSearch").executeOperation(wrappedReq);
+		StubFactory.getStubInstance("ItemSearch")
+		.executeOperation(wrappedReq);
 	    }
 	}
 	

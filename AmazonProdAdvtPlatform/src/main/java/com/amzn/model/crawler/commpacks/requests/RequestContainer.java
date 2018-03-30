@@ -20,6 +20,10 @@ public class RequestContainer {
     public RequestParameter reqParameters;
     private INodeStats incomingNode;
     public String[] responseGroup;
+    //unwise to save sort params in RequestPool and share between polled requestcontainers
+    //need to save here. When releasing container back to pool, the pool need to collect the
+    //sort param from the container and store with itself
+    public String[] sortParams;
     
     private ItemSearchRequest srchRequest;
     private ItemSearchRequest srchReqArr[]=new ItemSearchRequest[ITEM_PAGE_END_FOR_PRECREATE];
@@ -44,9 +48,13 @@ public class RequestContainer {
 	return srchReqContainer;
     }
     
-    public RequestContainer setSortParam(String sortParam){
+    public RequestContainer setSortParamInSrhcReq(String sortParam){
 	srchRequest.setSort(sortParam);
 	return this;
+    }
+    
+    public void setSortParam(String[] sortParams){
+	this.sortParams=sortParams;
     }
     
     public ResponseHolder dryRequestToFetchMeta(){
