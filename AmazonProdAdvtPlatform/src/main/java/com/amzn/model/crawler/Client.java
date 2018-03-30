@@ -40,7 +40,7 @@ public class Client {
 	//in the request container load each request with property itempage. After fetching end itempage
 	//using the node stats
 	singleReq.loadSrchIndexNodeid(nodeStats);
-	singleReq.addResponseGroup(new String[] { "ItemAttributes", "Offers", "VariationSummary" });
+	singleReq.loadResponseGroup(new String[] { "ItemAttributes", "Offers", "VariationSummary" });
 	int endPageVal=singleReq.reqParameters.createAmznSrchReq()
 		.dryRequestToFetchMeta().getTotalPages().intValue();
 	if(endPageVal>10)

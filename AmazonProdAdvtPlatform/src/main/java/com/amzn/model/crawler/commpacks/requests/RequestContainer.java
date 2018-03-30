@@ -33,18 +33,6 @@ public class RequestContainer {
 	srchReqContainer.setAssociateTag(AWESProperty.Value.ASSOCIATE_TAG.getString());
     }
     
-    public void loadSrchIndexNodeid(INodeStats stats){
-	incomingNode=stats;
-	addSrchIndexAndNodeIdToSrchReqs();
-	reqParameters.setNodeStats(stats);
-    }
-    
-    public void loadEachReqWithSortParam(String sortParam){
-	for(ItemSearchRequest srchReq:srchReqArr){
-	    srchReq.setSort(sortParam);
-	}
-    }
-    
     public ItemSearch getWrappedReq(int pageNum){
 	srchReqArr[pageNum%10].setItemPage(new PositiveInteger(new Integer(pageNum).toString()));
 	srchReqArr[(pageNum+1)%10].setItemPage(new PositiveInteger(new Integer(pageNum+1).toString()));
@@ -52,28 +40,10 @@ public class RequestContainer {
 	return srchReqContainer;
     }
     
-    public ItemSearch getSingleReq(int pageNum){
-	srchReqContainer.setRequest(new ItemSearchRequest[]{srchReqArr[pageNum]});
-	return srchReqContainer;
-    }
-    
-    /*public void createItemSrchReqRepo(){
-	int currentPage=ITEM_PAGE_START_FOR_PRECREATE;
-	while(currentPage<=ITEM_PAGE_END_FOR_PRECREATE){
-	    srchReq=new ItemSearchRequest();
-	    srchReq.setItemPage(new PositiveInteger(Integer.toString(currentPage)));
-	    srchReq.setResponseGroup(responseGroup);
-	    srchReqArr[currentPage-1]=srchReq;
-	    currentPage++;
-	}
-	currentPage=ITEM_PAGE_START_FOR_PRECREATE;
-    }*/
-    
-    public void addResponseGroup(String[] respGrp){
-	for(ItemSearchRequest srchReq:srchReqArr){
-	    srchReq.setResponseGroup(respGrp);
-	}
-	reqParameters.setRespGrp(respGrp);
+    public void loadSrchIndexNodeid(INodeStats stats){
+	incomingNode=stats;
+	addSrchIndexAndNodeIdToSrchReqs();
+	reqParameters.setNodeStats(stats);
     }
     
     public void addSrchIndexAndNodeIdToSrchReqs(){
@@ -83,21 +53,22 @@ public class RequestContainer {
 	}
     }
     
-    public void addSortParamToSrchReqs(String sortParam){
+    public void loadEachReqWithSortParam(String sortParam){
 	for(ItemSearchRequest srchReq:srchReqArr){
 	    srchReq.setSort(sortParam);
 	}
     }
     
-    public ADBBean getSrchReqContainer(int reqPosition){
-	srchReqContainer.setRequest(new ItemSearchRequest[]{srchReqArr[reqPosition-1], srchReqArr[reqPosition]});
-	srchReqContainer.setAssociateTag(AWESProperty.Value.ASSOCIATE_TAG.getString());
-	return srchReqContainer;
+    public void loadResponseGroup(String[] respGrp){
+	for(ItemSearchRequest srchReq:srchReqArr){
+	    srchReq.setResponseGroup(respGrp);
+	}
+	reqParameters.setRespGrp(respGrp);
     }
     
-    public ADBBean getSingleReqLoadedContainer(int reqPosition){
-	srchReqContainer.setRequest(new ItemSearchRequest[]{srchReqArr[reqPosition]});
-	srchReqContainer.setAssociateTag(AWESProperty.Value.ASSOCIATE_TAG.getString());
+    
+    public ItemSearch getSingleReq(int pageNum){
+	srchReqContainer.setRequest(new ItemSearchRequest[]{srchReqArr[pageNum]});
 	return srchReqContainer;
     }
 }

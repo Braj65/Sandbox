@@ -16,8 +16,8 @@ import com.amzn.model.nodesToBeCrawled.nodes.nodeEntity.NodeStats;
 
 public class RequestParameter {
     
-    public Map<String, String> strReqParams=new HashMap<String, String>();
-    public Map<String, PositiveInteger> posIntReqParams=new HashMap<String, PositiveInteger>();
+    /*public Map<String, String> strReqParams=new HashMap<String, String>();
+    public Map<String, PositiveInteger> posIntReqParams=new HashMap<String, PositiveInteger>();*/
     public String[] responseGroup;
     public INodeStats incomingNode;
     
