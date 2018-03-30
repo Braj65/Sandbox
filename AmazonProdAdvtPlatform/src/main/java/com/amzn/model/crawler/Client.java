@@ -39,16 +39,24 @@ public class Client {
 	RequestContainer singleReq=reqPool.poll();
 	//in the request container load each request with property itempage. After fetching end itempage
 	//using the node stats
-	singleReq.loadSrchIndexNodeid(nodeStats);
-	singleReq.loadResponseGroup(new String[] { "ItemAttributes", "Offers", "VariationSummary" });
-	int endPageVal=singleReq.reqParameters.createAmznSrchReq()
-		.dryRequestToFetchMeta().getTotalPages().intValue();
+	singleReq.loadSrchIndexNodeid(nodeStats)
+	.loadResponseGroup(new String[] { "ItemAttributes", "Offers", "VariationSummary" })
+	.load();
+	int endPageVal=StubFactory.getStubInstance("ItemSearch")
+		.executeOperation(singleReq.createAmznSrchReq())
+		.getTotalPages()
+		.intValue();
+	
 	if(endPageVal>10)
 	    endPageVal=10;
 	//fetch the sortparams and save with us
 	String[] sortParams=reqPool.getSortParams(nodeStats.getSrchIndex());
 	if(sortParams==null){
-	ResponseHolder response=singleReq.reqParameters.createAmznSrchReq().setSortParam("XXX")
+	ResponseHolder response=StubFactory.getStubInstance("ItemSearch")
+		.executeOperation(singleReq.setSortParam("XXX").createAmznSrchReq());
+		
+		
+	response=singleReq.reqParameters.createAmznSrchReq().setSortParam("XXX")
 			.dryRequestToFetchMeta();
 	    if(response.getOpsErrors()!=null)
 		sortParams=response.getSortParams();
