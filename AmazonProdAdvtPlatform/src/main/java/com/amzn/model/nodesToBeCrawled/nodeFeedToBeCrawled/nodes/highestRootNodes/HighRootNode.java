@@ -11,11 +11,11 @@ public class HighRootNode extends AbstractHighRootNode {
 
     public HighRootNode(AbstractParentNodeStats rootNodeStats) {
 	childNodes = new ArrayList<INode>();
-	ldapLoader = LoaderFactory.getPropLoader(rootNodeStats.getLdapFile());
 	currentRootCategory = rootNodeStats;
     }
 
     public void loadChildren() {
+	ldapLoader = LoaderFactory.getPropLoader(currentRootCategory.getLdapFile());
 	ldapLoader.createChildObjectsFromChildFile(childNodes);
     }
 

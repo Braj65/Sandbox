@@ -2,6 +2,7 @@ package com.amzn.model.nodesToBeCrawled.nodeFeedToBeCrawled.nodes.highestRootNod
 
 import java.util.List;
 
+import com.amzn.model.nodesToBeCrawled.fetchNodesFromAmzn.request.IBrowseNodes;
 import com.amzn.model.nodesToBeCrawled.nodeFeedToBeCrawled.nodes.INode;
 import com.amzn.model.nodesToBeCrawled.nodeFeedToBeCrawled.nodes.nodeEntity.ldapNodeEntity.AbstractParentNodeStats;
 import com.amzn.model.nodesToBeCrawled.nodeFeedToBeCrawled.utility.ILoadChildrenFromProp;

@@ -3,6 +3,7 @@ package com.amzn.model.nodesToBeCrawled.nodeFeedToBeCrawled.nodes;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.amzn.model.nodesToBeCrawled.fetchNodesFromAmzn.request.IBrowseNodes;
 import com.amzn.model.nodesToBeCrawled.nodeFeedToBeCrawled.nodes.nodeEntity.INodeStats;
 import com.amzn.model.nodesToBeCrawled.nodeFeedToBeCrawled.utility.ILoadChildrenFromProp;
 import com.amzn.model.nodesToBeCrawled.nodeFeedToBeCrawled.utility.loaderFactory.LoaderFactory;
@@ -42,5 +43,13 @@ public class RootNode implements INode{
     @Override
     public void notifyObserver(INodeStats nodeStats) {
 	System.out.println(nodeStats.toString());	
-    }    
+    }
+    
+    public List<IBrowseNodes> getFirstLevelChildren(){
+	List<IBrowseNodes> browseChilds=new ArrayList<IBrowseNodes>();
+	for(INode child:highRootChilds){
+	    browseChilds.add((IBrowseNodes)child);
+	}
+	return browseChilds;
+    }
 }
