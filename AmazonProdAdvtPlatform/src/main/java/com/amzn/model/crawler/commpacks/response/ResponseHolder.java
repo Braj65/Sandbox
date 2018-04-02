@@ -26,18 +26,6 @@ public class ResponseHolder {
 	respItem=new ResponseItem();
     }
     
-/*    public void validateResponsePagesCount(IRequestHolder request){
-	boolean flag=false;
-	for(int i=0;i<itemsOfResp.length;i++){
-	    flag=flag || 
-		    itemsOfResp[i].getTotalPages()
-		    .compareTo(((ItemSearchRequest)request.getReqArr()[i]).getItemPage())!=0;
-	}
-	if(!flag)
-	    throw new RuntimeException("Error in class Abstractsort applied. Mismatch in"
-	    	+ "page counts between request sent and response received");
-    }*/
-    
     public Errors_type0 getOpsErrors(){
 	return resp.getOperationRequest().getErrors();
     }
@@ -85,6 +73,10 @@ public class ResponseHolder {
 	    super(itemSearchResp);
 	    currentTimeSec=System.currentTimeMillis()/1000;
 	}
+    }
+    
+    public ADBBean getResponse(){
+	return resp;
     }
 
 }

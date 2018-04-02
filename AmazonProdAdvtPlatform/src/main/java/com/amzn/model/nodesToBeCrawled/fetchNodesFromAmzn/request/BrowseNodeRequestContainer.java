@@ -5,7 +5,12 @@ import com.amazon.webservices.awsecommerceservice._2013_08_01.BrowseNodeLookupRe
 
 public class BrowseNodeRequestContainer {
     
-    private BrowseNodeLookupRequest bnodeLookupReq;
-    private BrowseNodeLookup bnodeLookup;
+    protected BrowseNodeLookupRequest bnodeLookupReq;
+    protected BrowseNodeLookup bnodeLookup;
+    
+    public BrowseNodeRequestContainer(){
+	bnodeLookupReq=new BrowseNodeLookupRequest();
+	bnodeLookup=new BrowseNodeLookup();
+    }
 
 }
