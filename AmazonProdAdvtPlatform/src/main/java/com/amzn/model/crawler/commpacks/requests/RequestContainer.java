@@ -5,7 +5,7 @@ import org.apache.axis2.databinding.types.PositiveInteger;
 import com.amazon.webservices.awsecommerceservice._2013_08_01.ItemSearch;
 import com.amazon.webservices.awsecommerceservice._2013_08_01.ItemSearchRequest;
 import com.amzn.model.crawler.stub.AWESProperty;
-import com.amzn.model.nodesToBeCrawled.nodes.nodeEntity.INodeStats;
+import com.amzn.model.nodesToBeCrawled.nodeFeedToBeCrawled.nodes.nodeEntity.INodeStats;
 
 public class RequestContainer {
     
