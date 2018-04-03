@@ -1,11 +1,11 @@
 package com.amzn.model.crawler.commpacks.response;
 
-import com.amazon.webservices.awsecommerceservice._2013_08_01.ItemSearchResponse;
+import org.apache.axis2.databinding.ADBBean;
 
 public class NullResponseHolder extends ResponseHolder{
     private long currentTimeSec;
-    public NullResponseHolder(ItemSearchResponse itemSearch) {
-	super(itemSearch);
+    public NullResponseHolder(ADBBean resp) {
+	super(resp);
 	currentTimeSec=System.currentTimeMillis()/1000;
     }
 

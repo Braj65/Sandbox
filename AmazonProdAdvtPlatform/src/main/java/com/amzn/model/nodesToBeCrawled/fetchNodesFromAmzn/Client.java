@@ -1,11 +1,13 @@
-package com.amzn.model.nodesToBeCrawled.fetchNodesFromAmzn.request;
+package com.amzn.model.nodesToBeCrawled.fetchNodesFromAmzn;
 
 import java.rmi.RemoteException;
+import java.util.ArrayList;
 import java.util.List;
 
 import com.amazon.webservices.awsecommerceservice._2013_08_01.BrowseNodeLookupResponse;
 import com.amazon.webservices.awsecommerceservice._2013_08_01.BrowseNode_type0;
 import com.amazon.webservices.awsecommerceservice._2013_08_01.Children_type0;
+import com.amzn.model.crawler.commpacks.response.NodeLookupResponseHolder;
 import com.amzn.model.crawler.commpacks.response.ResponseHolder;
 import com.amzn.model.crawler.stub.StubFactory;
 import com.amzn.model.nodesToBeCrawled.nodeFeedToBeCrawled.nodes.RootNode;
@@ -39,18 +41,33 @@ public class Client {
 	reqCon.bnodeLookup.setAssociateTag("isnnfoiwnit0d-21");
 	ResponseHolder resp=null;
 	try {
-	    resp=StubFactory.getStubInstance("BrowseNodeLookup")
+	    resp=StubFactory.getStubInstance("BrowseNodeInfo")
 	    	.executeOperation(reqCon.bnodeLookup);
 	} catch (RemoteException e) {
 	    // TODO Auto-generated catch block
 	    e.printStackTrace();
 	}
-	BrowseNodeLookupResponse lookupResp=(BrowseNodeLookupResponse)resp.getResponse();
+	NodeLookupResponseHolder lookupResp=resp.convertToNodeLookupResp();
 	Children_type0 children=lookupResp.getBrowseNodes()[0].getBrowseNode()[0].getChildren();
 	crawlAllChildren(children);
     }
     
     public static void crawlAllChildren(Children_type0 children){
 	BrowseNode_type0[] nodeArr=children.getBrowseNode();
+	List<Children_type0> childList=new ArrayList<Children_type0>();
+	BrowseNodeRequestContainer reqCon=new BrowseNodeRequestContainer();
+	for(int i=0;i<nodeArr.length;i++){
+	    reqCon.bnodeLookupReq.addBrowseNodeId(nodeArr[i].getBrowseNodeId());
+	    reqCon.bnodeLookupReq.addResponseGroup("BrowseNodeInfo");
+	    reqCon.bnodeLookup.addRequest(reqCon.bnodeLookupReq);
+	    reqCon.bnodeLookup.setAssociateTag("isnnfoiwnit0d-21");
+	    ResponseHolder resp=null;
+	    try{
+		resp=StubFactory.getStubInstance("BrowseNodeInfo")
+			.executeOperation(reqCon.bnodeLookup);
+	    }catch(RemoteException e){
+		e.printStackTrace();
+	    }
+	}
     }
 }

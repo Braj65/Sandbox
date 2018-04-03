@@ -5,6 +5,7 @@ import java.rmi.RemoteException;
 import com.amazon.webservices.awsecommerceservice._2013_08_01.ItemSearch;
 import com.amzn.model.crawler.commpacks.requests.RequestContainer;
 import com.amzn.model.crawler.commpacks.requests.RequestPool;
+import com.amzn.model.crawler.commpacks.response.ItemSearchResponseHolder;
 import com.amzn.model.crawler.commpacks.response.ResponseHolder;
 import com.amzn.model.crawler.stub.StubFactory;
 import com.amzn.model.nodesToBeCrawled.nodeFeedToBeCrawled.nodes.nodeEntity.AbstractNodeStats;
@@ -42,6 +43,7 @@ public class Client {
 	.load();
 	int endPageVal=StubFactory.getStubInstance("ItemSearch")
 		.executeOperation(singleReq.createAmznSrchReq())
+		.convertToItemSearchResp()
 		.getTotalPages()
 		.intValue();
 	
@@ -51,13 +53,14 @@ public class Client {
 	String[] sortParams=reqPool.getSortParams(nodeStats.getSrchIndex());
 	if(sortParams==null){
 	ResponseHolder response=StubFactory.getStubInstance("ItemSearch")
-		.executeOperation(singleReq.setSortParamInSrhcReq("XXX")
-		.createAmznSrchReq());		
-		
-	    if(response.getOpsErrors()!=null)
-		sortParams=response.getSortParams();
+		.executeOperation(singleReq.setSortParamInSrhcReq("XXX").createAmznSrchReq());
+	
+	ItemSearchResponseHolder itemSrchResp=response.convertToItemSearchResp();
+	
+	    if(itemSrchResp.getOpsErrors()!=null)
+		sortParams=itemSrchResp.getSortParams();
 	    else
-		sortParams=response.getSortParamsFromItemOne();
+		sortParams=itemSrchResp.getSortParamsFromItemOne();
 	    singleReq.setSortParam(sortParams);
 //	    reqPool.setSortParam(nodeStats.getSrchIndex(), sortParams);
 	}
