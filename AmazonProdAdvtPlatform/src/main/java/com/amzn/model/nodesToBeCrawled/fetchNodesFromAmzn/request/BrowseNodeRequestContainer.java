@@ -1,12 +1,14 @@
 package com.amzn.model.nodesToBeCrawled.fetchNodesFromAmzn.request;
 
+import java.util.List;
+
 import com.amazon.webservices.awsecommerceservice._2013_08_01.BrowseNodeLookup;
 import com.amazon.webservices.awsecommerceservice._2013_08_01.BrowseNodeLookupRequest;
 
 public class BrowseNodeRequestContainer {
     
-    protected BrowseNodeLookupRequest bnodeLookupReq;
-    protected BrowseNodeLookup bnodeLookup;
+    public BrowseNodeLookupRequest bnodeLookupReq;
+    public BrowseNodeLookup bnodeLookup;
     
     public BrowseNodeRequestContainer(){
 	bnodeLookupReq=new BrowseNodeLookupRequest();
@@ -21,5 +23,4 @@ public class BrowseNodeRequestContainer {
 	bnodeLookupReq.addBrowseNodeId(parentNodeId);
 	bnodeLookupReq.addResponseGroup("BrowseNodeInfo");
     }
-
 }
