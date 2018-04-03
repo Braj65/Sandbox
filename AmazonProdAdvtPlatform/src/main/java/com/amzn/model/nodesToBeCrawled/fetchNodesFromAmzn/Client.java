@@ -30,15 +30,16 @@ public class Client {
 	List<IBrowseNodes> highRootChilds=root.getFirstLevelChildren();
 	INodeStats stats=null;
 	ResponseHolder resp=null;
-	BrowseNodeRequestContainer reqCon=new BrowseNodeRequestContainer();
+	BrowseNodeRequestContainer reqCon;
 	for(IBrowseNodes node:highRootChilds){
 	    AbstractParentNodeStats parentNode=node.getParentNodeStats();
 	    stats=parentNode.getNodeStats();
+	    reqCon=new BrowseNodeRequestContainer();
 	    BrowseNode childNode=new BrowseNode(stats.getNodeId().toString(), reqCon);
 	    
 	    reqCon.bnodeLookupReq.addBrowseNodeId(stats.getNodeId().toString());
 	    reqCon.bnodeLookupReq.addResponseGroup("BrowseNodeInfo");
-	    reqCon.bnodeLookup.addRequest(reqCon.bnodeLookupReq);
+	    reqCon.bnodeLookup.setShared(reqCon.bnodeLookupReq);
 	    reqCon.bnodeLookup.setAssociateTag("isnnfoiwnit0d-21");
 	    try{
 	    resp=StubFactory.getStubInstance("BrowseNodeInfo").executeOperation(reqCon.bnodeLookup);
@@ -46,58 +47,6 @@ public class Client {
 		e.printStackTrace();
 	    }
 	    childNode.loadChildren(resp.convertToNodeLookupResp());
-	}
-    }
-    public static void mainjam(String[] args) {
-	LoaderFactory factory=new LoaderFactory();
-	ILoadChildrenFromProp rootProps=new LoadHighRoots("HighestRootNodeIds.properties");
-	
-	RootNode root=new RootNode("HighestRootNodeIds.properties");
-	root.loadChildren();
-	List<IBrowseNodes> highRootChilds=root.getFirstLevelChildren();
-	INodeStats stats=null;
-	for(IBrowseNodes rootChild:highRootChilds){
-	    AbstractParentNodeStats parentNode= rootChild.getParentNodeStats();
-	    stats=parentNode.getNodeStats();
-	    createRequest(stats);
-	}	
-    }
-    
-    public static void createRequest(INodeStats nodeStat){
-	BrowseNodeRequestContainer reqCon=new BrowseNodeRequestContainer();
-	reqCon.bnodeLookupReq.addBrowseNodeId(nodeStat.getNodeId().toString());
-	reqCon.bnodeLookupReq.addResponseGroup("BrowseNodeInfo");
-	reqCon.bnodeLookup.addRequest(reqCon.bnodeLookupReq);
-	reqCon.bnodeLookup.setAssociateTag("isnnfoiwnit0d-21");
-	ResponseHolder resp=null;
-	try {
-	    resp=StubFactory.getStubInstance("BrowseNodeInfo")
-	    	.executeOperation(reqCon.bnodeLookup);
-	} catch (RemoteException e) {
-	    // TODO Auto-generated catch block
-	    e.printStackTrace();
-	}
-	NodeLookupResponseHolder lookupResp=resp.convertToNodeLookupResp();
-	Children_type0 children=lookupResp.getBrowseNodes()[0].getBrowseNode()[0].getChildren();
-	crawlAllChildren(children);
-    }
-    
-    public static void crawlAllChildren(Children_type0 children){
-	BrowseNode_type0[] nodeArr=children.getBrowseNode();
-	List<Children_type0> childList=new ArrayList<Children_type0>();
-	BrowseNodeRequestContainer reqCon=new BrowseNodeRequestContainer();
-	for(int i=0;i<nodeArr.length;i++){
-	    reqCon.bnodeLookupReq.addBrowseNodeId(nodeArr[i].getBrowseNodeId());
-	    reqCon.bnodeLookupReq.addResponseGroup("BrowseNodeInfo");
-	    reqCon.bnodeLookup.addRequest(reqCon.bnodeLookupReq);
-	    reqCon.bnodeLookup.setAssociateTag("isnnfoiwnit0d-21");
-	    ResponseHolder resp=null;
-	    try{
-		resp=StubFactory.getStubInstance("BrowseNodeInfo")
-			.executeOperation(reqCon.bnodeLookup);
-	    }catch(RemoteException e){
-		e.printStackTrace();
-	    }
 	}
     }
 }

@@ -12,7 +12,6 @@ import com.amzn.model.nodesToBeCrawled.fetchNodesFromAmzn.browseNodes.BrowseNode
 public class NodeLookupResponseHolder extends ResponseHolder{
     
     private BrowseNodeLookupResponse lookupResp;
-    private Children_type0 ifChildrenPresent;
     
     public NodeLookupResponseHolder(ADBBean resp){
 	super(resp);
@@ -25,30 +24,5 @@ public class NodeLookupResponseHolder extends ResponseHolder{
     
     public void setResp(BrowseNodeLookupResponse resp){
 	lookupResp=resp;
-    }
-    
-    public NodeLookupResponseHolder ifChildrenPresent(){
-	ifChildrenPresent=lookupResp.getBrowseNodes()[0].getBrowseNode()[0].getChildren();
-	return this;
-    }
-    
-    public BrowseNode_type0[] getChildren(){
-	if(ifChildrenPresent!=null)
-	    return ifChildrenPresent.getBrowseNode();
-	return null;
-    }
-    
-    public void createChildren(BrowseNode_type0[] children){
-	if(children==null)
-	    return;
-	BrowseNode node=new BrowseNode(getParentNodeId());	
-	for(BrowseNode_type0 child:children){
-	    
-	}
-    }
-    
-    public String getParentNodeId(){
-	return lookupResp.getBrowseNodes()[0].getBrowseNode()[0]
-		.getAncestors().getBrowseNode()[0].getBrowseNodeId();
     }
 }

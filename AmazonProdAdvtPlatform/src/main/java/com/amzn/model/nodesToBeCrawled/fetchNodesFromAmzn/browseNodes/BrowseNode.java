@@ -6,19 +6,22 @@ import java.util.List;
 import com.amazon.webservices.awsecommerceservice._2013_08_01.BrowseNode_type0;
 import com.amazon.webservices.awsecommerceservice._2013_08_01.Children_type0;
 import com.amzn.model.crawler.commpacks.response.NodeLookupResponseHolder;
+import com.amzn.model.crawler.stub.StubFactory;
 import com.amzn.model.nodesToBeCrawled.fetchNodesFromAmzn.request.BrowseNodeRequestContainer;
 
 public class BrowseNode {
     
     private List<BrowseNode> children;
     private String nodeId;
+    private String nodeName;
     private NodeLookupResponseHolder responseHolder;
     private BrowseNodeRequestContainer reqCon;
     
     private Children_type0 ifChildrenPresent;
     
-    public BrowseNode(String id, BrowseNodeRequestContainer req){
-	nodeId=id;
+    public BrowseNode(BrowseNode_type0 node, BrowseNodeRequestContainer req){
+	nodeId=node.getBrowseNodeId();
+	nodeName=node.getName();
 	reqCon=req;
     }
     
@@ -54,11 +57,19 @@ public class BrowseNode {
 	for(BrowseNode_type0 child:children){
 	    BrowseNode currNode=new BrowseNode(child.getBrowseNodeId(), reqCon);
 	    this.children.add(currNode);
+	    reqCon=new BrowseNodeRequestContainer();
 	    reqCon.bnodeLookupReq.addBrowseNodeId(child.getBrowseNodeId());
 	    reqCon.bnodeLookupReq.addResponseGroup("BrowseNodeInfo");
-	    reqCon
-	    
-	    currNode.loadChildren(resp);
+	    reqCon.bnodeLookup.setShared(reqCon.bnodeLookupReq);
+	    reqCon.bnodeLookup.setAssociateTag("isnnfoiwnit0d-21");
+	    try{
+	    responseHolder=StubFactory.getStubInstance("BrowseNodeInfo")
+		    .executeOperation(reqCon.bnodeLookup)
+		    .convertToNodeLookupResp();
+	    }catch(Exception e){
+		e.printStackTrace();
+	    }
+	    currNode.loadChildren(responseHolder);
 	}
     }
     
