@@ -8,6 +8,7 @@ import com.amazon.webservices.awsecommerceservice._2013_08_01.Children_type0;
 import com.amzn.model.crawler.commpacks.response.NodeLookupResponseHolder;
 import com.amzn.model.crawler.stub.StubFactory;
 import com.amzn.model.nodesToBeCrawled.fetchNodesFromAmzn.request.BrowseNodeRequestContainer;
+import com.amzn.model.nodesToBeCrawled.nodeFeedToBeCrawled.nodes.nodeEntity.INodeStats;
 
 public class BrowseNode {
     
@@ -22,6 +23,12 @@ public class BrowseNode {
     public BrowseNode(BrowseNode_type0 node, BrowseNodeRequestContainer req){
 	nodeId=node.getBrowseNodeId();
 	nodeName=node.getName();
+	reqCon=req;
+    }
+    
+    public BrowseNode(INodeStats nodeStats, BrowseNodeRequestContainer req){
+	nodeId=nodeStats.getNodeId().toString();
+	nodeName=nodeStats.getNodeName();
 	reqCon=req;
     }
     
@@ -55,7 +62,7 @@ public class BrowseNode {
 	    return;
 	this.initializeChildrenBucket();
 	for(BrowseNode_type0 child:children){
-	    BrowseNode currNode=new BrowseNode(child.getBrowseNodeId(), reqCon);
+	    BrowseNode currNode=new BrowseNode(child, reqCon);
 	    this.children.add(currNode);
 	    reqCon=new BrowseNodeRequestContainer();
 	    reqCon.bnodeLookupReq.addBrowseNodeId(child.getBrowseNodeId());
