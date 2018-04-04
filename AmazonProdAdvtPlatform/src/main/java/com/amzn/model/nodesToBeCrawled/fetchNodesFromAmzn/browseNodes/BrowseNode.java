@@ -78,8 +78,7 @@ public class BrowseNode {
     }
     
     public String getParentNodeId(){
-	return responseHolder.getLookupResp().getBrowseNodes()[0].getBrowseNode()[0]
-		.getAncestors().getBrowseNode()[0].getBrowseNodeId();
+	return responseHolder.getParentNodeId();
     }
 
 }

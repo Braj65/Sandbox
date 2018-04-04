@@ -1,17 +1,12 @@
 package com.amzn.model.crawler.commpacks.response;
 
-import java.util.List;
-
 import org.apache.axis2.databinding.ADBBean;
 
 import com.amazon.webservices.awsecommerceservice._2013_08_01.BrowseNodeLookupResponse;
-import com.amazon.webservices.awsecommerceservice._2013_08_01.BrowseNode_type0;
-import com.amazon.webservices.awsecommerceservice._2013_08_01.Children_type0;
-import com.amzn.model.nodesToBeCrawled.fetchNodesFromAmzn.browseNodes.BrowseNode;
 
 public class NodeLookupResponseHolder extends ResponseHolder{
     
-    private BrowseNodeLookupResponse lookupResp;
+    private BrowseNodeLookupResponse lookupResp=null;
     
     public NodeLookupResponseHolder(ADBBean resp){
 	super(resp);
@@ -22,7 +17,12 @@ public class NodeLookupResponseHolder extends ResponseHolder{
 	return lookupResp;
     }
     
-    public void setResp(BrowseNodeLookupResponse resp){
+    public void setLookupResp(BrowseNodeLookupResponse resp){
 	lookupResp=resp;
+    }
+    
+    public String getParentNodeId(){
+	return lookupResp.getBrowseNodes()[0].getBrowseNode()[0]
+		.getAncestors().getBrowseNode()[0].getBrowseNodeId();
     }
 }

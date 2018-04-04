@@ -38,9 +38,9 @@ public class ItemSearchResponseHolder extends ResponseHolder{
 
     public String[] getSortParamsFromItemOne() {
 	String params=resp.getItems()[0].getRequest().getErrors().getError()[0].getMessage();
-	params=params.substring(params.indexOf("'"), params.lastIndexOf("'"));
-	params=params.replaceAll("'", "");
-	return params.split(",");
+	String betweenQuotes=params.substring(params.indexOf("'"), params.lastIndexOf("'"));
+	String removeQuotes=betweenQuotes.replaceAll("'", "");
+	return removeQuotes.split(",");
     }
     
     public NonNegativeInteger getTotalPages(){
