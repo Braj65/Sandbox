@@ -50,9 +50,9 @@ public class RequestContainer {
     }
     
     public ItemSearch getWrappedReq(int pageNum){
-	srchReqArr[pageNum%10].setItemPage(new PositiveInteger(new Integer(pageNum).toString()));
-	srchReqArr[(pageNum+1)%10].setItemPage(new PositiveInteger(new Integer(pageNum+1).toString()));
-	srchReqContainer.setRequest(new ItemSearchRequest[]{srchReqArr[pageNum%10], srchReqArr[(pageNum+1)%10]});
+	srchReqArr[pageNum].setItemPage(new PositiveInteger(new Integer(pageNum).toString()));
+	srchReqArr[pageNum+1].setItemPage(new PositiveInteger(new Integer(pageNum+1).toString()));
+	srchReqContainer.setRequest(new ItemSearchRequest[]{srchReqArr[pageNum], srchReqArr[pageNum+1]});
 	return srchReqContainer;
     }
     
@@ -75,7 +75,7 @@ public class RequestContainer {
 	this.sortParams=sortParams;
     }
     
-    public void load(){
+    public void loadSearchRequests(){
 	for(ItemSearchRequest srchReq:srchReqArr){
 	    srchReq.setSearchIndex(incomingNode.getSrchIndex());
 	    srchReq.setBrowseNode(incomingNode.getNodeId().toString());

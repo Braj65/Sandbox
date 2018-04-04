@@ -14,7 +14,6 @@ import com.amazon.webservices.awsecommerceservice._2013_08_01.Items_type3;
 public class ItemSearchResponseHolder extends ResponseHolder{
     private ItemSearchResponse resp=null;
     private Items_type3[] itemsOfResp=null;
-    private Item_type3 itemOfItemTypes=null;
     private ResponseItem respItem;
     
     private HashMap<String, ResponseItem> itemSet=new HashMap<String, ResponseItem>();
@@ -33,8 +32,8 @@ public class ItemSearchResponseHolder extends ResponseHolder{
 
     public String[] getSortParams() {
 	String params=resp.getOperationRequest().getErrors().getError()[0].getMessage();
-	params=params.replaceAll("'", "");
-	return params.substring(params.indexOf("'"), params.lastIndexOf("'")+1).split(",");
+	String removeQuotes=params.replaceAll("'", "");
+	return removeQuotes.substring(params.indexOf("'"), params.lastIndexOf("'")+1).split(",");
     }
 
     public String[] getSortParamsFromItemOne() {
@@ -67,14 +66,6 @@ public class ItemSearchResponseHolder extends ResponseHolder{
 	}
 	return itemSet;
     }
-    
-    /*public static class NullResponseHolder extends ItemSearchResponseHolder{
-	private long currentTimeSec;
-	public NullResponseHolder(ADBBean itemSearchResp) {
-	    super(itemSearchResp);
-	    currentTimeSec=System.currentTimeMillis()/1000;
-	}
-    }*/
     
     public ADBBean getResponse(){
 	return resp;

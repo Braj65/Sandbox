@@ -5,6 +5,8 @@ import java.util.List;
 import com.amazon.webservices.awsecommerceservice._2013_08_01.BrowseNodeLookup;
 import com.amazon.webservices.awsecommerceservice._2013_08_01.BrowseNodeLookupRequest;
 
+
+//purge this class
 public class BrowseNodeRequestContainer {
     
     public BrowseNodeLookupRequest bnodeLookupReq;

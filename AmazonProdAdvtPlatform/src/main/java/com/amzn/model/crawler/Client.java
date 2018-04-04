@@ -40,7 +40,7 @@ public class Client {
 	//using the node stats
 	singleReq.loadSrchIndexNodeid(nodeStats)
 	.loadResponseGroup(new String[] { "ItemAttributes", "Offers", "VariationSummary" })
-	.load();
+	.loadSearchRequests();
 	int endPageVal=StubFactory.getStubInstance("ItemSearch")
 		.executeOperation(singleReq.createAmznSrchReq())
 		.convertToItemSearchResp()

@@ -18,8 +18,6 @@ public class BrowseNode {
     private NodeLookupResponseHolder responseHolder;
     private BrowseNodeRequestContainer reqCon;
     
-    private Children_type0 ifChildrenPresent;
-    
     public BrowseNode(BrowseNode_type0 node, BrowseNodeRequestContainer req){
 	nodeId=node.getBrowseNodeId();
 	nodeName=node.getName();
@@ -42,18 +40,17 @@ public class BrowseNode {
     
     public void loadChildren(NodeLookupResponseHolder resp){
 	responseHolder=resp;
-	BrowseNode_type0[] nodeArr=ifChildrenPresent().getChildren();
+	BrowseNode_type0[] nodeArr=getChildren();
 	createChildren(nodeArr);
     }
     
-    public BrowseNode ifChildrenPresent(){
-	ifChildrenPresent=responseHolder.getLookupResp().getBrowseNodes()[0].getBrowseNode()[0].getChildren();
-	return this;
+    public Children_type0 ifChildrenPresent(){
+	return responseHolder.getLookupResp().getBrowseNodes()[0].getBrowseNode()[0].getChildren();
     }
     
     public BrowseNode_type0[] getChildren(){
-	if(ifChildrenPresent!=null)
-	    return ifChildrenPresent.getBrowseNode();
+	if(ifChildrenPresent()!=null)
+	    return ifChildrenPresent().getBrowseNode();
 	return null;
     }
     
@@ -64,8 +61,8 @@ public class BrowseNode {
 	for(BrowseNode_type0 child:children){
 	    BrowseNode currNode=new BrowseNode(child, reqCon);
 	    this.children.add(currNode);
-	    reqCon=new BrowseNodeRequestContainer();
-	    reqCon.bnodeLookupReq.addBrowseNodeId(child.getBrowseNodeId());
+	    reqCon=new BrowseNodeRequestContainer();//clone it with clear props
+	    reqCon.bnodeLookupReq.addBrowseNodeId(child.getBrowseNodeId());//you can reduce these lines
 	    reqCon.bnodeLookupReq.addResponseGroup("BrowseNodeInfo");
 	    reqCon.bnodeLookup.setShared(reqCon.bnodeLookupReq);
 	    reqCon.bnodeLookup.setAssociateTag("isnnfoiwnit0d-21");
