@@ -56,7 +56,7 @@ public class BrowseNode {
     
     public void createChildren(BrowseNode_type0[] children){
 	if(children==null)
-	    createLeafNode();
+	    return;	//create leaf child here use the ancestor, nodeid and ancestor-1 to save the property
 	this.initializeChildrenBucket();
 	for(BrowseNode_type0 child:children){
 	    BrowseNode currNode=new BrowseNode(child, reqCon);

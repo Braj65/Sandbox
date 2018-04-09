@@ -11,7 +11,7 @@ import com.amazon.webservices.awsecommerceservice._2013_08_01.ItemSearchResponse
 import com.amazon.webservices.awsecommerceservice._2013_08_01.Item_type3;
 import com.amazon.webservices.awsecommerceservice._2013_08_01.Items_type3;
 
-public class ItemSearchResponseHolder extends ResponseHolder{
+public class ItemSearchResponseHolder implements IResponseHolder{
     private ItemSearchResponse resp=null;
     private Items_type3[] itemsOfResp=null;
     private ResponseItem respItem;
@@ -21,7 +21,6 @@ public class ItemSearchResponseHolder extends ResponseHolder{
     public static final NullResponseHolder NULLINSTANCE=new NullResponseHolder(null);
 
     public ItemSearchResponseHolder(ADBBean itemSearchResp) {
-	super(itemSearchResp);
 	resp=(ItemSearchResponse) itemSearchResp;
 	respItem=new ResponseItem();
     }

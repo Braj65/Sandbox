@@ -7,8 +7,8 @@ import org.apache.axis2.transport.http.HTTPConstants;
 
 import com.amazon.stubs.AWSECommerceServiceStub;
 import com.amazon.webservices.awsecommerceservice._2013_08_01.ItemSearch;
+import com.amzn.model.crawler.commpacks.response.IResponseHolder;
 import com.amzn.model.crawler.commpacks.response.NullResponseHolder;
-import com.amzn.model.crawler.commpacks.response.ResponseHolder;
 
 import pack.test.SignedRequestsHelper;
 
@@ -49,7 +49,7 @@ public abstract class AbsStubContainer implements IStubContainer{
 	protected void addStubOperation(String timeStamp) throws Exception {}
 
 	@Override
-	public ResponseHolder executeOperation(ADBBean sarchReq) {return null;}
+	public IResponseHolder executeOperation(ADBBean sarchReq) {return null;}
 	
     }
 }

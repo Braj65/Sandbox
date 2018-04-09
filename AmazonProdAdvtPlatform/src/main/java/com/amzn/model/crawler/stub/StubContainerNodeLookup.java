@@ -5,8 +5,8 @@ import java.rmi.RemoteException;
 import org.apache.axis2.databinding.ADBBean;
 
 import com.amazon.webservices.awsecommerceservice._2013_08_01.BrowseNodeLookup;
-import com.amazon.webservices.awsecommerceservice._2013_08_01.ItemSearch;
-import com.amzn.model.crawler.commpacks.response.ResponseHolder;
+import com.amzn.model.crawler.commpacks.response.IResponseHolder;
+import com.amzn.model.crawler.commpacks.response.NodeLookupResponseHolder;
 
 import pack.test.SignedRequestsHelper;
 
@@ -26,7 +26,7 @@ public class StubContainerNodeLookup extends AbsStubContainer{
     }
     
     @Override
-    public ResponseHolder executeOperation(ADBBean searchReq) throws RemoteException {
-	return new ResponseHolder(stub.browseNodeLookup((BrowseNodeLookup)searchReq));
+    public IResponseHolder executeOperation(ADBBean searchReq) throws RemoteException {
+	return new NodeLookupResponseHolder(stub.browseNodeLookup((BrowseNodeLookup)searchReq));
     }
 }
