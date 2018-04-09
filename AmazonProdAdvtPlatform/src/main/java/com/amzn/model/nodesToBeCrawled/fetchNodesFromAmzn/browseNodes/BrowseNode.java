@@ -56,7 +56,7 @@ public class BrowseNode {
     
     public void createChildren(BrowseNode_type0[] children){
 	if(children==null)
-	    return;
+	    createLeafNode();
 	this.initializeChildrenBucket();
 	for(BrowseNode_type0 child:children){
 	    BrowseNode currNode=new BrowseNode(child, reqCon);
