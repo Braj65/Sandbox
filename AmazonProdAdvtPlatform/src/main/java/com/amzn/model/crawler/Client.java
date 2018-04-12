@@ -7,7 +7,6 @@ import com.amzn.model.crawler.commpacks.requests.RequestContainer;
 import com.amzn.model.crawler.commpacks.requests.RequestPool;
 import com.amzn.model.crawler.commpacks.response.IResponseHolder;
 import com.amzn.model.crawler.commpacks.response.ItemSearchResponseHolder;
-import com.amzn.model.crawler.commpacks.response.ResponseHolder;
 import com.amzn.model.crawler.stub.StubFactory;
 import com.amzn.model.nodesToBeCrawled.nodeFeedToBeCrawled.nodes.nodeEntity.AbstractNodeStats;
 import com.amzn.model.nodesToBeCrawled.nodeFeedToBeCrawled.nodes.nodeEntity.INodeStats;
@@ -42,26 +41,25 @@ public class Client {
 	singleReq.loadSrchIndexNodeid(nodeStats)
 	.loadResponseGroup(new String[] { "ItemAttributes", "Offers", "VariationSummary" })
 	.loadSearchRequests();
-	int endPageVal=StubFactory.getStubInstance("ItemSearch")
-		.executeOperation(singleReq.createAmznSrchReq())
-		.convertToItemSearchResp()
-		.getTotalPages()
-		.intValue();
+	IResponseHolder response=StubFactory.getStubInstance("ItemSearch")
+		.executeOperation(singleReq.createAmznSrchReq());
+	ItemSearchResponseHolder itmSrchResp=(ItemSearchResponseHolder)response;
+	int endPageVal=itmSrchResp.getTotalPages().intValue();
 	
 	if(endPageVal>10)
 	    endPageVal=10;
 	//fetch the sortparams and save with us
 	String[] sortParams=reqPool.getSortParams(nodeStats.getSrchIndex());
 	if(sortParams==null){
-	IResponseHolder response=StubFactory.getStubInstance("ItemSearch")
+	    response=StubFactory.getStubInstance("ItemSearch")
 		.executeOperation(singleReq.setSortParamInSrhcReq("XXX").createAmznSrchReq());
 	
-	ItemSearchResponseHolder itemSrchResp=response.convertToItemSearchResp();
+	    itmSrchResp=(ItemSearchResponseHolder)response;
 	
-	    if(itemSrchResp.getOpsErrors()!=null)
-		sortParams=itemSrchResp.getSortParams();
+	    if(itmSrchResp.getOpsErrors()!=null)
+		sortParams=itmSrchResp.getSortParams();
 	    else
-		sortParams=itemSrchResp.getSortParamsFromItemOne();
+		sortParams=itmSrchResp.getSortParamsFromItemOne();
 	    singleReq.setSortParam(sortParams);
 //	    reqPool.setSortParam(nodeStats.getSrchIndex(), sortParams);
 	}
@@ -73,7 +71,7 @@ public class Client {
 		try{
 		    Thread.sleep(2000);
 		    wrappedReq=singleReq.getWrappedReq(pageNum);
-		    ResponseHolder resp=StubFactory.getStubInstance("ItemSearch")
+		    IResponseHolder resp=StubFactory.getStubInstance("ItemSearch")
 			    .executeOperation(wrappedReq);
 		    Thread.sleep(1000);
 		}catch(Exception e){

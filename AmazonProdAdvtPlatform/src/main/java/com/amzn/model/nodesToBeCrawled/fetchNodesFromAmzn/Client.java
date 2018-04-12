@@ -6,10 +6,10 @@ import java.util.List;
 
 import com.amazon.webservices.awsecommerceservice._2013_08_01.BrowseNode_type0;
 import com.amazon.webservices.awsecommerceservice._2013_08_01.Children_type0;
+import com.amzn.model.crawler.commpacks.response.IResponseHolder;
 import com.amzn.model.crawler.commpacks.response.NodeLookupResponseHolder;
-import com.amzn.model.crawler.commpacks.response.ResponseHolder;
 import com.amzn.model.crawler.stub.StubFactory;
-import com.amzn.model.nodesToBeCrawled.fetchNodesFromAmzn.browseNodes.BrowseNode;
+import com.amzn.model.nodesToBeCrawled.fetchNodesFromAmzn.browseNodes.NodesAndTheirParentsList;
 import com.amzn.model.nodesToBeCrawled.fetchNodesFromAmzn.request.BrowseNodeRequestContainer;
 import com.amzn.model.nodesToBeCrawled.fetchNodesFromAmzn.request.IBrowseNodes;
 import com.amzn.model.nodesToBeCrawled.nodeFeedToBeCrawled.nodes.RootNode;
@@ -29,13 +29,13 @@ public class Client {
 	root.loadChildren();
 	List<IBrowseNodes> highRootChilds=root.getFirstLevelChildren();
 	INodeStats stats=null;
-	ResponseHolder resp=null;
+	IResponseHolder resp=null;
 	BrowseNodeRequestContainer reqCon;
 	for(IBrowseNodes node:highRootChilds){
 	    AbstractParentNodeStats parentNode=node.getParentNodeStats();
 	    stats=parentNode.getNodeStats();
 	    reqCon=new BrowseNodeRequestContainer();
-	    BrowseNode childNode=new BrowseNode(stats, reqCon);
+	    NodesAndTheirParentsList childNode=new NodesAndTheirParentsList(stats, reqCon);
 
 	    reqCon.bnodeLookupReq.addBrowseNodeId(stats.getNodeId().toString());
 	    reqCon.bnodeLookupReq.addResponseGroup("BrowseNodeInfo");
@@ -46,7 +46,7 @@ public class Client {
 	    }catch(Exception e){
 		e.printStackTrace();
 	    }
-	    childNode.loadChildren(resp.convertToNodeLookupResp());
+	    childNode.loadChildren((NodeLookupResponseHolder)resp);
 	}
     }
 }

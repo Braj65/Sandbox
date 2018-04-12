@@ -5,36 +5,38 @@ import java.util.List;
 
 import com.amazon.webservices.awsecommerceservice._2013_08_01.BrowseNode_type0;
 import com.amazon.webservices.awsecommerceservice._2013_08_01.Children_type0;
+import com.amzn.model.crawler.commpacks.response.IResponseHolder;
 import com.amzn.model.crawler.commpacks.response.NodeLookupResponseHolder;
 import com.amzn.model.crawler.stub.StubFactory;
 import com.amzn.model.nodesToBeCrawled.fetchNodesFromAmzn.request.BrowseNodeRequestContainer;
 import com.amzn.model.nodesToBeCrawled.nodeFeedToBeCrawled.nodes.nodeEntity.INodeStats;
 
-public class BrowseNode {
+public class NodesAndTheirParentsList {
     
-    private List<BrowseNode> children;
+    private List<NodesAndTheirParentsList> children;
     private String nodeId;
     private String nodeName;
     private NodeLookupResponseHolder responseHolder;
+//    private IResponseHolder responseHolder;
     private BrowseNodeRequestContainer reqCon;
     
-    public BrowseNode(BrowseNode_type0 node, BrowseNodeRequestContainer req){
+    public NodesAndTheirParentsList(BrowseNode_type0 node, BrowseNodeRequestContainer req){
 	nodeId=node.getBrowseNodeId();
 	nodeName=node.getName();
 	reqCon=req;
     }
     
-    public BrowseNode(INodeStats nodeStats, BrowseNodeRequestContainer req){
+    public NodesAndTheirParentsList(INodeStats nodeStats, BrowseNodeRequestContainer req){
 	nodeId=nodeStats.getNodeId().toString();
 	nodeName=nodeStats.getNodeName();
 	reqCon=req;
     }
     
     public void initializeChildrenBucket(){
-	children=new ArrayList<BrowseNode>();
+	children=new ArrayList<NodesAndTheirParentsList>();
     }
     
-    public void addChild(BrowseNode node){
+    public void addChild(NodesAndTheirParentsList node){
 	children.add(node);
     }
     
@@ -59,7 +61,7 @@ public class BrowseNode {
 	    return;	//create leaf child here use the ancestor, nodeid and ancestor-1 to save the property
 	this.initializeChildrenBucket();
 	for(BrowseNode_type0 child:children){
-	    BrowseNode currNode=new BrowseNode(child, reqCon);
+	    NodesAndTheirParentsList currNode=new NodesAndTheirParentsList(child, reqCon);
 	    this.children.add(currNode);
 	    reqCon=new BrowseNodeRequestContainer();//clone it with clear props
 	    reqCon.bnodeLookupReq.addBrowseNodeId(child.getBrowseNodeId());//you can reduce these lines
@@ -67,9 +69,8 @@ public class BrowseNode {
 	    reqCon.bnodeLookup.setShared(reqCon.bnodeLookupReq);
 	    reqCon.bnodeLookup.setAssociateTag("isnnfoiwnit0d-21");
 	    try{
-	    responseHolder=StubFactory.getStubInstance("BrowseNodeInfo")
-		    .executeOperation(reqCon.bnodeLookup)
-		    .convertToNodeLookupResp();
+	    responseHolder=(NodeLookupResponseHolder) StubFactory.getStubInstance("BrowseNodeInfo")
+		    .executeOperation(reqCon.bnodeLookup);
 	    }catch(Exception e){
 		e.printStackTrace();
 	    }
