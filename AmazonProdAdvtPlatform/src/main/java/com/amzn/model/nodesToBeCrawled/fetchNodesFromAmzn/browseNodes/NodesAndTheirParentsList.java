@@ -78,6 +78,21 @@ public class NodesAndTheirParentsList {
 	}
     }
     
+    public void flushFullHeir(){
+	String nodeId=responseHolder.getLookupResp().getBrowseNodes()[0].getBrowseNode()[0].getBrowseNodeId();
+	String ancestorName=getFullAncestor(responseHolder.getLookupResp().getBrowseNodes()[0].getBrowseNode()[0]);
+    }
+    
+    public String getFullAncestor(BrowseNode_type0 bnode){
+	String leafNodeName=bnode.getName();
+	
+	while(bnode.getAncestors()!=null){
+	    bnode=bnode.getAncestors().getBrowseNode()[0];
+	    leafNodeName=bnode.getName()+"."+leafNodeName;
+	}
+	return leafNodeName;
+    }
+    
     public String getParentNodeId(){
 	return responseHolder.getParentNodeId();
     }
