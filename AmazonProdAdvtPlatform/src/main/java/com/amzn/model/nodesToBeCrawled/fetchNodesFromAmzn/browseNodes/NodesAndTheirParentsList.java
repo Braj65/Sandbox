@@ -19,10 +19,12 @@ public class NodesAndTheirParentsList {
     private NodeLookupResponseHolder responseHolder;
 //    private IResponseHolder responseHolder;
     private BrowseNodeRequestContainer reqCon;
+    private LeafNodes leafNodeOperations;
     
     public NodesAndTheirParentsList(BrowseNode_type0 node, BrowseNodeRequestContainer req){
 	nodeId=node.getBrowseNodeId();
 	nodeName=node.getName();
+	leafNodeOperations=new LeafNodes(nodeName);
 	reqCon=req;
     }
     
@@ -71,6 +73,7 @@ public class NodesAndTheirParentsList {
 	    try{
 	    responseHolder=(NodeLookupResponseHolder) StubFactory.getStubInstance("BrowseNodeInfo")
 		    .executeOperation(reqCon.bnodeLookup);
+	    flushFullHeir();
 	    }catch(Exception e){
 		e.printStackTrace();
 	    }
@@ -81,6 +84,7 @@ public class NodesAndTheirParentsList {
     public void flushFullHeir(){
 	String nodeId=responseHolder.getLookupResp().getBrowseNodes()[0].getBrowseNode()[0].getBrowseNodeId();
 	String ancestorName=getFullAncestor(responseHolder.getLookupResp().getBrowseNodes()[0].getBrowseNode()[0]);
+	leafNodeOperations.writeToPropertyFile(nodeId, ancestorName);	
     }
     
     public String getFullAncestor(BrowseNode_type0 bnode){

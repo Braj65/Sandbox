@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.apache.commons.configuration.ConfigurationException;
 import org.apache.commons.configuration.PropertiesConfiguration;
+import org.apache.commons.configuration.PropertiesConfigurationLayout;
 
 import com.amzn.model.nodesToBeCrawled.nodeFeedToBeCrawled.constants.Property;
 import com.amzn.model.nodesToBeCrawled.nodeFeedToBeCrawled.nodes.INode;
@@ -16,10 +17,12 @@ import com.amzn.model.nodesToBeCrawled.nodeFeedToBeCrawled.utility.loaderFactory
 public class LoadLeafChildren implements ILoadChildrenFromProp{
     
     private PropertiesConfiguration childNodeProperties=null;
+    private PropertiesConfigurationLayout layout=null;
     private String fullLdapName;
     public LoadLeafChildren(String propFileName){
 	try {
 	    childNodeProperties=new PropertiesConfiguration(getChildFile(propFileName));
+	    layout=childNodeProperties.getLayout();
 //	    preCreateChildObjects();
 	    LoaderFactory.registerPropLoader(propFileName, this);
 	} catch (ConfigurationException e) {
@@ -53,7 +56,7 @@ public class LoadLeafChildren implements ILoadChildrenFromProp{
 	createChildObjectsFromChildFile(childNodes);
     }
     
-    public void beforeCreatingChildObjects(AbstractLdapChild ldap){
+/*    public void beforeCreatingChildObjects(AbstractLdapChild ldap){
 	this.fullLdapName=ldap.parentCategory;
 	if(ldap.toBeCrawled){
 	    newCreateChildObjectsFromChildren(ldap.children);
@@ -69,7 +72,7 @@ public class LoadLeafChildren implements ILoadChildrenFromProp{
 	    childNodes.add((INode)(Object)childNodeProperties.getProperty(fullLdapName));
 	}
 	
-    }
+    }*/
     //Netx improvement. Create all childNode in first visit. Then in subsequent visits based on
     //the dlap name, based on some part of ldap name, all childnodes created earlier will be
     //transfered from that repo to current list of childnodes of the ldap object
@@ -113,5 +116,17 @@ public class LoadLeafChildren implements ILoadChildrenFromProp{
 	    extracted.addProperty(parentLdap, new ChildNode(key, childNodeProperties.getLong(key)));	    
 	}
 	childNodeProperties=extracted;
+    }
+    
+    public void writeToFile(String fullAncestorName, String nodeId){
+	childNodeProperties.setProperty(fullAncestorName, nodeId);
+	layout.setComment(fullAncestorName, fullAncestorName.substring(0, fullAncestorName.lastIndexOf(".")));
+	try {
+	    childNodeProperties.save();
+	} catch (ConfigurationException e) {
+	    // TODO Auto-generated catch block
+	    e.printStackTrace();
+	}
+	
     }
 }

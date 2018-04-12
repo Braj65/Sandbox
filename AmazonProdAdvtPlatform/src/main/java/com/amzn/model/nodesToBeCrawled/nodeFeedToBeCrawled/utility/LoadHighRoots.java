@@ -50,4 +50,15 @@ public class LoadHighRoots implements ILoadChildrenFromProp {
 		.setNodeId(Long.parseLong((String) categories.get(0))).build();
 
     }
+
+    @Override
+    public void writeToFile(String fullAncestorName, String nodeId) {
+	propConfigs.setProperty(fullAncestorName, nodeId);
+	try {
+	    propConfigs.save();
+	} catch (ConfigurationException e) {
+	    // TODO Auto-generated catch block
+	    e.printStackTrace();
+	}
+    }
 }

@@ -9,8 +9,8 @@ public class LeafNodes {
     private String nodeName;
     private ILoadChildrenFromProp propertyLoader;
     
-    public LeafNodes(String node){
-	nodeName=node+".properties";
+    public LeafNodes(String nodeName){
+	this.nodeName=nodeName+".properties";
 	try{
 	    propertyLoader=LoaderFactory.getPropLoader(nodeName);
 	}catch(Exception e){
@@ -21,6 +21,14 @@ public class LeafNodes {
 	    	+ "to provide a constant stream of full node names and ids from property files");
 	    propertyLoader=new LoadLeafChildren(nodeName);
 	}
+    }
+    
+    public void persistExistingPropertyFileToDb(){
+	//next task fit it at right place
+    }
+    
+    public void writeToPropertyFile(String nodeId, String fullAncestorName){
+	propertyLoader.writeToFile(fullAncestorName, nodeId);
     }
 
 }

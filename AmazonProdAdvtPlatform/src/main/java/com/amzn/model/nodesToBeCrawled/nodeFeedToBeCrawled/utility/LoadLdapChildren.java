@@ -76,5 +76,18 @@ public class LoadLdapChildren implements ILoadChildrenFromProp {
 	return new AbstractNodeStats.Builder().setNodeName(category)
 		.setNodeId(Long.parseLong((String) categories.get(0))).build();
     }
+
+    @Override
+    public void writeToFile(String fullAncestorName, String nodeId) {
+	nodeProperties.setProperty(fullAncestorName, nodeId);
+	try {
+	    nodeProperties.save();
+	} catch (ConfigurationException e) {
+	    // TODO Auto-generated catch block
+	    e.printStackTrace();
+	}
+    }
+    
+    
     
 }

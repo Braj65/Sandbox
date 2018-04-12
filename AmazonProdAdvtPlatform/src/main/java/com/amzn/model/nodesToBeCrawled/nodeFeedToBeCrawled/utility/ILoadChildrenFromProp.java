@@ -6,4 +6,5 @@ import com.amzn.model.nodesToBeCrawled.nodeFeedToBeCrawled.nodes.INode;
 
 public interface ILoadChildrenFromProp {    
     void createChildObjectsFromChildFile(List<INode> childNodes);
+    void writeToFile(String fullAncestorName, String nodeId);
 }
