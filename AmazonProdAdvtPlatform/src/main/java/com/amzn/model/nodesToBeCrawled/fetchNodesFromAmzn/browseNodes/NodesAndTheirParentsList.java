@@ -60,7 +60,7 @@ public class NodesAndTheirParentsList {
     
     public void createChildren(BrowseNode_type0[] children){
 	if(children==null)
-	    return;	//create leaf child here use the ancestor, nodeid and ancestor-1 to save the property
+	    flushFullHeir();	//create leaf child here use the ancestor, nodeid and ancestor-1 to save the property
 	this.initializeChildrenBucket();
 	for(BrowseNode_type0 child:children){
 	    NodesAndTheirParentsList currNode=new NodesAndTheirParentsList(child, reqCon);
@@ -73,7 +73,6 @@ public class NodesAndTheirParentsList {
 	    try{
 	    responseHolder=(NodeLookupResponseHolder) StubFactory.getStubInstance("BrowseNodeInfo")
 		    .executeOperation(reqCon.bnodeLookup);
-	    flushFullHeir();
 	    }catch(Exception e){
 		e.printStackTrace();
 	    }

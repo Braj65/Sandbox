@@ -1,12 +1,14 @@
 package com.amzn.model.nodesToBeCrawled.nodeFeedToBeCrawled.utility;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.Iterator;
 import java.util.List;
 
 import org.apache.commons.configuration.ConfigurationException;
 import org.apache.commons.configuration.PropertiesConfiguration;
 import org.apache.commons.configuration.PropertiesConfigurationLayout;
+import org.apache.commons.io.FileUtils;
 
 import com.amzn.model.nodesToBeCrawled.nodeFeedToBeCrawled.constants.Property;
 import com.amzn.model.nodesToBeCrawled.nodeFeedToBeCrawled.nodes.INode;
@@ -54,6 +56,7 @@ public class LoadLeafChildren implements ILoadChildrenFromProp{
     public void preCreateChildObjects(List<INode> childNodes, String fullLdapName){
 	this.fullLdapName=fullLdapName;
 	createChildObjectsFromChildFile(childNodes);
+	
     }
     
 /*    public void beforeCreatingChildObjects(AbstractLdapChild ldap){
@@ -127,6 +130,15 @@ public class LoadLeafChildren implements ILoadChildrenFromProp{
 	    // TODO Auto-generated catch block
 	    e.printStackTrace();
 	}
-	
+    }
+    
+    public void createNewFile(String fileName){
+	File rootFile=new File(Property.getChildNodePath()+fileName);
+	try {
+	    FileUtils.copyFile(childNodeProperties.getFile(), rootFile);
+	} catch (IOException e) {
+	    // TODO Auto-generated catch block
+	    e.printStackTrace();
+	}
     }
 }

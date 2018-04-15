@@ -1,5 +1,9 @@
 package com.amzn.model.nodesToBeCrawled.fetchNodesFromAmzn.browseNodes;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import com.amzn.model.nodesToBeCrawled.nodeFeedToBeCrawled.utility.ILoadChildrenFromProp;
 import com.amzn.model.nodesToBeCrawled.nodeFeedToBeCrawled.utility.LoadLeafChildren;
 import com.amzn.model.nodesToBeCrawled.nodeFeedToBeCrawled.utility.loaderFactory.LoaderFactory;
@@ -29,6 +33,10 @@ public class LeafNodes {
     public void persistExistingPropertyFileToDb(){
 	//We will write code about persisting to db in a later time. Currently we will write code
 	//to create a copy of existing file with time stamp in file name
+	DateFormat dateFormat=new SimpleDateFormat("dd_MM_yy-HH_mm");
+	Date d=new Date();
+	String newFileName=nodeName+dateFormat.format(d);
+	propertyLoader.createNewFile(newFileName);
     }
     
     public void writeToPropertyFile(String nodeId, String fullAncestorName){

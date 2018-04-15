@@ -87,7 +87,10 @@ public class LoadLdapChildren implements ILoadChildrenFromProp {
 	    e.printStackTrace();
 	}
     }
-    
-    
-    
+
+    @Override
+    public void createNewFile(String newFileName) {
+	// TODO Auto-generated method stub
+	
+    }    
 }
