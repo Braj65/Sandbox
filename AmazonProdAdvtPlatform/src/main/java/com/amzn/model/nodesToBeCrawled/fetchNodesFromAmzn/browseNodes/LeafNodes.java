@@ -21,10 +21,14 @@ public class LeafNodes {
 	    	+ "to provide a constant stream of full node names and ids from property files");
 	    propertyLoader=new LoadLeafChildren(nodeName);
 	}
+	finally{
+	    persistExistingPropertyFileToDb();
+	}
     }
     
     public void persistExistingPropertyFileToDb(){
-	//next task fit it at right place
+	//We will write code about persisting to db in a later time. Currently we will write code
+	//to create a copy of existing file with time stamp in file name
     }
     
     public void writeToPropertyFile(String nodeId, String fullAncestorName){
