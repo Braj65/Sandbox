@@ -35,7 +35,8 @@ public class Client {
 	    AbstractParentNodeStats parentNode=node.getParentNodeStats();
 	    stats=parentNode.getNodeStats();
 	    reqCon=new BrowseNodeRequestContainer();
-	    NodesAndTheirParentsList childNode=new NodesAndTheirParentsList(stats, reqCon);
+	    NodesAndTheirParentsList childNode=new NodesAndTheirParentsList(stats, reqCon)
+		    .initializeLeafNode();
 
 	    reqCon.bnodeLookupReq.addBrowseNodeId(stats.getNodeId().toString());
 	    reqCon.bnodeLookupReq.addResponseGroup("BrowseNodeInfo");

@@ -14,16 +14,19 @@ public class LeafNodes {
     private ILoadChildrenFromProp propertyLoader;
     
     public LeafNodes(String nodeName){
-	this.nodeName=nodeName+".properties";
+	this.nodeName=nodeName;
+    }
+    
+    public void loadPropertyFile(){
 	try{
-	    propertyLoader=LoaderFactory.getPropLoader(nodeName);
+	    propertyLoader=LoaderFactory.getPropLoader(nodeName+".properties");
 	}catch(Exception e){
 	    e.printStackTrace();
-	    System.out.println("Going to initialize property file for "+nodeName+" since "
+	    System.out.println("Going to initialize property file for "+nodeName+".properties"+" since "
 	    	+ "it is not present may be due to the client from 'nodeFeedToBeCrawled' pack is "
 	    	+ "not running. There we load the memory with propertfile of each type before starting "
 	    	+ "to provide a constant stream of full node names and ids from property files");
-	    propertyLoader=new LoadLeafChildren(nodeName);
+	    propertyLoader=new LoadLeafChildren(nodeName+".properties");
 	}
 	finally{
 	    persistExistingPropertyFileToDb();
@@ -35,7 +38,7 @@ public class LeafNodes {
 	//to create a copy of existing file with time stamp in file name
 	DateFormat dateFormat=new SimpleDateFormat("dd_MM_yy-HH_mm");
 	Date d=new Date();
-	String newFileName=nodeName+dateFormat.format(d);
+	String newFileName=nodeName+dateFormat.format(d)+".properties";
 	propertyLoader.createNewFile(newFileName);
     }
     

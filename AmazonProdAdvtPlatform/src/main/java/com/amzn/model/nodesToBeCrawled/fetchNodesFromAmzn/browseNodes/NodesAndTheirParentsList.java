@@ -24,7 +24,6 @@ public class NodesAndTheirParentsList {
     public NodesAndTheirParentsList(BrowseNode_type0 node, BrowseNodeRequestContainer req){
 	nodeId=node.getBrowseNodeId();
 	nodeName=node.getName();
-	leafNodeOperations=new LeafNodes(nodeName);
 	reqCon=req;
     }
     
@@ -32,6 +31,12 @@ public class NodesAndTheirParentsList {
 	nodeId=nodeStats.getNodeId().toString();
 	nodeName=nodeStats.getNodeName();
 	reqCon=req;
+    }
+    
+    public NodesAndTheirParentsList initializeLeafNode(){
+	leafNodeOperations=new LeafNodes(nodeName);
+	leafNodeOperations.loadPropertyFile();
+	return this;
     }
     
     public void initializeChildrenBucket(){
