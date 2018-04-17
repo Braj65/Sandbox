@@ -28,9 +28,6 @@ public class LeafNodes {
 	    	+ "to provide a constant stream of full node names and ids from property files");
 	    propertyLoader=new LoadLeafChildren(nodeName+".properties");
 	}
-	finally{
-	    persistExistingPropertyFileToDb();
-	}
     }
     
     public void persistExistingPropertyFileToDb(){
@@ -40,6 +37,7 @@ public class LeafNodes {
 	Date d=new Date();
 	String newFileName=nodeName+dateFormat.format(d)+".properties";
 	propertyLoader.createNewFile(newFileName);
+	propertyLoader.clearPropertyFile();
     }
     
     public void writeToPropertyFile(String nodeId, String fullAncestorName){

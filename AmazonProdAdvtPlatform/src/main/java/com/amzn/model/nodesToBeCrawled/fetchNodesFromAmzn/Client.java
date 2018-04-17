@@ -1,14 +1,11 @@
 package com.amzn.model.nodesToBeCrawled.fetchNodesFromAmzn;
 
-import java.rmi.RemoteException;
-import java.util.ArrayList;
 import java.util.List;
 
-import com.amazon.webservices.awsecommerceservice._2013_08_01.BrowseNode_type0;
-import com.amazon.webservices.awsecommerceservice._2013_08_01.Children_type0;
 import com.amzn.model.crawler.commpacks.response.IResponseHolder;
 import com.amzn.model.crawler.commpacks.response.NodeLookupResponseHolder;
 import com.amzn.model.crawler.stub.StubFactory;
+import com.amzn.model.nodesToBeCrawled.fetchNodesFromAmzn.browseNodes.LeafNodes;
 import com.amzn.model.nodesToBeCrawled.fetchNodesFromAmzn.browseNodes.NodesAndTheirParentsList;
 import com.amzn.model.nodesToBeCrawled.fetchNodesFromAmzn.request.BrowseNodeRequestContainer;
 import com.amzn.model.nodesToBeCrawled.fetchNodesFromAmzn.request.IBrowseNodes;
@@ -34,10 +31,14 @@ public class Client {
 	for(IBrowseNodes node:highRootChilds){
 	    AbstractParentNodeStats parentNode=node.getParentNodeStats();
 	    stats=parentNode.getNodeStats();
+	    parentNode=null;
 	    reqCon=new BrowseNodeRequestContainer();
-	    NodesAndTheirParentsList childNode=new NodesAndTheirParentsList(stats, reqCon)
-		    .initializeLeafNode();
-
+	    NodesAndTheirParentsList childNode=new NodesAndTheirParentsList(stats, reqCon);
+	    
+	    LeafNodes leaf=new LeafNodes(stats.getNodeName());
+	    leaf.persistExistingPropertyFileToDb();
+	    leaf=null;
+	    
 	    reqCon.bnodeLookupReq.addBrowseNodeId(stats.getNodeId().toString());
 	    reqCon.bnodeLookupReq.addResponseGroup("BrowseNodeInfo");
 	    reqCon.bnodeLookup.setShared(reqCon.bnodeLookupReq);

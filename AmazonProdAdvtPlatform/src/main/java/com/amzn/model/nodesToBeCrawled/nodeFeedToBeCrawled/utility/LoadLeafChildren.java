@@ -1,7 +1,9 @@
 package com.amzn.model.nodesToBeCrawled.nodeFeedToBeCrawled.utility;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.Iterator;
 import java.util.List;
 
@@ -140,5 +142,16 @@ public class LoadLeafChildren implements ILoadChildrenFromProp{
 	    // TODO Auto-generated catch block
 	    e.printStackTrace();
 	}
+    }
+    
+    public void clearPropertyFile(){
+	PrintWriter writer=null;
+	try {
+	    writer = new PrintWriter(childNodeProperties.getFile());
+	    writer.print("");
+	    writer.close();
+	} catch (FileNotFoundException e) {
+	    e.printStackTrace();
+	}	
     }
 }

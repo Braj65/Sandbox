@@ -21,11 +21,9 @@ public class NodesAndTheirParentsList {
     private BrowseNodeRequestContainer reqCon;
     private LeafNodes leafNodeOperations;
     
-    public NodesAndTheirParentsList(BrowseNode_type0 node, BrowseNodeRequestContainer req,
-	    LeafNodes leafOperations){
+    public NodesAndTheirParentsList(BrowseNode_type0 node, BrowseNodeRequestContainer req){
 	nodeId=node.getBrowseNodeId();
 	nodeName=node.getName();
-	leafNodeOperations=leafOperations;
 	reqCon=req;
     }
     
@@ -35,10 +33,10 @@ public class NodesAndTheirParentsList {
 	reqCon=req;
     }
     
-    public NodesAndTheirParentsList initializeLeafNode(){
-	leafNodeOperations=new LeafNodes(nodeName);
+    public void initializeLeafNode(){
+	leafNodeOperations=new LeafNodes(
+		getRootAncestor(responseHolder.getLookupResp().getBrowseNodes()[0].getBrowseNode()[0]));
 	leafNodeOperations.loadPropertyFile();
-	return this;
     }
     
     public void initializeChildrenBucket(){
@@ -67,12 +65,13 @@ public class NodesAndTheirParentsList {
     
     public void createChildren(BrowseNode_type0[] children){
 	if(children==null){
+	    initializeLeafNode();
 	    flushFullHeir();	//create leaf child here use the ancestor, nodeid and ancestor-1 to save the property
 	    return;
 	}
 	this.initializeChildrenBucket();
 	for(BrowseNode_type0 child:children){
-	    NodesAndTheirParentsList currNode=new NodesAndTheirParentsList(child, reqCon,this.leafNodeOperations);
+	    NodesAndTheirParentsList currNode=new NodesAndTheirParentsList(child, reqCon);
 	    this.children.add(currNode);
 	    reqCon=new BrowseNodeRequestContainer();//clone it with clear props
 	    reqCon.bnodeLookupReq.addBrowseNodeId(child.getBrowseNodeId());//you can reduce these lines
@@ -106,7 +105,11 @@ public class NodesAndTheirParentsList {
     }
     
     public String getRootAncestor(BrowseNode_type0 bnode){
-	
+	BrowseNode_type0 ancestor=bnode;
+	while(ancestor.getAncestors()!=null){
+	    ancestor=ancestor.getAncestors().getBrowseNode()[0];
+	}
+	return ancestor.getName();
     }
     
     public String getParentNodeId(){
