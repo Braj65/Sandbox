@@ -21,9 +21,11 @@ public class NodesAndTheirParentsList {
     private BrowseNodeRequestContainer reqCon;
     private LeafNodes leafNodeOperations;
     
-    public NodesAndTheirParentsList(BrowseNode_type0 node, BrowseNodeRequestContainer req){
+    public NodesAndTheirParentsList(BrowseNode_type0 node, BrowseNodeRequestContainer req,
+	    LeafNodes leafOperations){
 	nodeId=node.getBrowseNodeId();
 	nodeName=node.getName();
+	leafNodeOperations=leafOperations;
 	reqCon=req;
     }
     
@@ -64,11 +66,13 @@ public class NodesAndTheirParentsList {
     }
     
     public void createChildren(BrowseNode_type0[] children){
-	if(children==null)
+	if(children==null){
 	    flushFullHeir();	//create leaf child here use the ancestor, nodeid and ancestor-1 to save the property
+	    return;
+	}
 	this.initializeChildrenBucket();
 	for(BrowseNode_type0 child:children){
-	    NodesAndTheirParentsList currNode=new NodesAndTheirParentsList(child, reqCon);
+	    NodesAndTheirParentsList currNode=new NodesAndTheirParentsList(child, reqCon,this.leafNodeOperations);
 	    this.children.add(currNode);
 	    reqCon=new BrowseNodeRequestContainer();//clone it with clear props
 	    reqCon.bnodeLookupReq.addBrowseNodeId(child.getBrowseNodeId());//you can reduce these lines
@@ -99,6 +103,10 @@ public class NodesAndTheirParentsList {
 	    leafNodeName=bnode.getName()+"."+leafNodeName;
 	}
 	return leafNodeName;
+    }
+    
+    public String getRootAncestor(BrowseNode_type0 bnode){
+	
     }
     
     public String getParentNodeId(){
