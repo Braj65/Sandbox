@@ -125,7 +125,7 @@ public class LoadLeafChildren implements ILoadChildrenFromProp{
     
     public void writeToFile(String fullAncestorName, String nodeId){
 	childNodeProperties.setProperty(fullAncestorName, nodeId);
-	layout.setComment(fullAncestorName.substring(0, fullAncestorName.lastIndexOf(".")), fullAncestorName);
+	layout.setComment(fullAncestorName, fullAncestorName.substring(0, fullAncestorName.lastIndexOf(".")));
 	
     }
     
