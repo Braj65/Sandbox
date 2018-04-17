@@ -1,6 +1,8 @@
 package com.amzn.model.nodesToBeCrawled.nodeFeedToBeCrawled.utility;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
 import java.util.Iterator;
 import java.util.List;
 
@@ -65,5 +67,24 @@ public class LoadHighRoots implements ILoadChildrenFromProp {
     @Override
     public void createNewFile(String newFileName) {
 	// TODO Auto-generated method stub
+    }
+    
+    @Override
+    public void clearPropertyFile(){
+	propConfigs.clear();
+	PrintWriter writer=null;
+	try {
+	    writer = new PrintWriter(propConfigs.getFile());
+	    writer.print("");
+	    writer.close();
+	} catch (FileNotFoundException e) {
+	    e.printStackTrace();
+	}	
+    }
+
+    @Override
+    public void savePropertyFile() {
+	// TODO Auto-generated method stub
+	
     }
 }

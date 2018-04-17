@@ -33,10 +33,11 @@ public class NodesAndTheirParentsList {
 	reqCon=req;
     }
     
-    public void initializeLeafNode(){
+    public LeafNodes initializeLeafNode(){
 	leafNodeOperations=new LeafNodes(
 		getRootAncestor(responseHolder.getLookupResp().getBrowseNodes()[0].getBrowseNode()[0]));
 	leafNodeOperations.loadPropertyFile();
+	return leafNodeOperations;
     }
     
     public void initializeChildrenBucket(){
@@ -79,13 +80,22 @@ public class NodesAndTheirParentsList {
 	    reqCon.bnodeLookup.setShared(reqCon.bnodeLookupReq);
 	    reqCon.bnodeLookup.setAssociateTag("isnnfoiwnit0d-21");
 	    try{
+	    Thread.sleep(2000);
 	    responseHolder=(NodeLookupResponseHolder) StubFactory.getStubInstance("BrowseNodeInfo")
 		    .executeOperation(reqCon.bnodeLookup);
+	    Thread.sleep(1000);
 	    }catch(Exception e){
-		e.printStackTrace();
+		try{
+		Thread.sleep(5000);
+		responseHolder=(NodeLookupResponseHolder) StubFactory.getStubInstance("BrowseNodeInfo")
+			    .executeOperation(reqCon.bnodeLookup);
+		}catch(Exception ex){
+		    ex.printStackTrace();
+		}
 	    }
 	    currNode.loadChildren(responseHolder);
 	}
+	initializeLeafNode().savePropertyFile();
     }
     
     public void flushFullHeir(){

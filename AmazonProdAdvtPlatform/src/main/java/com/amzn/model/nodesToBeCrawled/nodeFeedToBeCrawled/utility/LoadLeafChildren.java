@@ -125,13 +125,8 @@ public class LoadLeafChildren implements ILoadChildrenFromProp{
     
     public void writeToFile(String fullAncestorName, String nodeId){
 	childNodeProperties.setProperty(fullAncestorName, nodeId);
-	layout.setComment(fullAncestorName, fullAncestorName.substring(0, fullAncestorName.lastIndexOf(".")));
-	try {
-	    childNodeProperties.save();
-	} catch (ConfigurationException e) {
-	    // TODO Auto-generated catch block
-	    e.printStackTrace();
-	}
+	layout.setComment(fullAncestorName.substring(0, fullAncestorName.lastIndexOf(".")), fullAncestorName);
+	
     }
     
     public void createNewFile(String fileName){
@@ -145,6 +140,7 @@ public class LoadLeafChildren implements ILoadChildrenFromProp{
     }
     
     public void clearPropertyFile(){
+	childNodeProperties.clear();
 	PrintWriter writer=null;
 	try {
 	    writer = new PrintWriter(childNodeProperties.getFile());
@@ -153,5 +149,14 @@ public class LoadLeafChildren implements ILoadChildrenFromProp{
 	} catch (FileNotFoundException e) {
 	    e.printStackTrace();
 	}	
+    }
+    
+    public void savePropertyFile(){
+	try {
+	    childNodeProperties.save();
+	} catch (ConfigurationException e) {
+	    // TODO Auto-generated catch block
+	    e.printStackTrace();
+	}
     }
 }

@@ -8,4 +8,6 @@ public interface ILoadChildrenFromProp {
     void createChildObjectsFromChildFile(List<INode> childNodes);
     void writeToFile(String fullAncestorName, String nodeId);
     void createNewFile(String newFileName);
+    void clearPropertyFile();
+    void savePropertyFile();
 }

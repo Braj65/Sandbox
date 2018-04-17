@@ -28,15 +28,16 @@ public class Client {
 	INodeStats stats=null;
 	IResponseHolder resp=null;
 	BrowseNodeRequestContainer reqCon;
+	NodesAndTheirParentsList childNode = null;
 	for(IBrowseNodes node:highRootChilds){
 	    AbstractParentNodeStats parentNode=node.getParentNodeStats();
 	    stats=parentNode.getNodeStats();
 	    parentNode=null;
 	    reqCon=new BrowseNodeRequestContainer();
-	    NodesAndTheirParentsList childNode=new NodesAndTheirParentsList(stats, reqCon);
+	    childNode=new NodesAndTheirParentsList(stats, reqCon);
 	    
 	    LeafNodes leaf=new LeafNodes(stats.getNodeName());
-	    leaf.persistExistingPropertyFileToDb();
+	    leaf.loadPropertyFile().persistExistingPropertyFileToDb();
 	    leaf=null;
 	    
 	    reqCon.bnodeLookupReq.addBrowseNodeId(stats.getNodeId().toString());
