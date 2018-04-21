@@ -44,10 +44,6 @@ public class NodesAndTheirParentsList {
 	children=new ArrayList<NodesAndTheirParentsList>();
     }
     
-    public void addChild(NodesAndTheirParentsList node){
-	children.add(node);
-    }
-    
     public void loadChildren(NodeLookupResponseHolder resp){
 	responseHolder=resp;
 	BrowseNode_type0[] nodeArr=getChildren();
@@ -64,26 +60,12 @@ public class NodesAndTheirParentsList {
 	return null;
     }
     
-    public Children_type0 getChildrenOf(BrowseNode_type0 node){
-	return node.getChildren();
-    }
-    
-    public boolean grandChildrenPresent(){
-	BrowseNode_type0[] nodeArr=getChildren();
-	for(BrowseNode_type0 child: nodeArr){
-	    if(getChildrenOf(child)==null)
-		return false;		
-	}
-	return true;
-    }
-    
     public void createChildren(BrowseNode_type0[] children){
 	if(children==null){
-	    initializeLeafNode();
 	    flushFullHeir();	//create leaf child here use the ancestor, nodeid and ancestor-1 to save the property
 	    return;
 	}
-	this.initializeChildrenBucket();
+//	this.initializeChildrenBucket();
 	for(BrowseNode_type0 child:children){
 	    NodesAndTheirParentsList currNode=new NodesAndTheirParentsList(child, reqCon);
 //	    this.children.add(currNode);
@@ -92,58 +74,28 @@ public class NodesAndTheirParentsList {
 	    reqCon.bnodeLookupReq.addResponseGroup("BrowseNodeInfo");
 	    reqCon.bnodeLookup.setShared(reqCon.bnodeLookupReq);
 	    reqCon.bnodeLookup.setAssociateTag("isnnfoiwnit0d-21");
-	    try{
-	    Thread.sleep(2000);
-	    responseHolder=(NodeLookupResponseHolder) StubFactory.getStubInstance("BrowseNodeInfo")
-		    .executeOperation(reqCon.bnodeLookup);
-	    Thread.sleep(1000);
-	    }catch(Exception e){
-		try{
-		Thread.sleep(5000);
-		responseHolder=(NodeLookupResponseHolder) StubFactory.getStubInstance("BrowseNodeInfo")
-			    .executeOperation(reqCon.bnodeLookup);
-		}catch(Exception ex){
-		    ex.printStackTrace();
-		}
-	    }
+	    
+	    retryRequetIfFailed(reqCon,5000);
 	    /*if(!grandChildrenPresent()){
 		FactoryNodes.addToRepo(child.getName()
 			, value);
 	    }else*/
-		currNode.loadChildren(responseHolder);
+	    currNode.loadChildren(responseHolder);
 		
 	}
 	String ancestorName=getFullAncestor(responseHolder.getLookupResp().getBrowseNodes()[0].getBrowseNode()[0]);
-	FactoryNodes.clearKey(ancestorName.substring(0, ancestorName.lastIndexOf(".")));
-	initializeLeafNode().savePropertyFile();
-    }
-    
-    public void getTerminalNodesNameConcatenated(BrowseNode_type0 parent){
-	BrowseNode_type0[] children=getChildren();
-	String leafChildrenNamesConcatenated="";
-	int i=0;
-	for(;i<children.length;i++){
-	    if(getChildrenOf(children[i])==null){
-		leafChildrenNamesConcatenated+=children[i].getName();
-		leafChildrenNamesConcatenated+="="+children[i].getBrowseNodeId();
-		break;
-	    }		
-	}
-	for(;i<children.length;i++){
-	    if(getChildrenOf(children[i])==null){
-		leafChildrenNamesConcatenated+="\n";
-		leafChildrenNamesConcatenated+=children[i].getName();
-		leafChildrenNamesConcatenated+="="+children[i].getBrowseNodeId();
-	    }
-	}
+	String parentName=ancestorName.substring(0, ancestorName.lastIndexOf("."));
+	initializeLeafNode();
+	leafNodeOperations.writeToPropertyFile(FactoryNodes.getValue(parentName), parentName);
+	leafNodeOperations.savePropertyFile();
+	FactoryNodes.clearKey(parentName);
     }
     
     public void flushFullHeir(){
 	String nodeId=responseHolder.getLookupResp().getBrowseNodes()[0].getBrowseNode()[0].getBrowseNodeId();
 	String ancestorName=getFullAncestor(responseHolder.getLookupResp().getBrowseNodes()[0].getBrowseNode()[0]);
 	FactoryNodes.addToRepo(ancestorName.substring(0, ancestorName.lastIndexOf("."))
-		, ancestorName+"="+nodeId);
-	leafNodeOperations.writeToPropertyFile(nodeId, ancestorName);	
+		, ancestorName+":"+nodeId);	
     }
     
     public String getFullAncestor(BrowseNode_type0 bnode){
@@ -164,8 +116,21 @@ public class NodesAndTheirParentsList {
 	return ancestor.getName();
     }
     
-    public String getParentNodeId(){
-	return responseHolder.getParentNodeId();
+    public void retryRequetIfFailed(BrowseNodeRequestContainer reqCon, long lagTime){
+	try{
+	    Thread.sleep(2000);
+	    responseHolder=(NodeLookupResponseHolder) StubFactory.getStubInstance("BrowseNodeInfo")
+		    .executeOperation(reqCon.bnodeLookup);
+	    Thread.sleep(1000);
+	}catch(Exception e){
+	    try {
+		Thread.sleep(lagTime+=3000);
+		retryRequetIfFailed(reqCon, lagTime);
+	    } catch (InterruptedException e1) {
+		// TODO Auto-generated catch block
+		e1.printStackTrace();
+	    }
+	}
     }
 
 }

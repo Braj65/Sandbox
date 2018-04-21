@@ -2,13 +2,16 @@ package com.amzn.model.nodesToBeCrawled.nodeFeedToBeCrawled.utility;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.io.Writer;
 import java.util.Iterator;
 import java.util.List;
 
 import org.apache.commons.configuration.ConfigurationException;
 import org.apache.commons.configuration.PropertiesConfiguration;
+import org.apache.commons.configuration.PropertiesConfiguration.PropertiesWriter;
 import org.apache.commons.configuration.PropertiesConfigurationLayout;
 import org.apache.commons.io.FileUtils;
 
@@ -123,10 +126,18 @@ public class LoadLeafChildren implements ILoadChildrenFromProp{
 	childNodeProperties=extracted;
     }
     
-    public void writeToFile(String fullAncestorName, String nodeId){
+    /*public void writeToFile(String fullAncestorName, String nodeId){
 	childNodeProperties.setProperty(fullAncestorName, nodeId);
 	layout.setComment(fullAncestorName, fullAncestorName.substring(0, fullAncestorName.lastIndexOf(".")));
 	
+    }*/
+    
+    public void writeToFile(String value, String comment){
+//	childNodeProperties.addProperty(value, null);
+	layout.setGlobalSeparator("");
+	PropertiesConfiguration.
+	childNodeProperties.setProperty(value, "");
+	layout.setComment(value, comment);
     }
     
     public void createNewFile(String fileName){

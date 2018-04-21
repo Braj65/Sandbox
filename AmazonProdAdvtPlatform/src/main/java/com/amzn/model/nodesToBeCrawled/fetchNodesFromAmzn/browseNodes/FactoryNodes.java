@@ -26,5 +26,9 @@ public class FactoryNodes {
 	    repo.remove(key);
 	}
     }
+    
+    public static String getValue(String key){
+	return repo.get(key);
+    }
 
 }

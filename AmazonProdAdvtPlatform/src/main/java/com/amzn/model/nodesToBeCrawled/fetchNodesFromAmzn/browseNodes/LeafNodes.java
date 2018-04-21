@@ -41,8 +41,8 @@ public class LeafNodes {
 	propertyLoader.clearPropertyFile();
     }
     
-    public void writeToPropertyFile(String nodeId, String fullAncestorName){
-	propertyLoader.writeToFile(fullAncestorName, nodeId);
+    public void writeToPropertyFile(String value, String comment){
+	propertyLoader.writeToFile(value, comment);
     }
     
     public void savePropertyFile(){
