@@ -64,6 +64,15 @@ public class NodesAndTheirParentsList {
 	return null;
     }
     
+    public boolean grandChildrenPresent(){
+	BrowseNode_type0[] nodeArr=getChildren();
+	for(BrowseNode_type0 node: nodeArr){
+	    if(getChildren()==null)
+		return false;		
+	}
+	return true;
+    }
+    
     public void createChildren(BrowseNode_type0[] children){
 	if(children==null){
 	    initializeLeafNode();
@@ -93,7 +102,7 @@ public class NodesAndTheirParentsList {
 		    ex.printStackTrace();
 		}
 	    }
-	    if(getChildren()==null){
+	    if(!grandChildrenPresent()){
 		
 	    }else
 		currNode.loadChildren(responseHolder);

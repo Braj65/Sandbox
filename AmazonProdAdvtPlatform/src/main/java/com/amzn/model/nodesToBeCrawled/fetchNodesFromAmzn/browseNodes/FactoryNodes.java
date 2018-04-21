@@ -1,0 +1,23 @@
+package com.amzn.model.nodesToBeCrawled.fetchNodesFromAmzn.browseNodes;
+
+import java.util.HashMap;
+import java.util.Map;
+
+public class FactoryNodes {
+    
+    public static Map<String,String> repo=new HashMap<String, String>();
+    
+    public static void addToRepo(String key, String value){
+	if(repo.containsKey(key)){
+	    String newVal=repo.get(key)+"\n"+value;
+	    repo.put(key, newVal);
+	}else{
+	    repo.put(key, value);
+	}
+    }
+    
+    public static void clearRepo(){
+	repo.clear();
+    }
+
+}
