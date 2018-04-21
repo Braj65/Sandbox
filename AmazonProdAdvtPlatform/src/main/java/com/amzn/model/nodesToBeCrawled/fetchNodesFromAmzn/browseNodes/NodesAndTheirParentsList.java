@@ -64,10 +64,14 @@ public class NodesAndTheirParentsList {
 	return null;
     }
     
+    public Children_type0 getChildrenOf(BrowseNode_type0 node){
+	return node.getChildren();
+    }
+    
     public boolean grandChildrenPresent(){
 	BrowseNode_type0[] nodeArr=getChildren();
-	for(BrowseNode_type0 node: nodeArr){
-	    if(getChildren()==null)
+	for(BrowseNode_type0 child: nodeArr){
+	    if(getChildrenOf(child)==null)
 		return false;		
 	}
 	return true;
@@ -102,18 +106,43 @@ public class NodesAndTheirParentsList {
 		    ex.printStackTrace();
 		}
 	    }
-	    if(!grandChildrenPresent()){
-		
-	    }else
+	    /*if(!grandChildrenPresent()){
+		FactoryNodes.addToRepo(child.getName()
+			, value);
+	    }else*/
 		currNode.loadChildren(responseHolder);
 		
 	}
+	String ancestorName=getFullAncestor(responseHolder.getLookupResp().getBrowseNodes()[0].getBrowseNode()[0]);
+	FactoryNodes.clearKey(ancestorName.substring(0, ancestorName.lastIndexOf(".")));
 	initializeLeafNode().savePropertyFile();
+    }
+    
+    public void getTerminalNodesNameConcatenated(BrowseNode_type0 parent){
+	BrowseNode_type0[] children=getChildren();
+	String leafChildrenNamesConcatenated="";
+	int i=0;
+	for(;i<children.length;i++){
+	    if(getChildrenOf(children[i])==null){
+		leafChildrenNamesConcatenated+=children[i].getName();
+		leafChildrenNamesConcatenated+="="+children[i].getBrowseNodeId();
+		break;
+	    }		
+	}
+	for(;i<children.length;i++){
+	    if(getChildrenOf(children[i])==null){
+		leafChildrenNamesConcatenated+="\n";
+		leafChildrenNamesConcatenated+=children[i].getName();
+		leafChildrenNamesConcatenated+="="+children[i].getBrowseNodeId();
+	    }
+	}
     }
     
     public void flushFullHeir(){
 	String nodeId=responseHolder.getLookupResp().getBrowseNodes()[0].getBrowseNode()[0].getBrowseNodeId();
 	String ancestorName=getFullAncestor(responseHolder.getLookupResp().getBrowseNodes()[0].getBrowseNode()[0]);
+	FactoryNodes.addToRepo(ancestorName.substring(0, ancestorName.lastIndexOf("."))
+		, ancestorName+"="+nodeId);
 	leafNodeOperations.writeToPropertyFile(nodeId, ancestorName);	
     }
     

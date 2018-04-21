@@ -10,6 +10,7 @@ public class FactoryNodes {
     public static void addToRepo(String key, String value){
 	if(repo.containsKey(key)){
 	    String newVal=repo.get(key)+"\n"+value;
+	    repo.put(key,"");
 	    repo.put(key, newVal);
 	}else{
 	    repo.put(key, value);
@@ -18,6 +19,12 @@ public class FactoryNodes {
     
     public static void clearRepo(){
 	repo.clear();
+    }
+    
+    public static void clearKey(String key){
+	if(repo.containsKey(key)){
+	    repo.remove(key);
+	}
     }
 
 }
