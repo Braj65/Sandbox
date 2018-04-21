@@ -73,7 +73,7 @@ public class NodesAndTheirParentsList {
 	this.initializeChildrenBucket();
 	for(BrowseNode_type0 child:children){
 	    NodesAndTheirParentsList currNode=new NodesAndTheirParentsList(child, reqCon);
-	    this.children.add(currNode);
+//	    this.children.add(currNode);
 	    reqCon=new BrowseNodeRequestContainer();//clone it with clear props
 	    reqCon.bnodeLookupReq.addBrowseNodeId(child.getBrowseNodeId());//you can reduce these lines
 	    reqCon.bnodeLookupReq.addResponseGroup("BrowseNodeInfo");
@@ -93,7 +93,11 @@ public class NodesAndTheirParentsList {
 		    ex.printStackTrace();
 		}
 	    }
-	    currNode.loadChildren(responseHolder);
+	    if(getChildren()==null){
+		
+	    }else
+		currNode.loadChildren(responseHolder);
+		
 	}
 	initializeLeafNode().savePropertyFile();
     }
