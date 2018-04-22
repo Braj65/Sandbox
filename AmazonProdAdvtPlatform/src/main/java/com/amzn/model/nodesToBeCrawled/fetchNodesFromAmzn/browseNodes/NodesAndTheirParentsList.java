@@ -94,8 +94,12 @@ public class NodesAndTheirParentsList {
     public void flushFullHeir(){
 	String nodeId=responseHolder.getLookupResp().getBrowseNodes()[0].getBrowseNode()[0].getBrowseNodeId();
 	String ancestorName=getFullAncestor(responseHolder.getLookupResp().getBrowseNodes()[0].getBrowseNode()[0]);
+	if(ancestorName.contains("Grocery & Gourmet Foods.Products.Cooking & Baking Supplies.Rice, Flour & Pulses.Flours") ||
+		ancestorName.equals("Grocery & Gourmet Foods.Products.Cooking & Baking Supplies.Rice, Flour & Pulses.Flours")){
+	    System.out.println();
+	}
 	FactoryNodes.addToRepo(ancestorName.substring(0, ancestorName.lastIndexOf("."))
-		, ancestorName+":"+nodeId);	
+		, ancestorName+"="+nodeId);	
     }
     
     public String getFullAncestor(BrowseNode_type0 bnode){
