@@ -3,6 +3,7 @@ package com.amzn.model.crawler.commpacks.response;
 import org.apache.axis2.databinding.ADBBean;
 
 import com.amazon.webservices.awsecommerceservice._2013_08_01.BrowseNodeLookupResponse;
+import com.amazon.webservices.awsecommerceservice._2013_08_01.BrowseNode_type0;
 
 public class NodeLookupResponseHolder implements IResponseHolder{
     
@@ -23,5 +24,9 @@ public class NodeLookupResponseHolder implements IResponseHolder{
     public String getParentNodeId(){
 	return lookupResp.getBrowseNodes()[0].getBrowseNode()[0]
 		.getAncestors().getBrowseNode()[0].getBrowseNodeId();
+    }
+    
+    public BrowseNode_type0 getFirstChild(){
+	return lookupResp.getBrowseNodes()[0].getBrowseNode()[0];
     }
 }

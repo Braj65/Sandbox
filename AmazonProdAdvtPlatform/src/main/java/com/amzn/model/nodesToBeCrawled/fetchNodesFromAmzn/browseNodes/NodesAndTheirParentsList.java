@@ -2,22 +2,24 @@ package com.amzn.model.nodesToBeCrawled.fetchNodesFromAmzn.browseNodes;
 
 import com.amazon.webservices.awsecommerceservice._2013_08_01.BrowseNode_type0;
 import com.amazon.webservices.awsecommerceservice._2013_08_01.Children_type0;
+import com.amzn.model.crawler.commpacks.response.IResponseHolder;
+import com.amzn.model.crawler.commpacks.response.ItemSearchResponseHolder;
 import com.amzn.model.crawler.commpacks.response.NodeLookupResponseHolder;
 import com.amzn.model.crawler.stub.StubFactory;
 import com.amzn.model.nodesToBeCrawled.fetchNodesFromAmzn.request.BrowseNodeRequestContainer;
 
 public class NodesAndTheirParentsList {
     
-    private NodeLookupResponseHolder responseHolder;
+    private IResponseHolder responseHolder;
     private BrowseNodeRequestContainer reqCon;
     
     public NodesAndTheirParentsList(BrowseNodeRequestContainer req){
 	reqCon=req;
     }
     
-    public LeafNodes initializeLeafNode(){
-	return new LeafNodes(
-		getRootAncestor(responseHolder.getLookupResp().getBrowseNodes()[0].getBrowseNode()[0]))
+    public CategoryNode initializeLeafNode(){
+	return new CategoryNode(
+		getRootAncestor(responseHolder.getFirstChild()))
 		.loadPropertyFile();
     }
     
@@ -28,7 +30,7 @@ public class NodesAndTheirParentsList {
     }
     
     public Children_type0 ifChildrenPresent(){
-	return responseHolder.getLookupResp().getBrowseNodes()[0].getBrowseNode()[0].getChildren();
+	return responseHolder.getFirstChild().getChildren();
     }
     
     public BrowseNode_type0[] getChildren(){
@@ -51,19 +53,19 @@ public class NodesAndTheirParentsList {
 	    this.loadChildren(responseHolder);
 		
 	}
-	String ancestorName=getFullAncestor(responseHolder.getLookupResp().getBrowseNodes()[0].getBrowseNode()[0]);
+	String ancestorName=getFullAncestor(responseHolder.getFirstChild());
 	String parentName=ancestorName.substring(0, ancestorName.lastIndexOf("."));
-	LeafNodes leafNodeOperations=initializeLeafNode();
-	leafNodeOperations.writeToPropertyFile(FactoryNodes.getValue(parentName), parentName);
-	leafNodeOperations.savePropertyFile();
-	FactoryNodes.clearKey(parentName);
+	CategoryNode leafNodeOperations=initializeLeafNode();
+	leafNodeOperations.writeToPropertyFile(LeafNodesFactory.getValue(parentName), parentName)
+		.savePropertyFile();
+	LeafNodesFactory.clearKey(parentName);
 	leafNodeOperations=null;
     }
     
     public void flushFullHeir(){
-	String nodeId=responseHolder.getLookupResp().getBrowseNodes()[0].getBrowseNode()[0].getBrowseNodeId();
-	String ancestorName=getFullAncestor(responseHolder.getLookupResp().getBrowseNodes()[0].getBrowseNode()[0]);
-	FactoryNodes.addToRepo(ancestorName.substring(0, ancestorName.lastIndexOf("."))
+	String nodeId=responseHolder.getFirstChild().getBrowseNodeId();
+	String ancestorName=getFullAncestor(responseHolder.getFirstChild());
+	LeafNodesFactory.addToRepo(ancestorName.substring(0, ancestorName.lastIndexOf("."))
 		, ancestorName+"="+nodeId);	
     }
     
@@ -85,21 +87,22 @@ public class NodesAndTheirParentsList {
 	return ancestor.getName();
     }
     
-    public void retryRequetIfFailed(BrowseNodeRequestContainer reqCon, long lagTime){
+    public IResponseHolder retryRequetIfFailed(BrowseNodeRequestContainer reqCon, long lagTime){
 	try{
 	    Thread.sleep(2000);
-	    responseHolder=(NodeLookupResponseHolder) StubFactory.getStubInstance("BrowseNodeInfo")
+	    return (NodeLookupResponseHolder) StubFactory.getStubInstance("BrowseNodeInfo")
 		    .executeOperation(reqCon.bnodeLookup);
-	    Thread.sleep(1000);
+	    
 	}catch(Exception e){
 	    try {
 		Thread.sleep(lagTime+=3000);
-		retryRequetIfFailed(reqCon, lagTime);
+		return retryRequetIfFailed(reqCon, lagTime);
 	    } catch (InterruptedException e1) {
 		// TODO Auto-generated catch block
 		e1.printStackTrace();
 	    }
 	}
+	return ItemSearchResponseHolder.NULLINSTANCE;
     }
 
 }

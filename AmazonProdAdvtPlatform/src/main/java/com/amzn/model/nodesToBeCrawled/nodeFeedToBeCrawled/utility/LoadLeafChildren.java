@@ -140,17 +140,15 @@ public class LoadLeafChildren implements ILoadChildrenFromProp {
 
     public void writeToFile(String value, String comment) {
 	// childNodeProperties.addProperty(value, null);
-	try {
-	    String[] fullPropVals = value.split("\\n");
-	    String[] onePropAndVal = fullPropVals[0].split("=");
+	if(value==null)
+	    return;
+	String[] fullPropVals = value.split("\\n");
+	String[] onePropAndVal = fullPropVals[0].split("=");
+	childNodeProperties.setProperty(onePropAndVal[0], onePropAndVal[1]);
+	layout.setComment(onePropAndVal[0], comment);
+	for (int i = 1; i < fullPropVals.length; i++) {
+	    onePropAndVal = fullPropVals[i].split("=");
 	    childNodeProperties.setProperty(onePropAndVal[0], onePropAndVal[1]);
-	    layout.setComment(onePropAndVal[0], comment);
-	    for (int i = 1; i < fullPropVals.length; i++) {
-		onePropAndVal = fullPropVals[i].split("=");
-		childNodeProperties.setProperty(onePropAndVal[0], onePropAndVal[1]);
-	    }
-	} catch (Exception e) {
-	    e.printStackTrace();
 	}
     }
 

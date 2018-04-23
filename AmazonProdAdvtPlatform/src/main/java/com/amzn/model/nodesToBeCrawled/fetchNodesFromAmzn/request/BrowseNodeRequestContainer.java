@@ -1,7 +1,5 @@
 package com.amzn.model.nodesToBeCrawled.fetchNodesFromAmzn.request;
 
-import java.util.List;
-
 import com.amazon.webservices.awsecommerceservice._2013_08_01.BrowseNodeLookup;
 import com.amazon.webservices.awsecommerceservice._2013_08_01.BrowseNodeLookupRequest;
 import com.amzn.model.crawler.stub.AWESProperty;
@@ -25,8 +23,8 @@ public class BrowseNodeRequestContainer {
     }
     
     public BrowseNodeRequestContainer addBrowseNodeId(String nodeId){
-	bnodeLookupReq.addBrowseNodeId(nodeId);
-	//bnodeLookupReq.setBrowseNodeId(new String[]{nodeId});
+//	bnodeLookupReq.addBrowseNodeId(nodeId);
+	bnodeLookupReq.setBrowseNodeId(new String[]{nodeId});
 	return this;
     }
     

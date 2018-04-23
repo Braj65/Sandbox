@@ -7,5 +7,9 @@ public class NullResponseHolder implements IResponseHolder{
     public NullResponseHolder(ADBBean resp) {
 	currentTimeSec=System.currentTimeMillis()/1000;
     }
+    @Override
+    public ADBBean getFirstChild() {
+	return null;
+    }
 
 }

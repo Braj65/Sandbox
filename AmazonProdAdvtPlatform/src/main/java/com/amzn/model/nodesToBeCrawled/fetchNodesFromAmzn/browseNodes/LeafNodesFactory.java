@@ -3,7 +3,7 @@ package com.amzn.model.nodesToBeCrawled.fetchNodesFromAmzn.browseNodes;
 import java.util.HashMap;
 import java.util.Map;
 
-public class FactoryNodes {
+public class LeafNodesFactory {
     
     public static Map<String,String> repo=new HashMap<String, String>();
     

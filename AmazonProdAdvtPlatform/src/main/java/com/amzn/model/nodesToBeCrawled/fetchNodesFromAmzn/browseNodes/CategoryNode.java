@@ -8,16 +8,16 @@ import com.amzn.model.nodesToBeCrawled.nodeFeedToBeCrawled.utility.ILoadChildren
 import com.amzn.model.nodesToBeCrawled.nodeFeedToBeCrawled.utility.LoadLeafChildren;
 import com.amzn.model.nodesToBeCrawled.nodeFeedToBeCrawled.utility.loaderFactory.LoaderFactory;
 
-public class LeafNodes {
+public class CategoryNode {
     
     private String nodeName;
     private ILoadChildrenFromProp propertyLoader;
     
-    public LeafNodes(String nodeName){
+    public CategoryNode(String nodeName){
 	this.nodeName=nodeName;
     }
     
-    public LeafNodes loadPropertyFile(){
+    public CategoryNode loadPropertyFile(){
 	try{
 	    propertyLoader=LoaderFactory.getPropLoader(nodeName+".properties");
 	}catch(Exception e){
@@ -41,8 +41,9 @@ public class LeafNodes {
 	propertyLoader.clearPropertyFile();
     }
     
-    public void writeToPropertyFile(String value, String comment){
+    public CategoryNode writeToPropertyFile(String value, String comment){
 	propertyLoader.writeToFile(value, comment);
+	return this;
     }
     
     public void savePropertyFile(){
