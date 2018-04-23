@@ -1,8 +1,8 @@
 package com.amazon.driver.keys;
 
 public enum AWSKeys {
-    AWS_ACCESS_KEY_ID("AKIAJBRG4SMARCVPZXGQ"),
-    AWS_SECRET_KEY("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");
+    AWS_ACCESS_KEY_ID("AKIAJBXXQMJM7ZVB3DLQ"),
+    AWS_SECRET_KEY("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");
     
     private String key;
     
