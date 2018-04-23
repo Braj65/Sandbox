@@ -30,9 +30,7 @@ public class Client {
 	BrowseNodeRequestContainer reqCon;
 	NodesAndTheirParentsList childNode = null;
 	for(IBrowseNodes node:highRootChilds){
-	    AbstractParentNodeStats parentNode=node.getParentNodeStats();
-	    stats=parentNode.getNodeStats();
-	    parentNode=null;
+	    stats=node.getParentNodeStats().getNodeStats();	    
 	    reqCon=new BrowseNodeRequestContainer();
 	    childNode=new NodesAndTheirParentsList(stats, reqCon);
 	    
