@@ -43,6 +43,7 @@ public class Client {
 	    resp=StubFactory.getStubInstance("BrowseNodeInfo").executeOperation(reqCon.bnodeLookup);
 	    }catch(Exception e){
 		e.printStackTrace();
+		continue;
 	    }
 	    childNode.loadChildren((NodeLookupResponseHolder)resp);
 	}

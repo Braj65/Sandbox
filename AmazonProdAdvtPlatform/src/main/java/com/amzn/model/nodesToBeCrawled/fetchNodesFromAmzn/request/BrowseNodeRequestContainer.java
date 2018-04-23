@@ -24,13 +24,9 @@ public class BrowseNodeRequestContainer {
 	bnodeLookup.addRequest(bnodeLookupReq);
     }
     
-    public void populateLookupReq(String parentNodeId){
-	bnodeLookupReq.addBrowseNodeId(parentNodeId);
-	bnodeLookupReq.addResponseGroup("BrowseNodeInfo");
-    }
-    
     public BrowseNodeRequestContainer addBrowseNodeId(String nodeId){
 	bnodeLookupReq.addBrowseNodeId(nodeId);
+	//bnodeLookupReq.setBrowseNodeId(new String[]{nodeId});
 	return this;
     }
     

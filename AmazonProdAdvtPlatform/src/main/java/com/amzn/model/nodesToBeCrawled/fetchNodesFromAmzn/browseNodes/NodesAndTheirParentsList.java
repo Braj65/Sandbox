@@ -43,12 +43,12 @@ public class NodesAndTheirParentsList {
 	    return;
 	}
 	for(BrowseNode_type0 child:children){
-	    NodesAndTheirParentsList currNode=new NodesAndTheirParentsList(reqCon);
+	    /*NodesAndTheirParentsList currNode=new NodesAndTheirParentsList(reqCon);
 	    reqCon=new BrowseNodeRequestContainer();//clone it with clear props
-	    reqCon.addBrowseNodeId(child.getBrowseNodeId()).setShared();
+*/	    reqCon.addBrowseNodeId(child.getBrowseNodeId()).setShared();
 	    
 	    retryRequetIfFailed(reqCon,5000);
-	    currNode.loadChildren(responseHolder);
+	    this.loadChildren(responseHolder);
 		
 	}
 	String ancestorName=getFullAncestor(responseHolder.getLookupResp().getBrowseNodes()[0].getBrowseNode()[0]);
