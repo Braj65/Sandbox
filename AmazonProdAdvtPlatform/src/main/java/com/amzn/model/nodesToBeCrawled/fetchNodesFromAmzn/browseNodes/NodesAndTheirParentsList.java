@@ -13,23 +13,11 @@ import com.amzn.model.nodesToBeCrawled.nodeFeedToBeCrawled.nodes.nodeEntity.INod
 
 public class NodesAndTheirParentsList {
     
-    private List<NodesAndTheirParentsList> children;
-    private String nodeId;
-    private String nodeName;
     private NodeLookupResponseHolder responseHolder;
-//    private IResponseHolder responseHolder;
     private BrowseNodeRequestContainer reqCon;
     private LeafNodes leafNodeOperations;
     
-    public NodesAndTheirParentsList(BrowseNode_type0 node, BrowseNodeRequestContainer req){
-	nodeId=node.getBrowseNodeId();
-	nodeName=node.getName();
-	reqCon=req;
-    }
-    
-    public NodesAndTheirParentsList(INodeStats nodeStats, BrowseNodeRequestContainer req){
-	nodeId=nodeStats.getNodeId().toString();
-	nodeName=nodeStats.getNodeName();
+    public NodesAndTheirParentsList(BrowseNodeRequestContainer req){
 	reqCon=req;
     }
     
@@ -38,10 +26,6 @@ public class NodesAndTheirParentsList {
 		getRootAncestor(responseHolder.getLookupResp().getBrowseNodes()[0].getBrowseNode()[0]));
 	leafNodeOperations.loadPropertyFile();
 	return leafNodeOperations;
-    }
-    
-    public void initializeChildrenBucket(){
-	children=new ArrayList<NodesAndTheirParentsList>();
     }
     
     public void loadChildren(NodeLookupResponseHolder resp){
@@ -65,15 +49,10 @@ public class NodesAndTheirParentsList {
 	    flushFullHeir();	//create leaf child here use the ancestor, nodeid and ancestor-1 to save the property
 	    return;
 	}
-//	this.initializeChildrenBucket();
 	for(BrowseNode_type0 child:children){
-	    NodesAndTheirParentsList currNode=new NodesAndTheirParentsList(child, reqCon);
-//	    this.children.add(currNode);
+	    NodesAndTheirParentsList currNode=new NodesAndTheirParentsList(reqCon);
 	    reqCon=new BrowseNodeRequestContainer();//clone it with clear props
-	    reqCon.bnodeLookupReq.addBrowseNodeId(child.getBrowseNodeId());//you can reduce these lines
-	    reqCon.bnodeLookupReq.addResponseGroup("BrowseNodeInfo");
-	    reqCon.bnodeLookup.setShared(reqCon.bnodeLookupReq);
-	    reqCon.bnodeLookup.setAssociateTag("isnnfoiwnit0d-21");
+	    reqCon.addBrowseNodeId(child.getBrowseNodeId()).setShared();
 	    
 	    retryRequetIfFailed(reqCon,5000);
 	    /*if(!grandChildrenPresent()){

@@ -32,16 +32,13 @@ public class Client {
 	for(IBrowseNodes node:highRootChilds){
 	    stats=node.getParentNodeStats().getNodeStats();	    
 	    reqCon=new BrowseNodeRequestContainer();
-	    childNode=new NodesAndTheirParentsList(stats, reqCon);
+	    childNode=new NodesAndTheirParentsList(reqCon);
 	    
 	    LeafNodes leaf=new LeafNodes(stats.getNodeName());
 	    leaf.loadPropertyFile().persistExistingPropertyFileToDb();
 	    leaf=null;
 	    
-	    reqCon.bnodeLookupReq.addBrowseNodeId(stats.getNodeId().toString());
-	    reqCon.bnodeLookupReq.addResponseGroup("BrowseNodeInfo");
-	    reqCon.bnodeLookup.setShared(reqCon.bnodeLookupReq);
-	    reqCon.bnodeLookup.setAssociateTag("isnnfoiwnit0d-21");
+	    reqCon.addBrowseNodeId(stats.getNodeId().toString()).setShared();
 	    try{
 	    resp=StubFactory.getStubInstance("BrowseNodeInfo").executeOperation(reqCon.bnodeLookup);
 	    }catch(Exception e){
