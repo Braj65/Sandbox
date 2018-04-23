@@ -1,31 +1,24 @@
 package com.amzn.model.nodesToBeCrawled.fetchNodesFromAmzn.browseNodes;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.amazon.webservices.awsecommerceservice._2013_08_01.BrowseNode_type0;
 import com.amazon.webservices.awsecommerceservice._2013_08_01.Children_type0;
-import com.amzn.model.crawler.commpacks.response.IResponseHolder;
 import com.amzn.model.crawler.commpacks.response.NodeLookupResponseHolder;
 import com.amzn.model.crawler.stub.StubFactory;
 import com.amzn.model.nodesToBeCrawled.fetchNodesFromAmzn.request.BrowseNodeRequestContainer;
-import com.amzn.model.nodesToBeCrawled.nodeFeedToBeCrawled.nodes.nodeEntity.INodeStats;
 
 public class NodesAndTheirParentsList {
     
     private NodeLookupResponseHolder responseHolder;
     private BrowseNodeRequestContainer reqCon;
-    private LeafNodes leafNodeOperations;
     
     public NodesAndTheirParentsList(BrowseNodeRequestContainer req){
 	reqCon=req;
     }
     
     public LeafNodes initializeLeafNode(){
-	leafNodeOperations=new LeafNodes(
-		getRootAncestor(responseHolder.getLookupResp().getBrowseNodes()[0].getBrowseNode()[0]));
-	leafNodeOperations.loadPropertyFile();
-	return leafNodeOperations;
+	return new LeafNodes(
+		getRootAncestor(responseHolder.getLookupResp().getBrowseNodes()[0].getBrowseNode()[0]))
+		.loadPropertyFile();
     }
     
     public void loadChildren(NodeLookupResponseHolder resp){
@@ -55,28 +48,21 @@ public class NodesAndTheirParentsList {
 	    reqCon.addBrowseNodeId(child.getBrowseNodeId()).setShared();
 	    
 	    retryRequetIfFailed(reqCon,5000);
-	    /*if(!grandChildrenPresent()){
-		FactoryNodes.addToRepo(child.getName()
-			, value);
-	    }else*/
 	    currNode.loadChildren(responseHolder);
 		
 	}
 	String ancestorName=getFullAncestor(responseHolder.getLookupResp().getBrowseNodes()[0].getBrowseNode()[0]);
 	String parentName=ancestorName.substring(0, ancestorName.lastIndexOf("."));
-	initializeLeafNode();
+	LeafNodes leafNodeOperations=initializeLeafNode();
 	leafNodeOperations.writeToPropertyFile(FactoryNodes.getValue(parentName), parentName);
 	leafNodeOperations.savePropertyFile();
 	FactoryNodes.clearKey(parentName);
+	leafNodeOperations=null;
     }
     
     public void flushFullHeir(){
 	String nodeId=responseHolder.getLookupResp().getBrowseNodes()[0].getBrowseNode()[0].getBrowseNodeId();
 	String ancestorName=getFullAncestor(responseHolder.getLookupResp().getBrowseNodes()[0].getBrowseNode()[0]);
-	if(ancestorName.contains("Grocery & Gourmet Foods.Products.Cooking & Baking Supplies.Rice, Flour & Pulses.Flours") ||
-		ancestorName.equals("Grocery & Gourmet Foods.Products.Cooking & Baking Supplies.Rice, Flour & Pulses.Flours")){
-	    System.out.println();
-	}
 	FactoryNodes.addToRepo(ancestorName.substring(0, ancestorName.lastIndexOf("."))
 		, ancestorName+"="+nodeId);	
     }
