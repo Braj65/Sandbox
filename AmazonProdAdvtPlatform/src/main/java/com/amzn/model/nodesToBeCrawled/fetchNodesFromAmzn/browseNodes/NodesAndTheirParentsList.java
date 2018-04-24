@@ -10,7 +10,7 @@ import com.amzn.model.nodesToBeCrawled.fetchNodesFromAmzn.request.BrowseNodeRequ
 
 public class NodesAndTheirParentsList {
     
-    private IResponseHolder responseHolder;
+    private NodeLookupResponseHolder responseHolder;
     private BrowseNodeRequestContainer reqCon;
     
     public NodesAndTheirParentsList(BrowseNodeRequestContainer req){
@@ -87,7 +87,7 @@ public class NodesAndTheirParentsList {
 	return ancestor.getName();
     }
     
-    public IResponseHolder retryRequetIfFailed(BrowseNodeRequestContainer reqCon, long lagTime){
+    public NodeLookupResponseHolder retryRequetIfFailed(BrowseNodeRequestContainer reqCon, long lagTime){
 	try{
 	    Thread.sleep(2000);
 	    return (NodeLookupResponseHolder) StubFactory.getStubInstance("BrowseNodeInfo")
@@ -102,7 +102,7 @@ public class NodesAndTheirParentsList {
 		e1.printStackTrace();
 	    }
 	}
-	return ItemSearchResponseHolder.NULLINSTANCE;
+	return null;
     }
 
 }
