@@ -31,7 +31,7 @@ public class CategoryNode {
 	return this;
     }
     
-    public void persistExistingPropertyFileToDb(){
+    public CategoryNode persistExistingPropertyFileToDb(){
 	//We will write code about persisting to db in a later time. Currently we will write code
 	//to create a copy of existing file with time stamp in file name
 	DateFormat dateFormat=new SimpleDateFormat("dd_MM_yy-HH_mm");
@@ -39,6 +39,7 @@ public class CategoryNode {
 	String newFileName=nodeName+dateFormat.format(d)+".properties";
 	propertyLoader.createNewFile(newFileName);
 	propertyLoader.clearPropertyFile();
+	return this;
     }
     
     public CategoryNode writeToPropertyFile(String value, String comment){

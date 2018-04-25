@@ -12,11 +12,14 @@ public class NodesAndTheirParentsList {
     
     private NodeLookupResponseHolder responseHolder;
     private BrowseNodeRequestContainer reqCon;
+    private CategoryNode leafNodeOperations;
     
-    public NodesAndTheirParentsList(BrowseNodeRequestContainer req){
+    public NodesAndTheirParentsList(BrowseNodeRequestContainer req, CategoryNode catNode){
 	reqCon=req;
+	leafNodeOperations=catNode;
     }
     
+    @Deprecated
     public CategoryNode initializeLeafNode(){
 	return new CategoryNode(
 		getRootAncestor(responseHolder.getFirstChild()))
@@ -24,6 +27,8 @@ public class NodesAndTheirParentsList {
     }
     
     public void loadChildren(NodeLookupResponseHolder resp){
+	if(resp==null)
+	    throw new RuntimeException("Response has been received null");
 	responseHolder=resp;
 	BrowseNode_type0[] nodeArr=getChildren();
 	createChildren(nodeArr);
@@ -49,28 +54,28 @@ public class NodesAndTheirParentsList {
 	    reqCon=new BrowseNodeRequestContainer();//clone it with clear props
 */	    reqCon.addBrowseNodeId(child.getBrowseNodeId()).setShared();
 	    
-	    retryRequetIfFailed(reqCon,5000);
+	    responseHolder=retryRequetIfFailed(reqCon,5000);
 	    this.loadChildren(responseHolder);
 		
 	}
-	String ancestorName=getFullAncestor(responseHolder.getFirstChild());
+	String ancestorName=getFullAncestor();
 	String parentName=ancestorName.substring(0, ancestorName.lastIndexOf("."));
-	CategoryNode leafNodeOperations=initializeLeafNode();
+//	CategoryNode leafNodeOperations=initializeLeafNode();
 	leafNodeOperations.writeToPropertyFile(LeafNodesFactory.getValue(parentName), parentName)
 		.savePropertyFile();
 	LeafNodesFactory.clearKey(parentName);
-	leafNodeOperations=null;
     }
     
     public void flushFullHeir(){
 	String nodeId=responseHolder.getFirstChild().getBrowseNodeId();
-	String ancestorName=getFullAncestor(responseHolder.getFirstChild());
+	String ancestorName=getFullAncestor();
 	LeafNodesFactory.addToRepo(ancestorName.substring(0, ancestorName.lastIndexOf("."))
 		, ancestorName+"="+nodeId);	
     }
     
-    public String getFullAncestor(BrowseNode_type0 bnode){
-	String leafNodeName=bnode.getName();
+    public String getFullAncestor(){
+	BrowseNode_type0 bnode=responseHolder.getFirstChild();
+	String leafNodeName=responseHolder.getFirstChild().getName();
 	
 	while(bnode.getAncestors()!=null){
 	    bnode=bnode.getAncestors().getBrowseNode()[0];
@@ -79,6 +84,7 @@ public class NodesAndTheirParentsList {
 	return leafNodeName;
     }
     
+    @Deprecated
     public String getRootAncestor(BrowseNode_type0 bnode){
 	BrowseNode_type0 ancestor=bnode;
 	while(ancestor.getAncestors()!=null){

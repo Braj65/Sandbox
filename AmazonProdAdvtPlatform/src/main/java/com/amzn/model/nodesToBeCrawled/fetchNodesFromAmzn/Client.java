@@ -29,13 +29,15 @@ public class Client {
 	BrowseNodeRequestContainer reqCon=new BrowseNodeRequestContainer();
 	NodesAndTheirParentsList childNode = null;
 	for(IBrowseNodes node:highRootChilds){
-	    stats=node.getParentNodeStats().getNodeStats();	    
-	    childNode=new NodesAndTheirParentsList(reqCon);
+	    stats=node.getParentNodeStats().getNodeStats();
 	    
-	    CategoryNode catNode=new CategoryNode(stats.getNodeName());
-	    catNode.loadPropertyFile().persistExistingPropertyFileToDb();
-	    catNode=null;
+	    CategoryNode catNode=new CategoryNode(stats.getNodeName())
+		    .loadPropertyFile()
+		    .persistExistingPropertyFileToDb();
+//	    catNode.loadPropertyFile().persistExistingPropertyFileToDb();
 	    
+	    childNode=new NodesAndTheirParentsList(reqCon, catNode);
+	    	    
 	    reqCon.addBrowseNodeId(stats.getNodeId().toString()).setShared();
 	    try{
 	    resp=StubFactory.getStubInstance("BrowseNodeInfo").executeOperation(reqCon.bnodeLookup);
