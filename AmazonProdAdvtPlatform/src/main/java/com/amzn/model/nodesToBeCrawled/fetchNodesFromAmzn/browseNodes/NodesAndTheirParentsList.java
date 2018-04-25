@@ -22,8 +22,8 @@ public class NodesAndTheirParentsList {
     @Deprecated
     public CategoryNode initializeLeafNode(){
 	return new CategoryNode(
-		getRootAncestor(responseHolder.getFirstChild()))
-		.loadPropertyFile();
+		getRootAncestor(responseHolder.getFirstChild()));
+//		.loadPropertyFile();
     }
     
     public void loadChildren(NodeLookupResponseHolder resp){

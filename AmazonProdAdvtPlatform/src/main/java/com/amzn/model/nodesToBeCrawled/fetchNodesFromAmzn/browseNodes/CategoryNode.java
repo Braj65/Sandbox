@@ -13,11 +13,8 @@ public class CategoryNode {
     private String nodeName;
     private ILoadChildrenFromProp propertyLoader;
     
-    public CategoryNode(String nodeName){
+    protected CategoryNode(String nodeName){
 	this.nodeName=nodeName;
-    }
-    
-    public CategoryNode loadPropertyFile(){
 	try{
 	    propertyLoader=LoaderFactory.getPropLoader(nodeName+".properties");
 	}catch(Exception e){
@@ -28,7 +25,6 @@ public class CategoryNode {
 	    	+ "to provide a constant stream of full node names and ids from property files");
 	    propertyLoader=new LoadLeafChildren(nodeName+".properties");
 	}
-	return this;
     }
     
     public CategoryNode persistExistingPropertyFileToDb(){
@@ -42,12 +38,12 @@ public class CategoryNode {
 	return this;
     }
     
-    public CategoryNode writeToPropertyFile(String value, String comment){
+    protected CategoryNode writeToPropertyFile(String value, String comment){
 	propertyLoader.writeToFile(value, comment);
 	return this;
     }
     
-    public void savePropertyFile(){
+    protected void savePropertyFile(){
 	propertyLoader.savePropertyFile();
     }
 

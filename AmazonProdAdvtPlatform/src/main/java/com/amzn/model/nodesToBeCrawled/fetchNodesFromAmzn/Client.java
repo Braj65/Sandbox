@@ -32,7 +32,6 @@ public class Client {
 	    stats=node.getParentNodeStats().getNodeStats();
 	    
 	    CategoryNode catNode=new CategoryNode(stats.getNodeName())
-		    .loadPropertyFile()
 		    .persistExistingPropertyFileToDb();
 //	    catNode.loadPropertyFile().persistExistingPropertyFileToDb();
 	    

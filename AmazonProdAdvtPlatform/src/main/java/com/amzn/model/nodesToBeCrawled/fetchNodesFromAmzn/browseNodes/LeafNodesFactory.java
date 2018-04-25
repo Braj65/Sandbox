@@ -5,29 +5,22 @@ import java.util.Map;
 
 public class LeafNodesFactory {
     
-    public static Map<String,String> repo=new HashMap<String, String>();
+    private static Map<String,String> repo=new HashMap<String, String>();
     
-    public static void addToRepo(String key, String value){
+    protected static void addToRepo(String key, String value){
+	String newVal=value;
 	if(repo.containsKey(key)){
-	    String newVal=repo.get(key)+"\n"+value;
+	    newVal=repo.get(key)+"\n"+value;
 	    repo.put(key,"");
-	    repo.put(key, newVal);
-	}else{
-	    repo.put(key, value);
 	}
+	repo.put(key, newVal);
     }
     
-    public static void clearRepo(){
-	repo.clear();
+    protected static void clearKey(String key){
+	repo.remove(key);	
     }
     
-    public static void clearKey(String key){
-	if(repo.containsKey(key)){
-	    repo.remove(key);
-	}
-    }
-    
-    public static String getValue(String key){
+    protected static String getValue(String key){
 	return repo.get(key);
     }
 
