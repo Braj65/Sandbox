@@ -1,9 +1,10 @@
 package com.amzn.model.nodesToBeCrawled.fetchNodesFromAmzn.browseNodes;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import com.amazon.webservices.awsecommerceservice._2013_08_01.BrowseNode_type0;
 import com.amazon.webservices.awsecommerceservice._2013_08_01.Children_type0;
-import com.amzn.model.crawler.commpacks.response.IResponseHolder;
-import com.amzn.model.crawler.commpacks.response.ItemSearchResponseHolder;
 import com.amzn.model.crawler.commpacks.response.NodeLookupResponseHolder;
 import com.amzn.model.crawler.stub.StubFactory;
 import com.amzn.model.nodesToBeCrawled.fetchNodesFromAmzn.request.BrowseNodeRequestContainer;
@@ -13,6 +14,7 @@ public class NodesAndTheirParentsList {
     private NodeLookupResponseHolder responseHolder;
     private BrowseNodeRequestContainer reqCon;
     private CategoryNode leafNodeOperations;
+    private Map<String, String> leafNodes=new HashMap<String, String>(); 
     
     public NodesAndTheirParentsList(BrowseNodeRequestContainer req, CategoryNode catNode){
 	reqCon=req;
@@ -61,16 +63,24 @@ public class NodesAndTheirParentsList {
     private void writeToPropertyFile(){
 	String ancestorName=getFullAncestor();
 	String parentName=ancestorName.substring(0, ancestorName.lastIndexOf("."));
-	leafNodeOperations.writeToPropertyFile(LeafNodesFactory.getValue(parentName), parentName)
+	leafNodeOperations.writeToPropertyFile(leafNodes.get(parentName), parentName)
 		.savePropertyFile();
-	LeafNodesFactory.clearKey(parentName);
+	leafNodes.remove(parentName);
     }
     
     private void flushFullHeir(){
 	String nodeId=responseHolder.getFirstChild().getBrowseNodeId();
 	String ancestorName=getFullAncestor();
-	LeafNodesFactory.addToRepo(ancestorName.substring(0, ancestorName.lastIndexOf("."))
+	addToRepo(ancestorName.substring(0, ancestorName.lastIndexOf("."))
 		, ancestorName+"="+nodeId);	
+    }
+    public void addToRepo(String key, String value){
+	String newVal=value;
+	if(leafNodes.containsKey(key)){
+	    newVal=leafNodes.get(key)+"\n"+value;
+	    leafNodes.put(key,"");
+	}
+	leafNodes.put(key, newVal);
     }
     
     private String getFullAncestor(){

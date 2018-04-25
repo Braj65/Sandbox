@@ -13,7 +13,7 @@ public class CategoryNode {
     private String nodeName;
     private ILoadChildrenFromProp propertyLoader;
     
-    protected CategoryNode(String nodeName){
+    public CategoryNode(String nodeName){
 	this.nodeName=nodeName;
 	try{
 	    propertyLoader=LoaderFactory.getPropLoader(nodeName+".properties");
