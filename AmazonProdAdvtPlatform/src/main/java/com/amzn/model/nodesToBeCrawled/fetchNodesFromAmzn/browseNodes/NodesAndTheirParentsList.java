@@ -88,6 +88,8 @@ public class NodesAndTheirParentsList {
     }
     
     public NodeLookupResponseHolder retryRequetIfFailed(BrowseNodeRequestContainer reqCon, long lagTime){
+	if(lagTime>20000)
+	    return null;
 	try{
 	    Thread.sleep(2000);
 	    return (NodeLookupResponseHolder) StubFactory.getStubInstance("BrowseNodeInfo")
