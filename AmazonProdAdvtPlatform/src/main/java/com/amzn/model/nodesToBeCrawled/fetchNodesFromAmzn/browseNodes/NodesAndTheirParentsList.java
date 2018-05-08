@@ -74,7 +74,7 @@ public class NodesAndTheirParentsList {
 	addToRepo(ancestorName.substring(0, ancestorName.lastIndexOf("."))
 		, ancestorName+"="+nodeId);	
     }
-    public void addToRepo(String key, String value){
+    private void addToRepo(String key, String value){
 	String newVal=value;
 	if(leafNodes.containsKey(key)){
 	    newVal=leafNodes.get(key)+"\n"+value;
